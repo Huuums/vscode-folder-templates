@@ -1,0 +1,88 @@
+{
+  "name": "fast-component-folders",
+  "displayName": "fast-component-folders",
+  "description": "Create all your Files in a Component folder with one click",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.37.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.createFolderStructure"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.createFolderStructure",
+        "title": "Create Component Folder Structure"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "explorerResourceIsFolder",
+          "command": "extension.createFolderStructure",
+          "group": "7_modification@500"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Fast Component Folders",
+      "properties": {
+        "fastComponentFolders.componentFolderStructure": {
+          "type": "array",
+          "scope": "window",
+          "default": [
+            {
+              "fileName": "<name>.tsx",
+              "content": [
+                "import React from 'react';",
+                "import s from './<name>.scss'",
+                "",
+                "interface <name>Props {",
+                "}",
+                "",
+                "const <name>: React.FC<<name>Props> = (props) => {",
+                "  return <div/>;",
+                "};",
+                "",
+                "export default <name>;"
+              ]
+            },
+            {
+              "fileName": "<name>.scss"
+            },
+            {
+              "fileName": "/__tests__/<name>.test.ts"
+            },
+            {
+              "fileName": "index.ts",
+              "content": [
+                "import <name> from './<name>'",
+                "export default <name>;"
+              ]
+            }
+          ],
+          "description": "Configure the Files that should be created."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "test": "node ./test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^10.12.21",
+    "@types/vscode": "^1.37.0",
+    "eslint": "^5.13.0",
+    "glob": "^7.1.4",
+    "mocha": "^6.1.4",
+    "typescript": "^3.3.1",
+    "vscode-test": "^1.0.2"
+  }
+}
