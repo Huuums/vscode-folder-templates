@@ -1,7 +1,7 @@
 {
-  "name": "fast-component-folders",
-  "displayName": "fast-component-folders",
-  "description": "Create all your Files in a Component folder with one click",
+  "name": "fast-folder-structure",
+  "displayName": "fast-folder-structure",
+  "description": "Create Folder structures for e.g. components quickly",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.37.0"
@@ -12,12 +12,12 @@
   "activationEvents": [
     "onCommand:extension.createFolderStructure"
   ],
-  "main": "./extension.js",
+  "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "extension.createFolderStructure",
-        "title": "Create Component Folder Structure"
+        "title": "New Folder from FFS-Template"
       }
     ],
     "menus": {
@@ -32,57 +32,105 @@
     "configuration": {
       "title": "Fast Component Folders",
       "properties": {
-        "fastComponentFolders.componentFolderStructure": {
+        "fastFolderStructure.structures": {
           "type": "array",
           "scope": "window",
           "default": [
             {
-              "fileName": "<name>.tsx",
-              "content": [
-                "import React from 'react';",
-                "import s from './<name>.scss'",
-                "",
-                "interface <name>Props {",
-                "}",
-                "",
-                "const <name>: React.FC<<name>Props> = (props) => {",
-                "  return <div/>;",
-                "};",
-                "",
-                "export default <name>;"
+              "name": "TS React Functional Component",
+              "structure": [
+                {
+                  "fileName": "<FFSName>.tsx",
+                  "template": "TS React Functional Component"
+                },
+                {
+                  "fileName": "<FFSName>.scss"
+                },
+                {
+                  "fileName": "/__tests__/<FFSName>.test.ts"
+                },
+                {
+                  "fileName": "index.ts",
+                  "template": "Indexfile Import/Export"
+                }
               ]
             },
             {
-              "fileName": "<name>.scss"
-            },
-            {
-              "fileName": "/__tests__/<name>.test.ts"
-            },
-            {
-              "fileName": "index.ts",
-              "content": [
-                "import <name> from './<name>'",
-                "export default <name>;"
+              "name": "JS React Functional Component",
+              "structure": [
+                {
+                  "fileName": "<FFSName>.jsx",
+                  "template": "JS React Functional Component"
+                },
+                {
+                  "fileName": "<FFSName>.scss"
+                },
+                {
+                  "fileName": "/__tests__/<FFSName>.test.js"
+                },
+                {
+                  "fileName": "index.js",
+                  "template": "Indexfile Import/Export"
+                }
               ]
             }
           ],
-          "description": "Configure the Files that should be created."
+          "description": "Configure as many structures as you would like."
+        },
+        "fastFolderStructure.fileTemplates": {
+          "type": "object",
+          "scope": "window",
+          "default": {
+            "TS React Functional Component": [
+              "import React from 'react';",
+              "import s from './<FFSName>.scss'",
+              "",
+              "interface <FFSName>Props {",
+              "}",
+              "",
+              "const <FFSName>: React.FC<<FFSName>Props> = (props) => {",
+              "  return <div/>;",
+              "};",
+              "",
+              "export default <FFSName>;"
+            ],
+            "Indexfile Import/Export": [
+              "import <FFSName> from './<FFSName>'",
+              "",
+              "export default <FFSName>;"
+            ],
+            "JS React Functional Component": [
+              "import React from 'react';",
+              "import s from './<FFSName>.scss'",
+              "",
+              "",
+              "const <FFSName> = (props) => {",
+              "  return <div/>;",
+              "};",
+              "",
+              "export default <FFSName>;"
+            ]
+          }
         }
       }
     }
   },
   "scripts": {
-    "test": "node ./test/runTest.js"
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "yarn run compile",
+    "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
     "@types/mocha": "^5.2.6",
     "@types/node": "^10.12.21",
     "@types/vscode": "^1.37.0",
-    "eslint": "^5.13.0",
     "glob": "^7.1.4",
     "mocha": "^6.1.4",
     "typescript": "^3.3.1",
+    "tslint": "^5.12.1",
     "vscode-test": "^1.0.2"
   }
 }
