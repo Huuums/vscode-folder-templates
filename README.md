@@ -9,7 +9,7 @@ FFS (yes, this acronym is not by chance) is what I kept thinking when I had to c
 - Create your own Templates for your folder structures and files and then let the extension do the rest.
 - No more annoyance by having to create 2 files or more for every single component.
 
-\!\[demo](images/demo.gif)
+![demo](images/demo.gif)
 
 ## Extension
 
