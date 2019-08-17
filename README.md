@@ -93,8 +93,8 @@ The VS-Code Demo readme said `Users appreciate release notes as you update your 
 
 So here are the release notes.
 
-### 1.0.0
+### 0.1.0
 
-Initial release of vscode-FFS
+This is the super beta so people can't shout at me when something doesn't work.
 
 You're glad you had those release notes, eh?

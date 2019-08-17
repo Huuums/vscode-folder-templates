@@ -1,11 +1,21 @@
 {
   "name": "vscode-fast-folder-structure",
-  "displayName": "vscode-fast-folder-structure",
-  "description": "Create Folder structures for e.g. components quickly",
-  "version": "0.0.1",
+  "displayName": "Fast Folder Structure (FFS)",
+  "description": "template folder structures and file templates and apply them easily",
+  "keywords": [
+    "Folder Creator",
+    "File templates",
+    "Folder Templates",
+    "fast",
+    "template",
+    "ffs"
+  ],
+  "version": "0.1.0",
+  "publisher": "Huuums",
   "engines": {
     "vscode": "^1.37.0"
   },
+  "license": "MIT",
   "categories": [
     "Other"
   ],
