@@ -1,6 +1,6 @@
 {
-  "name": "fast-folder-structure",
-  "displayName": "fast-folder-structure",
+  "name": "vscode-fast-folder-structure",
+  "displayName": "vscode-fast-folder-structure",
   "description": "Create Folder structures for e.g. components quickly",
   "version": "0.0.1",
   "engines": {
