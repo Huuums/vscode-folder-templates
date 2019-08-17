@@ -1,31 +1,83 @@
-# fast-folder-structure README
+# VS-Code Fast Folder Structure - What is this and why
 
-This is the README for your extension "fast-folder-structure". After writing up a brief description, we recommend including the following sections.
+VS-Code Fast Folder Structure is an extension which creates your folders/files just like you defined in your templates.
+
+FFS (yes, this acronym is not by chance) is what I kept thinking when I had to create 2 folders 4-5 files for every component I wrote. But I didn't want this anymore. And if you feel the same, this might just be the extension for you.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Create your own Templates for your folder structures and files and then let the extension do the rest.
+- No more annoyance by having to create 2 files or more for every single component.
 
-For example if there is an image subfolder under your extension project workspace:
+\!\[FunctionalityDemo\]\(images/demo.gif\)
 
-\!\[feature X\]\(images/feature-x.png\)
+## Extension
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
+### The value \<FFSName\> will always be replaced into the componentname you specified in the InputPrompt in both your Templates as well your filenames
 
 This extension contributes the following settings:
 
-- `myExtension.enable`: enable/disable this extension
-- `myExtension.thing`: set to `blah` to do something
+- `fastFolderStructure.structures`: Takes an `Array` of `objects` in this format
+
+```json
+{ "fastFolderStructure.structures": [
+  {
+    "name": "Your name for the folder structure",
+    "structure": [
+      {
+      "name": "<FFSName>.jsx",
+      "template": "My JSX Template"  <-- This is the name of the filetemplate that you will create later on.
+      },
+      {
+        // You can also create nested Folders like this
+        "name": "firstnestedfolder/secondnestedfolder/<FFSName>.test.js",
+        // Not specifying a template will simply create an empty file
+      },
+      {
+        "name": "index.js",
+        "template: "Indexfile with only import/export",
+      },
+      ...
+    ]
+  }
+]}
+```
+
+- `fastFolderStructure.fileTemplates`: Takes an `Object` where the `key` is the name of the template.
+
+  The value can either be
+
+  - an `Array` where every item in the array is a `String`. Every new item in the array will be written into a new line.
+  - a `String` and you can annotate the linebreaks yourself with `\n`.
+
+```json
+{
+  "fastFolderStructure.fileTemplates": {
+    "My JSX Template": [
+      "import React from 'react';",
+      "",
+      "interface <FFSName>Props {",
+      "}",
+      "",
+      "const <FFSName> = (props) => {",
+      "  return <div/>;",
+      "};",
+      "",
+      "export default <FFSName>;"
+    ],
+    "Indexfile with only import/export": [
+      "import <FFSName> from './<FFSName>'\n\nexport default <FFSName>;"
+    ]
+  }
+}
+```
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- Creating files via this extension that already exist will override the existing files.
+
+- No tests yet, I like to live dangerously.
+- Not really an issue but I'd appreciate feedback in improvements or how to make templating the files easier.
 
 ## Release Notes
 
@@ -33,29 +85,4 @@ Users appreciate release notes as you update your extension.
 
 ### 1.0.0
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-- Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-- Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-- Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-- [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-- [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Initial release of FFS
