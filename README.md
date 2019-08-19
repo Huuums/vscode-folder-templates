@@ -93,6 +93,10 @@ The VS-Code Demo readme said `Users appreciate release notes as you update your 
 
 So here are the release notes.
 
+### 0.1.2
+
+Added info where this idea came from.
+
 ### 0.1.1
 
 Fixed readme stuff
