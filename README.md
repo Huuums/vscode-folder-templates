@@ -102,3 +102,7 @@ Fixed readme stuff
 This is the super beta so people can't shout at me when something doesn't work.
 
 You're glad you had those release notes, eh?
+
+### Credits
+
+The idea for FFS came after seeing this extension [ee92.folderize](https://marketplace.visualstudio.com/items?itemName=ee92.folderize)
