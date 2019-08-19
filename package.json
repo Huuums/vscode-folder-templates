@@ -2,6 +2,10 @@
   "name": "vscode-fast-folder-structure",
   "displayName": "Fast Folder Structure (FFS)",
   "description": "template folder structures and file templates and apply them easily",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Huuums/vscode-fast-folder-structure"
+  },
   "keywords": [
     "Folder Creator",
     "File templates",
@@ -20,13 +24,13 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.createFolderStructure"
+    "onCommand:FFS.createFolderStructure"
   ],
-  "main": "./out/extension.js",
+  "main": "./out/FFS.js",
   "contributes": {
     "commands": [
       {
-        "command": "extension.createFolderStructure",
+        "command": "FFS.createFolderStructure",
         "title": "New Folder from FFS-Template"
       }
     ],
@@ -34,7 +38,7 @@
       "explorer/context": [
         {
           "when": "explorerResourceIsFolder",
-          "command": "extension.createFolderStructure",
+          "command": "FFS.createFolderStructure",
           "group": "7_modification@500"
         }
       ]
