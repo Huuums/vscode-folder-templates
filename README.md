@@ -52,7 +52,7 @@ Additional information:
 
 ## fastFolderStructure.fileTemplates
 
-- The `key of the`key->value` is the name of the template
+- The `key` of the `key->value` pair is the name of the template
 
 - The value can either be
   - an `Array` where every item in the array is a `String`. Every new item in the array will be written into a new line.
@@ -92,6 +92,10 @@ Additional information:
 The VS-Code Demo readme said `Users appreciate release notes as you update your extension.`
 
 So here are the release notes.
+
+### 0.1.1
+
+Fixed readme stuff
 
 ### 0.1.0
 
