@@ -52,7 +52,7 @@ Additional information:
 
 ## fastFolderStructure.fileTemplates
 
-- The `key of the`key->value` is the name of the template
+- The `key` of the `key->value` pair is the name of the template
 
 - The value can either be
   - an `Array` where every item in the array is a `String`. Every new item in the array will be written into a new line.
