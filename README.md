@@ -93,6 +93,10 @@ The VS-Code Demo readme said `Users appreciate release notes as you update your 
 
 So here are the release notes.
 
+### 0.1.3
+
+I forgot to test some stuff and broke the whole thing. It's working again.
+
 ### 0.1.2
 
 Added info where this idea came from.
