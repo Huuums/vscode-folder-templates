@@ -29,14 +29,14 @@ This extension contributes the following settings:
     "name": "Your name for the folder structure",
     "structure": [
       {
-        "name": "<FFSName>.jsx",
+        "fileName": "<FFSName>.jsx",
         "template": "My JSX Template"
       },
       {
-        "name": "firstnestedfolder/secondnestedfolder/<FFSName>.test.js",
+        "fileName": "firstnestedfolder/secondnestedfolder/<FFSName>.test.js",
       },
       {
-        "name": "index.js",
+        "fileName": "index.js",
         "template": "Indexfile with only import/export",
       },
       ...
@@ -92,6 +92,10 @@ Additional information:
 The VS-Code Demo readme said `Users appreciate release notes as you update your extension.`
 
 So here are the release notes.
+
+### 0.1.5
+
+Fixed wrong information in Readme on how to use the extension. Thank you snigglewhoop for pointing that out!
 
 ### 0.1.4
 

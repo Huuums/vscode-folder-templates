@@ -12,9 +12,10 @@
     "Folder Templates",
     "fast",
     "template",
-    "ffs"
+    "ffs",
+    "scaffolding"
   ],
-  "version": "0.1.4",
+  "version": "0.1.5",
   "publisher": "Huuums",
   "engines": {
     "vscode": "^1.37.0"
