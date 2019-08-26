@@ -15,7 +15,7 @@
     "ffs",
     "scaffolding"
   ],
-  "version": "0.1.5",
+  "version": "0.1.6",
   "publisher": "Huuums",
   "engines": {
     "vscode": "^1.37.0"
@@ -40,7 +40,7 @@
         {
           "when": "explorerResourceIsFolder",
           "command": "FFS.createFolderStructure",
-          "group": "7_modification@500"
+          "group": "2_workspace@500"
         }
       ]
     },
