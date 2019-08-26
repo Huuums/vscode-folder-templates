@@ -93,6 +93,11 @@ The VS-Code Demo readme said `Users appreciate release notes as you update your 
 
 So here are the release notes.
 
+### 0.1.6
+
+- Added feature to automatically save files that have a template assigned. No more manually saving every file.
+- Moved 'Create Folder from FFS-Template' Context Item into the workspace group where it should be.
+
 ### 0.1.5
 
 Fixed wrong information in Readme on how to use the extension. Thank you snigglewhoop for pointing that out!

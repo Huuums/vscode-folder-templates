@@ -18,7 +18,7 @@ const createStructure = async (
     const templates: TemplateCollection | undefined = config.get(
       'fileTemplates',
     );
-    structure.forEach((file: FolderStructureFile) => {
+    const fileUris = structure.map((file: FolderStructureFile) => {
       const newPath = vscode.Uri.file(
         `${(resource && resource.fsPath) ||
           'test'}/${componentName}/${file.fileName.replace(
@@ -38,9 +38,15 @@ const createStructure = async (
           componentName,
         ),
       );
+      return file.template ? newPath : null;
     });
-    vscode.workspace.applyEdit(wsedit);
-    //vscode.window.activeTextEditor.hide();
+    await vscode.workspace.applyEdit(wsedit);
+    fileUris.forEach(async (uri: vscode.Uri | null) => {
+      if (uri) {
+        const document = await vscode.workspace.openTextDocument(uri);
+        document.save();
+      }
+    });
   }
 };
 
