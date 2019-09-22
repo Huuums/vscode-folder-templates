@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { getFileContentStringAndReplacePlaceholder, ensure } from '../util';
+import { getFileContentStringAndReplacePlaceholder, replaceAll } from '../util';
 import {
   FolderStructureFile,
   FolderStructure,
@@ -18,11 +18,13 @@ const createStructure = async (
     const templates: TemplateCollection | undefined = config.get(
       'fileTemplates',
     );
+    const ffsTransformRegexp = /<FFSName(?:\s*\|\s*([A-Za-z]+))?>/;
     const fileUris = structure.map((file: FolderStructureFile) => {
       const newPath = vscode.Uri.file(
         `${(resource && resource.fsPath) ||
-          'test'}/${componentName}/${file.fileName.replace(
-          '<FFSName>',
+          'test'}/${componentName}/${replaceAll(
+          file.fileName,
+          ffsTransformRegexp,
           componentName,
         )}`,
       );
@@ -34,7 +36,7 @@ const createStructure = async (
         new vscode.Position(0, 0),
         getFileContentStringAndReplacePlaceholder(
           template,
-          '<FFSName>',
+          ffsTransformRegexp,
           componentName,
         ),
       );

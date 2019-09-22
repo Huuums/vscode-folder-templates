@@ -2,15 +2,41 @@ import { Template } from './types';
 
 const replaceAll = function(
   target: string,
-  search: string,
+  search: string | RegExp,
   replacement: string,
 ) {
-  return target.replace(new RegExp(search, 'g'), replacement);
+  return target.replace(new RegExp(search, 'g'), match =>
+    getTransformedSSFName(match, replacement),
+  );
+};
+
+const getTransformedSSFName = (match: string, replacement: string) => {
+  const [, transformer] = match.split('|');
+  if (!transformer) {
+    return replacement;
+  }
+  switch (removeSpecialCharacters(transformer).toLowerCase()) {
+    case 'lowercase':
+      return replacement.toLowerCase();
+    case 'uppercase':
+      return replacement.toUpperCase();
+    case 'capitalize':
+      return capitalize(replacement);
+    default:
+      return replacement;
+  }
+};
+
+const removeSpecialCharacters = (string: string) =>
+  string.replace(/[^a-zA-Z]/g, '');
+
+const capitalize = (string: string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
 const getFileContentStringAndReplacePlaceholder = (
   content: Template | undefined,
-  replaceValue: string,
+  replaceValue: string | RegExp,
   newValue: string,
 ) => {
   if (!content) {
