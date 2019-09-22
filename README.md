@@ -1,4 +1,6 @@
-# VS-Code Fast Folder Structure - What is this and why
+# VS-Code Fast Folder Structure
+
+## What is this and why
 
 VS-Code Fast Folder Structure is an extension which creates your folders/files as you specify in templates.
 
@@ -15,12 +17,15 @@ FFS (yes, this acronym is not by chance) is what I kept thinking when I had to c
 
 This extension contributes the following settings:
 
-### The value \<FFSName\> will always be replaced into the component name you specified in the input promt in both your templates as well as your filenames
+- `fastFolderStructure.structures`: Takes an `array of objects`
+- `fastFolderStructure.fileTemplates`: Takes an `object` where the `key` is the name of the template.
 
-- `fastFolderStructure.structures`: Takes an `Array` of `objects`
-- `fastFolderStructure.fileTemplates`: Takes an `Object` where the `key` is the name of the template.
+### fastFolderStructure.structures
 
-## fastFolderStructure.structures
+- `name` is the name that will be shown in the select dropdown.
+- `structure` folder structure you want to create. It takes an `array of objects` where every file you want to create is its own object.
+  - each file has a required `fileName` key and an optional `template` key.
+  - if a template key is specified it should match a key of one of your `fileTemplates`. See [fastFolderStructure.fileTemplates](#fastFolderStructure.fileTemplates)
 
 ```json
 {
@@ -47,13 +52,11 @@ This extension contributes the following settings:
 
 Additional information:
 
-- In the example above you can also see, that it's possible to created nested folders.
-- You don't need to specify a template, if no template is specified the file will be created empty
+- In the example above you can also see, that it's possible to create nested folders.
 
-## fastFolderStructure.fileTemplates
+### fastFolderStructure.fileTemplates
 
 - The `key` of the `key->value` pair is the name of the template
-
 - The value can either be
   - an `Array` where every item in the array is a `String`. Every new item in the array will be written into a new line.
   - a `String` and you can annotate the linebreaks yourself with `\n`.
@@ -80,6 +83,22 @@ Additional information:
 }
 ```
 
+## Templating
+
+The value `<FFSName>` will always be replaced into the component name you specified in the input promt in both your templates as well as your filenames
+
+Adding a transformer with this pattern `<FFSName | transformer>` will give you the ability to transform your componentname where needed.
+
+The currently supported transformers are: `uppercase`, `lowercase` and `capitalize`. (I'm open for new suggestions any time)
+
+Given the componentname `myNewComponent` each of the transformers will result in:
+
+```
+<FFSName | uppercase> => MYNEWCOMPONENT
+<FFSName | lowercase> => mynewcomponent
+<FFSName | capitalize> => MyNewComponent
+```
+
 ## Known Issues
 
 - Creating files via this extension that already exist will override existing files.
@@ -92,6 +111,11 @@ Additional information:
 The VS-Code Demo readme said `Users appreciate release notes as you update your extension.`
 
 So here are the release notes.
+
+### 0.2.0
+
+- Added feature to transform your FFSName to lowercase, uppercase or capitalize it.(Thanks marcocavanna!)
+- Cleaned up the readme a bit
 
 ### 0.1.6
 
