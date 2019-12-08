@@ -27,6 +27,12 @@ This extension contributes the following settings:
   - each file has a required `fileName` key and an optional `template` key.
   - if a template key is specified it should match a key of one of your `fileTemplates`. See [fastFolderStructure.fileTemplates](#fastFolderStructure.fileTemplates)
 
+#### Special cases
+
+As of now there is a special keyword for the `template` key.
+
+- EmptyDirectory (This will simply create an empty directory instead of a file).
+
 ```json
 {
   "fastFolderStructure.structures": [
@@ -44,6 +50,10 @@ This extension contributes the following settings:
         "fileName": "index.js",
         "template": "Indexfile with only import/export",
       },
+      {
+        "fileName": "My Empty Directory",
+        "template": "EmptyDirectory"
+      }
       ...
     ]
   }

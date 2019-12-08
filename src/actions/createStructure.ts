@@ -28,6 +28,10 @@ const createStructure = async (
           componentName,
         )}`,
       );
+      if (file.template === 'EmptyDirectory') {
+        vscode.workspace.fs.createDirectory(newPath);
+        return null;
+      }
       wsedit.createFile(newPath, { ignoreIfExists: true });
       const template = templates && templates[file.template];
 
