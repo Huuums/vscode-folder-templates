@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.3.2
+
+- reverted some changes to fix behaviour
+
 ### 0.3.1
 
 - fixed a bug where you couldn't create multiple empty Directories
