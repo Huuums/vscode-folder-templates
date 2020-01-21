@@ -1,58 +1,19 @@
 import * as vscode from 'vscode';
-import { getFileContentStringAndReplacePlaceholder, replaceAll } from '../util';
-import {
-  FolderStructureFile,
-  FolderStructure,
-  TemplateCollection,
-} from '../types';
+import createFileOrDirectory from '../actions/createFileOrDirectory';
+import { FolderStructure } from '../types';
+import openAndSaveFile from './openAndSaveFile';
 
 const createStructure = async (
   componentName: string,
   structure: FolderStructure['structure'] | undefined,
   resource?: vscode.Uri,
 ) => {
-  const wsedit = new vscode.WorkspaceEdit();
-
   if (structure) {
-    const config = vscode.workspace.getConfiguration('fastFolderStructure');
-    const templates: TemplateCollection | undefined = config.get(
-      'fileTemplates',
+    const fileUris = await Promise.all(
+      structure.map(createFileOrDirectory(componentName, resource?.fsPath)),
     );
-    const ffsTransformRegexp = /<FFSName(?:\s*\|\s*([A-Za-z]+))?>/;
-    const fileUris = structure.map((file: FolderStructureFile) => {
-      const newPath = vscode.Uri.file(
-        `${(resource && resource.fsPath) ||
-          'test'}/${componentName}/${replaceAll(
-          file.fileName,
-          ffsTransformRegexp,
-          componentName,
-        )}`,
-      );
-      if (file.template === 'EmptyDirectory') {
-        vscode.workspace.fs.createDirectory(newPath);
-        return null;
-      }
-      wsedit.createFile(newPath, { ignoreIfExists: true });
-      const template = templates && templates[file.template];
 
-      wsedit.insert(
-        newPath,
-        new vscode.Position(0, 0),
-        getFileContentStringAndReplacePlaceholder(
-          template,
-          ffsTransformRegexp,
-          componentName,
-        ),
-      );
-      return file.template ? newPath : null;
-    });
-    await vscode.workspace.applyEdit(wsedit);
-    fileUris.forEach(async (uri: vscode.Uri | null) => {
-      if (uri) {
-        const document = await vscode.workspace.openTextDocument(uri);
-        document.save();
-      }
-    });
+    fileUris.forEach(openAndSaveFile);
   }
 };
 
