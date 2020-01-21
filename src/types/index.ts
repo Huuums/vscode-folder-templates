@@ -8,8 +8,6 @@ export type FolderStructureFile = {
   template: string;
 };
 
-export type TemplateCollection = {
-  [key: string]: Template;
-};
+export type TemplateCollection = Record<string, Template>;
 
 export type Template = string[] | string;
