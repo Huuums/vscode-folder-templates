@@ -3,10 +3,11 @@ import * as fs from 'fs';
 import { FolderStructureFile, TemplateCollection } from '../types';
 import { replaceAll, getFileContentStringAndReplacePlaceholder } from '../util';
 
-export default (componentName: string, basePath = '') => async (
-  fileInstructions: FolderStructureFile,
-) => {
-  const wsedit = new vscode.WorkspaceEdit();
+export default (
+  componentName: string,
+  basePath = '',
+  wsedit: vscode.WorkspaceEdit,
+) => (fileInstructions: FolderStructureFile) => {
   const config = vscode.workspace.getConfiguration('fastFolderStructure');
   const templates: TemplateCollection | undefined = config.get('fileTemplates');
 
@@ -38,7 +39,6 @@ export default (componentName: string, basePath = '') => async (
     ),
   );
 
-  await vscode.workspace.applyEdit(wsedit);
   if (fileInstructions.template) {
     return newPath;
   }

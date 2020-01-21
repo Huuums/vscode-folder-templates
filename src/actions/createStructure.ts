@@ -1,18 +1,20 @@
 import * as vscode from 'vscode';
 import createFileOrDirectory from '../actions/createFileOrDirectory';
-import { FolderStructure } from '../types';
+import { FolderStructure, FolderStructureFile } from '../types';
 import openAndSaveFile from './openAndSaveFile';
 
 const createStructure = async (
   componentName: string,
-  structure: FolderStructure['structure'] | undefined,
+  structure: FolderStructureFile[] | undefined,
   resource?: vscode.Uri,
 ) => {
   if (structure) {
-    const fileUris = await Promise.all(
-      structure.map(createFileOrDirectory(componentName, resource?.fsPath)),
+    const wsedit = new vscode.WorkspaceEdit();
+    const fileUris = structure.map(
+      createFileOrDirectory(componentName, resource?.fsPath, wsedit),
     );
 
+    await vscode.workspace.applyEdit(wsedit);
     fileUris.forEach(openAndSaveFile);
   }
 };
