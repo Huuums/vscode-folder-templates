@@ -23,6 +23,8 @@ This extension contributes the following settings:
 ### fastFolderStructure.structures
 
 - `name` is the name that will be shown in the select dropdown.
+- `customVariables` takes an `array of strings` with which you can define custom Variables for which you will be prompted upon creating a structure.
+  - You will have to annotate your customVariables with `< >` and can also be transformed .
 - `structure` folder structure you want to create. It takes an `array of objects` where every file you want to create is its own object.
   - each file has a required `fileName` key and an optional `template` key.
   - if a template key is specified it should match a key of one of your `fileTemplates`. See [fastFolderStructure.fileTemplates](#fastFolderStructure.fileTemplates)
@@ -38,6 +40,7 @@ As of now there is a special keyword for the `template` key.
   "fastFolderStructure.structures": [
   {
     "name": "Your name for the folder structure",
+    "customVariables": ["CustomVar", "CustomVar2"],
     "structure": [
       {
         "fileName": "<FFSName>.jsx",
@@ -95,7 +98,7 @@ Additional information:
 
 ## Templating
 
-The value `<FFSName>` will always be replaced into the component name you specified in the input promt in both your templates as well as your filenames
+The value `<FFSName>` will always be replaced into the component name you specified in the input prompt in both your templates as well as your filenames
 
 Adding a transformer with this pattern `<FFSName | transformer>` will give you the ability to transform your componentname where needed.
 
@@ -107,6 +110,14 @@ Given the componentname `myNewComponent` each of the transformers will result in
 <FFSName | uppercase> => MYNEWCOMPONENT
 <FFSName | lowercase> => mynewcomponent
 <FFSName | capitalize> => MyNewComponent
+```
+
+### Custom Variables
+
+As of version 0.4 you can also specify custom variables. You will be prompted for every custom variable defined in your [fastFolderStructure.structures](#fastFolderStructure.structures) `structure.customVariables` property separately. These custom variables can be transformed the same way as the default `<FFSName>`
+
+```
+<customVar | uppercase> => CUSTOMVARIABLEVALUE
 ```
 
 ## Known Issues

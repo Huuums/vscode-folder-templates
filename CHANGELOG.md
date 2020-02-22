@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.4.0
+
+- Added possibility to configure Custom Variables
+
 ### 0.3.2
 
 - reverted some changes to fix behaviour

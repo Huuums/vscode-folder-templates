@@ -6,13 +6,11 @@ const getSelectedFolderStructure = (
   folderStructures: FolderStructure[],
   structureName = 'default',
 ) => {
-  let { structure } = folderStructures[0];
+  let { structure, customVariables } = folderStructures[0];
   if (structureName !== 'default') {
-    ({ structure } = ensure(
-      folderStructures.find(
-        folderStructure => folderStructure.name === structureName,
-      ),
-    ));
+    ({ structure, customVariables } = folderStructures.find(
+      folderStructure => folderStructure.name === structureName,
+    )!);
   }
   if (!structure) {
     vscode.window.showErrorMessage(
@@ -20,7 +18,7 @@ const getSelectedFolderStructure = (
     );
     return undefined;
   }
-  return structure;
+  return { structure, customVariables };
 };
 
 export default getSelectedFolderStructure;
