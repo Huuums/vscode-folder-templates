@@ -4,14 +4,16 @@ import { FolderStructure, FolderStructureFile } from '../types';
 import openAndSaveFile from './openAndSaveFile';
 
 const createStructure = async (
-  componentName: string,
+  replaceValues: string[][],
   structure: FolderStructureFile[] | undefined,
   resource?: vscode.Uri,
 ) => {
   if (structure) {
     const wsedit = new vscode.WorkspaceEdit();
-    const fileUris = structure.map(
-      createFileOrDirectory(componentName, resource?.fsPath, wsedit),
+    const fileUris = await Promise.all(
+      structure.map(
+        createFileOrDirectory(replaceValues, resource?.fsPath, wsedit),
+      ),
     );
 
     await vscode.workspace.applyEdit(wsedit);

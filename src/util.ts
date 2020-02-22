@@ -1,11 +1,11 @@
 import { Template } from './types';
 
-const replaceAll = function(
+const replaceText = function(
   target: string,
-  search: string | RegExp,
+  search: RegExp,
   replacement: string,
 ) {
-  return target.replace(new RegExp(search, 'g'), match =>
+  return target.replace(search, match =>
     getTransformedSSFName(match, replacement),
   );
 };
@@ -36,19 +36,35 @@ const capitalize = (string: string) => {
 
 const getFileContentStringAndReplacePlaceholder = (
   content: Template | undefined,
-  replaceValue: string | RegExp,
-  newValue: string,
+  replaceValues: string[][],
 ) => {
   if (!content) {
     return '';
   }
-  if (Array.isArray(content)) {
-    return replaceAll(content.join('\n'), replaceValue, newValue);
-  }
-  return replaceAll(content, replaceValue, newValue);
+  const fileContent = Array.isArray(content) ? content.join('\n') : content;
+
+  return replaceAllVariablesInString(fileContent, replaceValues);
 };
 
-export { replaceAll, getFileContentStringAndReplacePlaceholder };
+const replaceAllVariablesInString = (
+  string: string,
+  replaceValues: string[][],
+) => {
+  return replaceValues.reduce((acc, row) => {
+    const [variableName, replaceValue] = row;
+    return replaceText(
+      acc,
+      new RegExp(`<${variableName}\\s*(?:\\s*\\|\\s*([A-Za-z]+))?>`, 'g'),
+      replaceValue,
+    );
+  }, string);
+};
+
+export {
+  replaceText,
+  getFileContentStringAndReplacePlaceholder,
+  replaceAllVariablesInString,
+};
 
 export function ensure<T>(
   argument: T | undefined | null,

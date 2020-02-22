@@ -1,22 +1,24 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import { FolderStructureFile, TemplateCollection } from '../types';
-import { replaceAll, getFileContentStringAndReplacePlaceholder } from '../util';
+import {
+  getFileContentStringAndReplacePlaceholder,
+  replaceAllVariablesInString,
+} from '../util';
 
 export default (
-  componentName: string,
+  replaceValues: string[][],
   basePath = '',
   wsedit: vscode.WorkspaceEdit,
-) => (fileInstructions: FolderStructureFile) => {
+) => async (fileInstructions: FolderStructureFile) => {
   const config = vscode.workspace.getConfiguration('fastFolderStructure');
   const templates: TemplateCollection | undefined = config.get('fileTemplates');
 
-  const ffsTransformRegexp = /<FFSName(?:\s*\|\s*([A-Za-z]+))?>/;
+  const [[, componentName]] = replaceValues;
 
-  const targetFilePath = `${basePath}/${componentName}/${replaceAll(
+  const targetFilePath = `${basePath}/${componentName}/${replaceAllVariablesInString(
     fileInstructions.fileName,
-    ffsTransformRegexp,
-    componentName,
+    replaceValues,
   )}`;
 
   if (fileInstructions.template === 'EmptyDirectory') {
@@ -29,15 +31,12 @@ export default (
 
   const template = templates?.[fileInstructions.template];
 
-  wsedit.insert(
-    newPath,
-    new vscode.Position(0, 0),
-    getFileContentStringAndReplacePlaceholder(
-      template,
-      ffsTransformRegexp,
-      componentName,
-    ),
+  const fileContent = getFileContentStringAndReplacePlaceholder(
+    template,
+    replaceValues,
   );
+
+  wsedit.insert(newPath, new vscode.Position(0, 0), fileContent);
 
   if (fileInstructions.template) {
     return newPath;
