@@ -1,10 +1,13 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
+import { promisify } from 'util';
 import { FolderStructureFile, TemplateCollection } from '../types';
 import {
-  getFileContentStringAndReplacePlaceholder,
+  convertFileContentToString,
   replaceAllVariablesInString,
 } from '../util';
+
+const exists = promisify(fs.exists);
 
 export default (
   replaceValues: string[][],
@@ -21,6 +24,14 @@ export default (
     replaceValues,
   )}`;
 
+  //don't do anything if file exists. just skip this file
+  if (await exists(targetFilePath)) {
+    vscode.window.showInformationMessage(
+      `${targetFilePath} already exists. Skipping file`,
+    );
+    return null;
+  }
+
   if (fileInstructions.template === 'EmptyDirectory') {
     fs.mkdirSync(targetFilePath, { recursive: true });
     return null;
@@ -31,8 +42,8 @@ export default (
 
   const template = templates?.[fileInstructions.template];
 
-  const fileContent = getFileContentStringAndReplacePlaceholder(
-    template,
+  const fileContent = replaceAllVariablesInString(
+    convertFileContentToString(template),
     replaceValues,
   );
 

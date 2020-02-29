@@ -2,16 +2,16 @@ import { Template } from './types';
 
 const replaceText = function(
   target: string,
-  search: RegExp,
+  stringToReplace: RegExp,
   replacement: string,
 ) {
-  return target.replace(search, match =>
-    getTransformedSSFName(match, replacement),
+  return target.replace(stringToReplace, (_, transformer) =>
+    //only need the transformer
+    getTransformedSSFName(replacement, transformer),
   );
 };
 
-const getTransformedSSFName = (match: string, replacement: string) => {
-  const [, transformer] = match.split('|');
+const getTransformedSSFName = (replacement: string, transformer: string) => {
   if (!transformer) {
     return replacement;
   }
@@ -22,10 +22,19 @@ const getTransformedSSFName = (match: string, replacement: string) => {
       return replacement.toUpperCase();
     case 'capitalize':
       return capitalize(replacement);
+    case 'pascalcase':
+      return toCamelCase(capitalize(replacement));
+    case 'camelcase':
+      return toCamelCase(replacement);
     default:
       return replacement;
   }
 };
+
+const toCamelCase = (str: String) =>
+  str.replace(/[^A-Za-z0-9]+(.)/g, (_, charAfterSpecialChars) => {
+    return charAfterSpecialChars.toUpperCase();
+  });
 
 const removeSpecialCharacters = (string: string) =>
   string.replace(/[^a-zA-Z]/g, '');
@@ -34,16 +43,19 @@ const capitalize = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-const getFileContentStringAndReplacePlaceholder = (
-  content: Template | undefined,
-  replaceValues: string[][],
-) => {
+const convertFileContentToString = (content: Template | undefined) => {
   if (!content) {
     return '';
   }
-  const fileContent = Array.isArray(content) ? content.join('\n') : content;
+  return Array.isArray(content) ? content.join('\n') : content;
+};
 
-  return replaceAllVariablesInString(fileContent, replaceValues);
+const getReplaceRegexp = (variableName: string) => {
+  const regexp = new RegExp(
+    `<${variableName}\\s*(?:\\s*\\|\\s*([A-Za-z]+))?>`,
+    'g',
+  );
+  return regexp;
 };
 
 const replaceAllVariablesInString = (
@@ -52,27 +64,13 @@ const replaceAllVariablesInString = (
 ) => {
   return replaceValues.reduce((acc, row) => {
     const [variableName, replaceValue] = row;
-    return replaceText(
-      acc,
-      new RegExp(`<${variableName}\\s*(?:\\s*\\|\\s*([A-Za-z]+))?>`, 'g'),
-      replaceValue,
-    );
+    return replaceText(acc, getReplaceRegexp(variableName), replaceValue);
   }, string);
 };
 
 export {
+  getReplaceRegexp,
   replaceText,
-  getFileContentStringAndReplacePlaceholder,
+  convertFileContentToString,
   replaceAllVariablesInString,
 };
-
-export function ensure<T>(
-  argument: T | undefined | null,
-  message: string = 'This value was promised to be there.',
-): T {
-  if (argument === undefined || argument === null) {
-    throw new TypeError(message);
-  }
-
-  return argument;
-}

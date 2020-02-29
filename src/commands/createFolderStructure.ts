@@ -4,7 +4,29 @@ import getStructure from '../lib/getSelectedFolderStructure';
 import { FolderStructure } from '../types';
 import getReplaceValueTuples from '../lib/getReplaceValueTuples';
 
-const CreateFolderStructure = async (resource: vscode.Uri) => {
+const CreateFolderStructure = async (resource: vscode.Uri | undefined) => {
+  if (!resource && vscode.workspace.workspaceFolders) {
+    // if command is triggered via command box and not via context menu let user enter path where component should be created
+    let activeWorkspace = vscode.workspace.workspaceFolders[0].uri;
+    if (vscode.workspace.workspaceFolders.length > 1) {
+      activeWorkspace =
+        (
+          await vscode.window.showWorkspaceFolderPick({
+            placeHolder:
+              'Select Workspace in which you want to create the Structure',
+          })
+        )?.uri || activeWorkspace;
+    }
+
+    resource = vscode.Uri.parse(
+      activeWorkspace +
+        '/' +
+        ((await vscode.window.showInputBox({
+          placeHolder:
+            'Enter Path where component should be created (relative to project root)',
+        })) || ''),
+    );
+  }
   const config = vscode.workspace.getConfiguration('fastFolderStructure');
   const folderStructures: FolderStructure[] | undefined = config.get(
     'structures',
@@ -24,13 +46,25 @@ const CreateFolderStructure = async (resource: vscode.Uri) => {
     return;
   }
   const { customVariables, structure: files } = selectedFolderStructure;
-  //Get all userinputs for replacement of variables
+
+  const ffsNameTuple = await getReplaceValueTuples(['FFSName']);
+  //If no componentname is specified do nothing
+  if (!ffsNameTuple[0][1]) {
+    return Promise.resolve();
+  }
+
+  //Get all inputs for replacement of customvariables
   const replaceValueTuples = await getReplaceValueTuples([
-    'FFSName',
     ...(customVariables || []),
   ]);
-  if (folderStructures && replaceValueTuples) {
-    createStructure(replaceValueTuples, files, resource);
+
+  if (folderStructures) {
+    await createStructure(
+      [...ffsNameTuple, ...replaceValueTuples],
+      files,
+      resource,
+    );
   }
+  return 'done';
 };
 export default CreateFolderStructure;
