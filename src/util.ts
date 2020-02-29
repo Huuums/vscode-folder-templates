@@ -2,10 +2,10 @@ import { Template } from './types';
 
 const replaceText = function(
   target: string,
-  search: RegExp,
+  stringToReplace: RegExp,
   replacement: string,
 ) {
-  return target.replace(search, (_match, transformer) =>
+  return target.replace(stringToReplace, (_, transformer) =>
     //only need the transformer
     getTransformedSSFName(replacement, transformer),
   );
@@ -22,10 +22,19 @@ const getTransformedSSFName = (replacement: string, transformer: string) => {
       return replacement.toUpperCase();
     case 'capitalize':
       return capitalize(replacement);
+    case 'pascalcase':
+      return toCamelCase(capitalize(replacement));
+    case 'camelcase':
+      return toCamelCase(replacement);
     default:
       return replacement;
   }
 };
+
+const toCamelCase = (str: String) =>
+  str.replace(/[^A-Za-z0-9]+(.)/g, (_, charAfterSpecialChars) => {
+    return charAfterSpecialChars.toUpperCase();
+  });
 
 const removeSpecialCharacters = (string: string) =>
   string.replace(/[^a-zA-Z]/g, '');

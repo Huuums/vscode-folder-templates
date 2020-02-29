@@ -12,10 +12,23 @@ suite('Utilities suite', () => {
     const variableName = 'FFSName';
     // Get all parts of a string enclosed in < >
     const regex = getReplaceRegexp(variableName);
+
     replaceText(`<FFSName>`, regex, 'dDDd').should.equal('dDDd');
     replaceText(`<FFSName | uppercase>`, regex, 'dDDd').should.equal('DDDD');
     replaceText(`<FFSName | lowercase>`, regex, 'dDDd').should.equal('dddd');
     replaceText(`<FFSName | capitalize>`, regex, 'dDDd').should.equal('DDDd');
+
+    replaceText(
+      `<FFSName | camelcase>`,
+      regex,
+      'start-_test   with* specialchars!"§$%&/89whoop',
+    ).should.equal('startTestWithSpecialchars89whoop');
+    replaceText(
+      `<FFSName | pascalcase>`,
+      regex,
+      'start-_test   with* specialchars!"§$%&/89whoop',
+    ).should.equal('StartTestWithSpecialchars89whoop');
+
     replaceText(`<ASDF | capitalize>`, regex, 'dDDd').should.equal(
       '<ASDF | capitalize>',
     );
