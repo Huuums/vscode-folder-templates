@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
 import { FolderStructure } from '../types';
-import { ensure } from '../util';
 
 const getSelectedFolderStructure = (
   folderStructures: FolderStructure[],
@@ -8,9 +7,16 @@ const getSelectedFolderStructure = (
 ) => {
   let { structure, customVariables } = folderStructures[0];
   if (structureName !== 'default') {
-    ({ structure, customVariables } = folderStructures.find(
+    const folderStructure = folderStructures.find(
       folderStructure => folderStructure.name === structureName,
-    )!);
+    );
+    if (!folderStructure) {
+      vscode.window.showErrorMessage(
+        'Could not find selected structure, please try again',
+      );
+      return null;
+    }
+    return { structure, customVariables };
   }
   if (!structure) {
     vscode.window.showErrorMessage(

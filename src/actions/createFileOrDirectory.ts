@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import { FolderStructureFile, TemplateCollection } from '../types';
 import {
-  getFileContentStringAndReplacePlaceholder,
+  convertFileContentToString,
   replaceAllVariablesInString,
 } from '../util';
 
@@ -31,8 +31,8 @@ export default (
 
   const template = templates?.[fileInstructions.template];
 
-  const fileContent = getFileContentStringAndReplacePlaceholder(
-    template,
+  const fileContent = replaceAllVariablesInString(
+    convertFileContentToString(template),
     replaceValues,
   );
 

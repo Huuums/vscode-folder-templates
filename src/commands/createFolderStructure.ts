@@ -17,7 +17,6 @@ const CreateFolderStructure = async (resource: vscode.Uri | undefined) => {
           })
         )?.uri || activeWorkspace;
     }
-    console.log(activeWorkspace);
 
     resource = vscode.Uri.parse(
       activeWorkspace +
@@ -49,9 +48,10 @@ const CreateFolderStructure = async (resource: vscode.Uri | undefined) => {
   const { customVariables, structure: files } = selectedFolderStructure;
 
   const ffsNameTuple = await getReplaceValueTuples(['FFSName']);
-  console.log(ffsNameTuple);
   //If no componentname is specified do nothing
-  if (!ffsNameTuple[0][1]) return Promise.resolve();
+  if (!ffsNameTuple[0][1]) {
+    return Promise.resolve();
+  }
 
   //Get all inputs for replacement of customvariables
   const replaceValueTuples = await getReplaceValueTuples([
