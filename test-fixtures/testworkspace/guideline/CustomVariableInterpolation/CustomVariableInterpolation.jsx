@@ -1,0 +1,5 @@
+names CustomVariableInterpolation inside variable1 string
+variable2
+
+fillerText1
+fillerText2

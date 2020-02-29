@@ -17,7 +17,9 @@ const createStructure = async (
     );
 
     await vscode.workspace.applyEdit(wsedit);
-    fileUris.forEach(openAndSaveFile);
+    await Promise.all(fileUris.map(openAndSaveFile));
+
+    return 'done';
   }
 };
 

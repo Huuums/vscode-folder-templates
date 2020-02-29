@@ -16,7 +16,10 @@ const getSelectedFolderStructure = (
       );
       return null;
     }
-    return { structure, customVariables };
+    return {
+      structure: folderStructure.structure,
+      customVariables: folderStructure.customVariables,
+    };
   }
   if (!structure) {
     vscode.window.showErrorMessage(

@@ -1,102 +1,61 @@
 {
   "fastFolderStructure.fileTemplates": {
-    "No Custom Variable Test": [
-      "import s from './<FFSName>.scss'",
-      "",
-      "<FFSName> no transformation",
-      "<FFSName | uppercase> uppercase",
-      "<FFSName | capitalize> capitalized",
-      "<FFSName | lowercase> lowercase",
-      ""
-    ],
-    "Indexfile Import/Export": [
-      "import <FFSName> from './<FFSName>'",
-      "",
-      "export default <FFSName>;"
-    ],
-    "Multiple Variable Test": [
-      "fillerText1",
+    "FFSName Interpolation": ["<FFSName | uppercase>"],
+    "Custom Variable Interpolation": [
       "names <FFSName> inside <testVar> string",
+      "<testVar2 | lowercase>",
       "",
-      "<FFSName> no transformation",
-      "<FFSName | uppercase> uppercase",
-      "<FFSName | capitalize> capitalized",
-      "<FFSName | lowercase> lowercase",
-      "",
-      "fillerText2",
-      "fillerText3",
-      "",
-      "<testVar> no transformation",
-      "<testVar | uppercase> uppercase",
-      "<testVar | capitalize> capitalized",
-      "<testVar | lowercase> lowercase",
-      "",
-      "fillerText4",
-      "fillerText5",
-      "",
-      "<testVar2> no transformation",
-      "<testVar2 | uppercase> uppercase",
-      "<testVar2 | capitalize> capitalized",
-      "<testVar2 | lowercase> lowercase",
-      "",
-      "fillerText6",
-      "fillerText7"
+      "fillerText1",
+      "fillerText2"
     ]
   },
   "fastFolderStructure.structures": [
     {
-      "name": "TS React Functional Component",
+      "name": "FFSName Interpolation",
       "structure": [
         {
-          "fileName": "<FFSName>.tsx",
-          "template": "No Custom Variable Test"
-        },
-        {
-          "fileName": "<FFSName>.scss"
-        },
-        {
-          "fileName": "/__tests__/<FFSName>.test.ts"
-        },
-        {
-          "fileName": "index.ts",
-          "template": "Indexfile Import/Export"
+          "fileName": "<FFSName | capitalize>.txt",
+          "template": "FFSName Interpolation"
         }
       ]
     },
     {
-      "name": "Multivar Test",
+      "name": "Custom Variable Interpolation",
       "customVariables": ["testVar", "testVar2"],
       "structure": [
         {
           "fileName": "<FFSName>.jsx",
-          "template": "Multiple Variable Test"
+          "template": "Custom Variable Interpolation"
         },
         {
-          "fileName": "uppercasefilename <FFSName | uppercase>.jsx"
+          "fileName": "<testVar>.jsx"
         },
         {
-          "fileName": "lowercase customVariable in Filename <testVar | lowercase>.scss"
-        },
+          "fileName": "<testVar2>.jsx"
+        }
+      ]
+    },
+    {
+      "name": "Empty Directory Test",
+      "structure": [
         {
-          "fileName": "/nestedFolder/<FFSName> <testVar> <testVar2> Chain Variables.txt"
-        },
-        {
-          "fileName": "/nestedFolder/nestedFolder2/<FFSName>.test.js"
-        },
-        {
-          "fileName": "index.js",
-          "template": "Indexfile Import/Export"
-        },
-        {
-          "fileName": "EmptyDirectory",
+          "fileName": "<FFSName>",
           "template": "EmptyDirectory"
         },
         {
-          "fileName": "EmptyDirectory 2",
+          "fileName": "EmptyDirectory 1",
           "template": "EmptyDirectory"
         },
         {
-          "fileName": "EmptyDirectory/EmptyDirectory inside EmptyDirectory",
+          "fileName": "Empty Directory 2",
+          "template": "EmptyDirectory"
+        },
+        {
+          "fileName": "Empty Directory 2",
+          "template": "EmptyDirectory"
+        },
+        {
+          "fileName": "Empty Directory 3/Empty Directory 4",
           "template": "EmptyDirectory"
         }
       ]

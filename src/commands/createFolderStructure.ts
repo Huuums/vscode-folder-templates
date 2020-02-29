@@ -65,6 +65,6 @@ const CreateFolderStructure = async (resource: vscode.Uri | undefined) => {
       resource,
     );
   }
-  return Promise.resolve('done');
+  return 'done';
 };
 export default CreateFolderStructure;
