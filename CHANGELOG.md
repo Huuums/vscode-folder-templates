@@ -1,5 +1,13 @@
 # Change Log
 
+### 1.0.0
+
+- NO BREAKING CHANGES
+- Yippieh. I feel as if the extension is stable enough for its first major release 1.0.0. Hopefully this didn't jinx it.
+- Added tests
+- No longer overwrites existing files
+- Added transformer `camelcase` and `pascalcase`
+
 ### 0.4.0
 
 - Added possibility to configure Custom Variables
