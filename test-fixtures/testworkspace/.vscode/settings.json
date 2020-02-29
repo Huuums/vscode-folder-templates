@@ -36,6 +36,22 @@
       ]
     },
     {
+      "name": "No Deletion Test",
+      "structure": [
+        {
+          "fileName": "existingfile.js",
+          "template": "FFSName Interpolation"
+        },
+        {
+          "fileName": "existingfile2.js"
+        },
+        {
+          "fileName": "newfile.js",
+          "template": "FFSName Interpolation"
+        }
+      ]
+    },
+    {
       "name": "Empty Directory Test",
       "structure": [
         {

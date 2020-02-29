@@ -4,12 +4,14 @@ import { before, beforeEach } from 'mocha';
 import * as sinon from 'sinon';
 import * as rimraf from 'rimraf';
 import * as chai from 'chai';
+import * as fs from 'fs';
+import { promisify } from 'util';
 import * as chaifs from 'chai-fs';
 import * as sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 chai.use(chaifs);
 chai.should();
-
+const unlink = promisify(fs.unlink);
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
 import * as vscode from 'vscode';
@@ -18,6 +20,8 @@ import * as vscode from 'vscode';
 suite('Fast Folder Structure Extension Suite', () => {
   const componentsPath =
     vscode.workspace.workspaceFolders?.[0].uri.fsPath + '/src/components';
+  const noDeletionPath =
+    vscode.workspace.workspaceFolders?.[0].uri.fsPath + '/src/donotdelete';
   const guideLineFolderPath =
     vscode.workspace.workspaceFolders?.[0].uri.fsPath + '/guideline/';
   const inputBox = sinon.stub(vscode.window, 'showInputBox');
@@ -100,5 +104,33 @@ suite('Fast Folder Structure Extension Suite', () => {
     path.should.be.a
       .directory()
       .and.deep.equal(`${guideLineFolderPath}/EmptyDirectoryTest`);
+  });
+
+  test('do not create existing files', async () => {
+    const path = `${noDeletionPath}/nodeletiontest`;
+
+    try {
+      await unlink(path + '/newfile.js');
+    } catch (e) {}
+    path.should.be.a
+      .directory()
+      .with.contents(['existingfile2.js', 'existingfile.js']);
+    inputBox.onCall(0).resolves('src/donotdelete');
+    inputBox.onCall(1).resolves('nodeletiontest');
+    structure.onCall(0).returns(Promise.resolve<any>('No Deletion Test'));
+    const infoMessage = await sinon.stub(
+      vscode.window,
+      'showInformationMessage',
+    );
+    await vscode.commands.executeCommand('FFS.createFolderStructure');
+    //path, ffsname and once for every custom variable
+    inputBox.should.have.been.callCount(2);
+    structure.should.have.been.calledOnce;
+    infoMessage.should.have.been.calledTwice;
+    path.should.be.a
+      .directory()
+      .with.contents(['existingfile2.js', 'existingfile.js', 'newfile.js']);
+    `${path}/newfile.js`.should.be.a.file().with.content('NODELETIONTEST');
+    `${path}/existingfile.js`.should.be.a.file().and.empty;
   });
 });
