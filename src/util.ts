@@ -1,6 +1,6 @@
 import { Template } from './types';
 
-const replaceText = function(
+const replaceText = function (
   target: string,
   stringToReplace: RegExp,
   replacement: string,
@@ -18,6 +18,8 @@ const getTransformedSSFName = (replacement: string, transformer: string) => {
   switch (removeSpecialCharacters(transformer).toLowerCase()) {
     case 'lowercase':
       return replacement.toLowerCase();
+    case 'lowercasefirstchar':
+      return lowerCaseFirstChar(replacement);
     case 'uppercase':
       return replacement.toUpperCase();
     case 'capitalize':
@@ -25,7 +27,7 @@ const getTransformedSSFName = (replacement: string, transformer: string) => {
     case 'pascalcase':
       return toCamelCase(capitalize(replacement));
     case 'camelcase':
-      return toCamelCase(replacement);
+      return toCamelCase(lowerCaseFirstChar(replacement));
     default:
       return replacement;
   }
@@ -35,6 +37,10 @@ const toCamelCase = (str: String) =>
   str.replace(/[^A-Za-z0-9]+(.)/g, (_, charAfterSpecialChars) => {
     return charAfterSpecialChars.toUpperCase();
   });
+
+const lowerCaseFirstChar = (string: String) => {
+  return string.charAt(0).toLowerCase() + string.slice(1);
+};
 
 const removeSpecialCharacters = (string: string) =>
   string.replace(/[^a-zA-Z]/g, '');
