@@ -1,5 +1,11 @@
 # Change Log
 
+### 1.0.1
+
+- Added transformer `lowercasefirstchar`
+- Fixed `camelcase` transformer to lowercase the first char if it was uppercase
+- Fixed a bug where deleting a newly created structure and then creating it again skipped files
+
 ### 1.0.0
 
 - NO BREAKING CHANGES
