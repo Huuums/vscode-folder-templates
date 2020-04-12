@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
+import * as path from 'path';
 import { promisify } from 'util';
 import { FolderStructureFile, TemplateCollection } from '../types';
 import {
@@ -19,10 +20,12 @@ export default (
 
   const [[, componentName]] = replaceValues;
 
-  const targetFilePath = `${basePath}/${componentName}/${replaceAllVariablesInString(
-    fileInstructions.fileName,
-    replaceValues,
-  )}`;
+  const targetFilePath = path.normalize(
+    `${basePath}/${componentName}/${replaceAllVariablesInString(
+      fileInstructions.fileName,
+      replaceValues,
+    )}`,
+  );
 
   //don't do anything if file exists. just skip this file
   if (await exists(targetFilePath)) {
@@ -38,7 +41,7 @@ export default (
   }
 
   const newPath = vscode.Uri.file(targetFilePath);
-  wsedit.createFile(newPath, { ignoreIfExists: true });
+  wsedit.createFile(newPath, { ignoreIfExists: false });
 
   const template = templates?.[fileInstructions.template];
 

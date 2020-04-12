@@ -110,8 +110,9 @@ Given the componentname `myNewComponent` each of the transformers will result in
 myNewComponent => <FFSName | uppercase> => MYNEWCOMPONENT
 myNewComponent => <FFSName | lowercase> => mynewcomponent
 myNewComponent => <FFSName | capitalize> => MyNewComponent
-my-new-component => <FFSName | camelcase> => myNewComponent (every letter behind a special character will be capitalized)
-my-new-component => <FFSName | pascalcase> => MyNewComponent (the very first letter and every letter behind a special character will be capitalized)
+MyNewComponent => <FFSName | lowercasefirstchar> => myNewComponent
+My-new-component => <FFSName | camelcase> => myNewComponent (First letter is lowercased. Every letter behind a special character will be capitalized)
+my-new-component => <FFSName | pascalcase> => MyNewComponent (First letter and every letter behind a special character will be capitalized)
 ```
 
 ### Custom Variables
@@ -124,7 +125,7 @@ As of version 0.4 you can also specify custom variables. You will be prompted fo
 
 ## Known Issues
 
-- Not really an issue but I'd appreciate feedback in improvements or how to make templating easier. Because I feel like it's a bother (not a big one but still) to set this up initially
+- Not really an issue but I'd appreciate feedback on possible improvements and ideas how to make templating easier.
 
 ### Credits
 

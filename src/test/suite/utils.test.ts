@@ -17,11 +17,14 @@ suite('Utilities suite', () => {
     replaceText(`<FFSName | uppercase>`, regex, 'dDDd').should.equal('DDDD');
     replaceText(`<FFSName | lowercase>`, regex, 'dDDd').should.equal('dddd');
     replaceText(`<FFSName | capitalize>`, regex, 'dDDd').should.equal('DDDd');
+    replaceText(`<FFSName | lowercasefirstchar>`, regex, 'DDDd').should.equal(
+      'dDDd',
+    );
 
     replaceText(
       `<FFSName | camelcase>`,
       regex,
-      'start-_test   with* specialchars!"§$%&/89whoop',
+      'Start-_test   with* specialchars!"§$%&/89whoop',
     ).should.equal('startTestWithSpecialchars89whoop');
     replaceText(
       `<FFSName | pascalcase>`,
