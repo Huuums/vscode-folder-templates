@@ -1,4 +1,7 @@
-import { Template } from './types';
+import { Template, FolderContent } from './types';
+import * as vscode from 'vscode';
+import { readdirSync, readFileSync, PathLike } from 'fs';
+import { normalize } from 'path';
 
 const replaceText = function (
   target: string,
@@ -74,7 +77,48 @@ const replaceAllVariablesInString = (
   }, string);
 };
 
+const getFileContent = (path: PathLike) => {
+  try {
+    let fileContent = readFileSync(path, { encoding: 'utf8' });
+    return fileContent;
+  } catch (e) {
+    return null;
+  }
+};
+
+const getFolderContents = (
+  uri: vscode.Uri,
+  workspacePath?: string,
+): FolderContent[] | undefined => {
+  try {
+    const files = readdirSync(uri.fsPath, { withFileTypes: true });
+    const allPaths = files.map((file) => {
+      if (file.isDirectory()) {
+        return getFolderContents(vscode.Uri.joinPath(uri, file.name));
+      }
+      return {
+        filePath: vscode.Uri.joinPath(uri, file.name).fsPath,
+        content: getFileContent(`${uri.fsPath}/${file.name}`),
+      };
+    });
+    if (allPaths.length === 0) {
+      return [
+        {
+          filePath: uri.fsPath,
+          content: 'EmptyDirectory',
+        },
+      ];
+    }
+    return allPaths.flat();
+  } catch (e) {
+    vscode.window.showErrorMessage(
+      'Something went wrong getting Folder contents',
+    );
+  }
+};
+
 export {
+  getFolderContents,
   getReplaceRegexp,
   replaceText,
   convertFileContentToString,

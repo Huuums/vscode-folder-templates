@@ -8,6 +8,10 @@ export type FolderStructureFile = {
   fileName: string;
   template: string;
 };
+export type FolderContent = {
+  filePath: string;
+  content: string;
+};
 
 export type TemplateCollection = Record<string, Template>;
 

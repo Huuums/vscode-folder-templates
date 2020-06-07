@@ -26,7 +26,8 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:FFS.createFolderStructure"
+    "onCommand:FFS.createFolderStructure",
+    "onCommand:FFS.createTemplateFromFolder"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -34,6 +35,10 @@
       {
         "command": "FFS.createFolderStructure",
         "title": "New Folder from FFS-Template"
+      },
+      {
+        "command": "FFS.createTemplateFromFolder",
+        "title": "Create FFS-Template from this Folder"
       }
     ],
     "menus": {
@@ -42,11 +47,16 @@
           "when": "explorerResourceIsFolder",
           "command": "FFS.createFolderStructure",
           "group": "2_workspace@500"
+        },
+        {
+          "when": "explorerResourceIsFolder",
+          "command": "FFS.createTemplateFromFolder",
+          "group": "2_workspace@400"
         }
       ]
     },
     "configuration": {
-      "title": "Fast Component Folders",
+      "title": "VS-Code Fast Folder Structure",
       "properties": {
         "fastFolderStructure.structures": {
           "type": "array",
