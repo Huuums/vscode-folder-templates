@@ -6,7 +6,7 @@ export type FolderStructure = {
 
 export type FolderStructureFile = {
   fileName: string;
-  template: string;
+  template?: string;
 };
 export type FolderContent = {
   filePath: string;
@@ -16,3 +16,11 @@ export type FolderContent = {
 export type TemplateCollection = Record<string, Template>;
 
 export type Template = string[] | string;
+
+export type FileQuickPickItem = {
+  content: string;
+  label: string;
+  picked: boolean;
+  description: string;
+  filePath: string;
+};

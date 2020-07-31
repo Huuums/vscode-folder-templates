@@ -43,7 +43,7 @@ export default (
   const newPath = vscode.Uri.file(targetFilePath);
   wsedit.createFile(newPath, { ignoreIfExists: false });
 
-  const template = templates?.[fileInstructions.template];
+  const template = templates?.[fileInstructions.template || ''];
 
   const fileContent = replaceAllVariablesInString(
     convertFileContentToString(template),

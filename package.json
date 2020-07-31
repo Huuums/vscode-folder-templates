@@ -16,7 +16,7 @@
     "Create Directories",
     "Productivity"
   ],
-  "version": "1.0.1",
+  "version": "1.1.0",
   "publisher": "Huuums",
   "engines": {
     "vscode": "^1.37.0"
@@ -34,11 +34,11 @@
     "commands": [
       {
         "command": "FFS.createFolderStructure",
-        "title": "New Folder from FFS-Template"
+        "title": "Create New Folder from FFS-Template"
       },
       {
         "command": "FFS.createTemplateFromFolder",
-        "title": "Create FFS-Template from this Folder"
+        "title": "Create new FFS-Template from this folder"
       }
     ],
     "menus": {
@@ -152,7 +152,7 @@
     "@types/chai": "^4.2.9",
     "@types/chai-fs": "^2.0.2",
     "@types/glob": "^7.1.1",
-    "@types/mocha": "^7.0.2",
+    "@types/mocha": "^8.0.0",
     "@types/node": "^13.1.8",
     "@types/rimraf": "^3.0.0",
     "@types/sinon": "^9.0.0",
@@ -161,12 +161,16 @@
     "chai": "^4.2.0",
     "chai-fs": "^2.0.0",
     "glob": "^7.1.4",
-    "mocha": "^7.0.0",
+    "mocha": "^8.0.1",
     "rimraf": "^3.0.2",
     "sinon": "^9.0.0",
     "sinon-chai": "^3.5.0",
     "tslint": "^6.0.0",
     "typescript": "^3.3.1",
     "vscode-test": "^1.0.2"
+  },
+  "dependencies": {
+    "@types/html-tags": "^3.0.1",
+    "html-tags": "^3.1.0"
   }
 }

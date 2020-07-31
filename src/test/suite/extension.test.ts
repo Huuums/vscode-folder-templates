@@ -12,6 +12,7 @@ chai.use(sinonChai);
 chai.use(chaifs);
 chai.should();
 const unlink = promisify(fs.unlink);
+const copyFile = promisify(fs.copyFile);
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
 import * as vscode from 'vscode';
@@ -22,10 +23,12 @@ suite('Fast Folder Structure Extension Suite', () => {
     vscode.workspace.workspaceFolders?.[0].uri.fsPath + '/src/components';
   const noDeletionPath =
     vscode.workspace.workspaceFolders?.[0].uri.fsPath + '/src/donotdelete';
+  const templateFolder =
+    vscode.workspace.workspaceFolders?.[0].uri.fsPath + '/src/templateFolder';
   const guideLineFolderPath =
     vscode.workspace.workspaceFolders?.[0].uri.fsPath + '/guideline/';
   const inputBox = sinon.stub(vscode.window, 'showInputBox');
-  const structure = sinon.stub(vscode.window, 'showQuickPick');
+  const quickpick = sinon.stub(vscode.window, 'showQuickPick');
 
   before(() => {
     vscode.window.showInformationMessage('Start all tests.');
@@ -36,19 +39,19 @@ suite('Fast Folder Structure Extension Suite', () => {
     sinon.reset();
   });
 
-  test('FFSName interpolation on filename and filecontent works as expected', async () => {
+  test('FFSName interpolation on filename and filecontent should work as expected', async () => {
     const path = `${componentsPath}/fFSNameInterpolation`;
     //path to folder
     inputBox.onCall(0).resolves('src/components');
 
     //Structure choice
-    structure.onCall(0).returns(Promise.resolve<any>('FFSName Interpolation'));
+    quickpick.onCall(0).returns(Promise.resolve<any>('FFSName Interpolation'));
 
     //FFSName
     inputBox.onCall(1).resolves('fFSNameInterpolation');
 
     await vscode.commands.executeCommand('FFS.createFolderStructure');
-    structure.should.have.been.calledOnce;
+    quickpick.should.have.been.calledOnce;
     inputBox.should.have.been.calledTwice;
 
     path.should.be.a
@@ -64,20 +67,20 @@ suite('Fast Folder Structure Extension Suite', () => {
       );
   });
 
-  test('Custom variable interpolation to work on filename and filecontent', async () => {
+  test('Custom variable interpolation should work on filename and filecontent', async () => {
     const path = `${componentsPath}/CustomVariableInterpolation`;
     inputBox.onCall(0).resolves('src/components');
     inputBox.onCall(1).resolves('CustomVariableInterpolation');
     inputBox.onCall(2).resolves('variable1');
     inputBox.onCall(3).resolves('variable2');
-    structure
+    quickpick
       .onCall(0)
       .returns(Promise.resolve<any>('Custom Variable Interpolation'));
 
     await vscode.commands.executeCommand('FFS.createFolderStructure');
     //path, ffsname and once for every custom variable
     inputBox.should.have.been.callCount(4);
-    structure.should.have.been.calledOnce;
+    quickpick.should.have.been.calledOnce;
     path.should.be.a
       .directory()
       .and.equal(`${guideLineFolderPath}/CustomVariableInterpolation`);
@@ -91,22 +94,22 @@ suite('Fast Folder Structure Extension Suite', () => {
       );
   });
 
-  test('EmptyDirectory template to create as many empty directories as specified', async () => {
+  test('EmptyDirectory template should create as many empty directories as specified', async () => {
     const path = `${componentsPath}/EmptyDirectoryTest`;
     inputBox.onCall(0).resolves('src/components');
     inputBox.onCall(1).resolves('EmptyDirectoryTest');
-    structure.onCall(0).returns(Promise.resolve<any>('Empty Directory Test'));
+    quickpick.onCall(0).returns(Promise.resolve<any>('Empty Directory Test'));
 
     await vscode.commands.executeCommand('FFS.createFolderStructure');
     //path, ffsname and once for every custom variable
     inputBox.should.have.been.callCount(2);
-    structure.should.have.been.calledOnce;
+    quickpick.should.have.been.calledOnce;
     path.should.be.a
       .directory()
       .and.deep.equal(`${guideLineFolderPath}/EmptyDirectoryTest`);
   });
 
-  test('do not create existing files', async () => {
+  test('should not create existing files', async () => {
     const path = `${noDeletionPath}/nodeletiontest`;
 
     try {
@@ -117,7 +120,7 @@ suite('Fast Folder Structure Extension Suite', () => {
       .with.contents(['existingfile2.js', 'existingfile.js']);
     inputBox.onCall(0).resolves('src/donotdelete');
     inputBox.onCall(1).resolves('nodeletiontest');
-    structure.onCall(0).returns(Promise.resolve<any>('No Deletion Test'));
+    quickpick.onCall(0).returns(Promise.resolve<any>('No Deletion Test'));
     const infoMessage = await sinon.stub(
       vscode.window,
       'showInformationMessage',
@@ -125,7 +128,7 @@ suite('Fast Folder Structure Extension Suite', () => {
     await vscode.commands.executeCommand('FFS.createFolderStructure');
     //path, ffsname and once for every custom variable
     inputBox.should.have.been.callCount(2);
-    structure.should.have.been.calledOnce;
+    quickpick.should.have.been.calledOnce;
     infoMessage.should.have.been.calledTwice;
     path.should.be.a
       .directory()

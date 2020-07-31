@@ -54,7 +54,7 @@ const CreateFolderStructure = async (resource: vscode.Uri | undefined) => {
   }
 
   //Get all inputs for replacement of customvariables
-  const replaceValueTuples = await getReplaceValueTuples([
+  const replaceValueTuples: string[][] = await getReplaceValueTuples([
     ...(customVariables || []),
   ]);
 

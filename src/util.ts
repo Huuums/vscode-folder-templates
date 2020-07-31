@@ -1,4 +1,4 @@
-import { Template, FolderContent } from './types';
+import { Template, FolderContent, FileQuickPickItem } from './types';
 import * as vscode from 'vscode';
 import { readdirSync, readFileSync, PathLike } from 'fs';
 import { normalize } from 'path';
@@ -60,8 +60,9 @@ const convertFileContentToString = (content: Template | undefined) => {
 };
 
 const getReplaceRegexp = (variableName: string) => {
+  //finds <variableName( | transformer)> and  [variableName( | transformer)] in strings
   const regexp = new RegExp(
-    `<${variableName}\\s*(?:\\s*\\|\\s*([A-Za-z]+))?>`,
+    `(?:<|\\[)${variableName}\\s*(?:\\s*\\|\\s*([A-Za-z]+)\\s*?)?(?:>|\\])`,
     'g',
   );
   return regexp;
@@ -86,10 +87,7 @@ const getFileContent = (path: PathLike) => {
   }
 };
 
-const getFolderContents = (
-  uri: vscode.Uri,
-  workspacePath?: string,
-): FolderContent[] | undefined => {
+const getFolderContents = (uri: vscode.Uri): FolderContent[] | undefined => {
   try {
     const files = readdirSync(uri.fsPath, { withFileTypes: true });
     const allPaths = files.map((file) => {
@@ -117,10 +115,53 @@ const getFolderContents = (
   }
 };
 
+const shouldCreateTemplateFromFile = (
+  templateFiles: FileQuickPickItem[] | undefined,
+  filePath: string,
+) => templateFiles?.some((file) => file.filePath === filePath);
+
+const removeEmptyDirectories = (items: FileQuickPickItem[]) =>
+  items.filter((file) =>
+    Boolean(file.content && file.content !== 'EmptyDirectory'),
+  );
+
+const getPossibleFFSTemplateVariables = (
+  templateFiles: FileQuickPickItem[] | undefined,
+) => (row: FileQuickPickItem) => {
+  {
+    //using the g flag makes the regexp stateful so you would either have to set the lastindex to 0 for it to be usable multiple times or create the regexp twice.
+    const getAllPossibleStringTemplates = /(?:<|\[)(.*?)(?:\s*\|.*?)?(?:>|\])/g;
+
+    const filepathtemplatestrings = [
+      ...(row.filePath.matchAll(getAllPossibleStringTemplates) || []),
+    ];
+
+    if (shouldCreateTemplateFromFile(templateFiles, row.filePath)) {
+      const filecontenttemplatestrings = [
+        ...(row.content.matchAll(getAllPossibleStringTemplates) || []),
+      ];
+      // console.log(filecontenttemplatestrings, filepathtemplatestrings);
+      return [
+        ...filecontenttemplatestrings,
+        ...filepathtemplatestrings,
+      ].flatMap((row) => row.slice(1)); //gets value of first group
+    }
+
+    return filepathtemplatestrings.flatMap((row) => row.slice(1)); //gets value of first group
+  }
+};
+
+const unique = <T>(acc: T[], row: T) =>
+  acc.includes(row) ? acc : [...acc, row];
+
 export {
+  unique,
   getFolderContents,
   getReplaceRegexp,
   replaceText,
   convertFileContentToString,
   replaceAllVariablesInString,
+  removeEmptyDirectories,
+  shouldCreateTemplateFromFile,
+  getPossibleFFSTemplateVariables,
 };
