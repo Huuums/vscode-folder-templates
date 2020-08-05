@@ -102,7 +102,17 @@ The value `<FFSName>` will always be replaced into the component name you specif
 
 Adding a transformer with this pattern `<FFSName | transformer>` will give you the ability to transform your componentname where needed.
 
-The currently supported transformers are: `uppercase`, `lowercase` and `capitalize`. (I'm open for new suggestions any time)
+The currently supported transformers are: 
+ - `uppercase`
+ - `lowercase`
+ - `capitalize`
+ - `lowercasefirstchar`
+ - `camelcase`
+ - `pascalcase`
+ - `snakecase`
+ - `kebabcase`
+
+(I'm open for new suggestions any time)
 
 Given the componentname `myNewComponent` each of the transformers will result in:
 
@@ -113,6 +123,8 @@ myNewComponent => <FFSName | capitalize> => MyNewComponent
 MyNewComponent => <FFSName | lowercasefirstchar> => myNewComponent
 My-new-component => <FFSName | camelcase> => myNewComponent (First letter is lowercased. Every letter behind a special character will be capitalized)
 my-new-component => <FFSName | pascalcase> => MyNewComponent (First letter and every letter behind a special character will be capitalized)
+myNewComponent => <FFSName | snakecase> => my_new_component
+myNewComponent => <FFSName | kebabcase> => my-new-component
 ```
 
 ### Custom Variables
