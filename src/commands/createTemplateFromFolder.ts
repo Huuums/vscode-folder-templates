@@ -34,7 +34,7 @@ const createTemplateFromFolder = async (resource: vscode.Uri | undefined) => {
 
   const fileQuickpickItems: FileQuickPickItem[] = folderContents.map(
     (currentPath) => ({
-      content: currentPath.content,
+      content: currentPath.content || '',
       label: vscode.workspace.asRelativePath(currentPath.filePath),
       picked: true,
       description: `full file path: ${currentPath.filePath}`,

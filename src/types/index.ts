@@ -10,7 +10,7 @@ export type FolderStructureFile = {
 };
 export type FolderContent = {
   filePath: string;
-  content: string;
+  content: string | null;
 };
 
 export type TemplateCollection = Record<string, Template>;

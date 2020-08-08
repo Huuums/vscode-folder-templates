@@ -87,17 +87,19 @@ const getFileContent = (path: PathLike) => {
   }
 };
 
-const getFolderContents = (uri: vscode.Uri): FolderContent[] | undefined => {
+const getFolderContents = (uri: vscode.Uri): FolderContent[] => {
   try {
     const files = readdirSync(uri.fsPath, { withFileTypes: true });
     const allPaths = files.map((file) => {
       if (file.isDirectory()) {
         return getFolderContents(vscode.Uri.joinPath(uri, file.name));
       }
-      return {
-        filePath: vscode.Uri.joinPath(uri, file.name).fsPath,
-        content: getFileContent(`${uri.fsPath}/${file.name}`),
-      };
+      return [
+        {
+          filePath: vscode.Uri.joinPath(uri, file.name).fsPath,
+          content: getFileContent(`${uri.fsPath}/${file.name}`),
+        },
+      ];
     });
     if (allPaths.length === 0) {
       return [
@@ -107,11 +109,12 @@ const getFolderContents = (uri: vscode.Uri): FolderContent[] | undefined => {
         },
       ];
     }
-    return allPaths.flat();
+    return allPaths.flat(Infinity) as FolderContent[];
   } catch (e) {
     vscode.window.showErrorMessage(
       'Something went wrong getting Folder contents',
     );
+    return [];
   }
 };
 
