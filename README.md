@@ -23,7 +23,7 @@ To create your Templates you have two options.
 
 ### Interpolation
 
-The value `<FFSName>` (`[FFSName]` works as well) will always be interpolated into the component name you were asked for when creating the structure.
+The value `<FFSName>` (`[FFSName]` works as well) will always be interpolated into the component name you are asked for when creating the structure.
 Adding a transformer with this pattern `<FFSName | transformer>` will give you the ability to transform your componentname wherever needed.
 The currently supported transformers are: `uppercase`, `lowercase`, `capitalize`, `lowercasefirstchar`, `camelcase` and `pascalcase`.
 
@@ -46,7 +46,7 @@ There are two key parts to creating your FFS Templates. [Folder Structures](#fas
 
 ### fastFolderStructure.structures
 
-The `fastFolderStructure.structures` configuration takes an `array of objects` where one object equals one Folder Structure.
+The `fastFolderStructure.structures` option takes an `array of objects` where one object equals one Folder Structure.
 
 Example Structure
 
@@ -89,6 +89,8 @@ If a template is specified for a file its value should match one of the names of
   - an `array` where every item in the array is a `string`. Every new item in the array will be written into a new line.
   - a `string` and you can annotate the linebreaks yourself with `\n`.
 
+Two example filetemplates
+
 ```json
 {
   "fastFolderStructure.fileTemplates": {
@@ -108,6 +110,22 @@ If a template is specified for a file its value should match one of the names of
   }
 }
 ```
+
+## Creating a Template from an existing Folder
+
+Create a folder in the exact format you wish to have as a template.
+
+You can use \<FFSName\> as well as \<FFSName \| transformer\> in the filenames as well as in the filecontent.
+_Note: Windows users have to use \[FFSName\] instead of \<FFSName\> inside filenames as windows doesn't allow `<` and `>` in filenames._
+
+You can use custom variables by putting them into either of the two template notations `[] or <>` inside filenames and filecontent.
+
+When FFS tries to convert the existing folder into a template it will parse all filenames and file content inside that folder.
+
+It will then ask you
+
+- from which files you would like to have a filetemplate.
+- which values you would like to use as Customvariables (only asks for strings inside the template notation which are NOT HTMLtags)
 
 ### Credits
 
