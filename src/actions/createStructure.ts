@@ -7,12 +7,18 @@ const createStructure = async (
   replaceValues: string[][],
   structure: FolderStructureFile[] | undefined,
   resource?: vscode.Uri,
+  omitParentDirectory = false,
 ) => {
   if (structure) {
     const wsedit = new vscode.WorkspaceEdit();
     const fileUris = await Promise.all(
       structure.map(
-        createFileOrDirectory(replaceValues, resource?.fsPath, wsedit),
+        createFileOrDirectory(
+          replaceValues,
+          resource?.fsPath,
+          omitParentDirectory,
+          wsedit,
+        ),
       ),
     );
 

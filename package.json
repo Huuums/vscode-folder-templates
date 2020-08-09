@@ -39,7 +39,7 @@
       },
       {
         "command": "FFS.createTemplateFromFolder",
-        "title": "FFS: "
+        "title": "FFS: Create Template from this folder"
       },
       {
         "command": "FFS.removeTemplate",

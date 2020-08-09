@@ -54,6 +54,7 @@ Example Structure
 {
   "name": "My Custom Template",
   "customVariables": ["CustomVar", "CustomVar2"],
+  "omitParentDirectory": true,
   "structure": [
     {
       "fileName": "<FFSName>.jsx",
@@ -74,11 +75,12 @@ Example Structure
 }
 ```
 
-| Key             | Type                                    | Description                                                                 |
-| --------------- | --------------------------------------- | --------------------------------------------------------------------------- |
-| name            | string                                  | Name of the Folder Structure.                                               |
-| customVariables | string[]                                | Custom variables that will be replaced upon folder creation                 |
-| structure       | {fileName: string, template?: string}[] | Every object in this array represents a File or Folder that will be created |
+| Key                 | Type                                    | Description                                                                                                                                  |
+| ------------------- | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| name                | string                                  | Name of the Folder Structure.                                                                                                                |
+| customVariables     | string[]                                | Custom variables that will be replaced upon folder creation                                                                                  |
+| structure           | {fileName: string, template?: string}[] | Every object in this array represents a File or Folder that will be created                                                                  |
+| omitParentDirectory | boolean (default: false)                | If set to true FFS will create all files directly inside the current folder instead of creating a new folder and all the files inside of it. |
 
 If a template is specified for a file its value should match one of the names of your [fastFolderStructure.fileTemplates](#fastFolderStructure.fileTemplates) or have the `EmptyDirectory` value. If the template value is `EmptyDirectory` it will create an empty directory instead of a file.
 

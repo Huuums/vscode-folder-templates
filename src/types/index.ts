@@ -2,6 +2,7 @@ export type FolderStructure = {
   name: string;
   customVariables: string[];
   structure: FolderStructureFile[];
+  omitParentDirectory: boolean;
 };
 
 export type FolderStructureFile = {

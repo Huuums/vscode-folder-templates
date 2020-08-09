@@ -45,7 +45,11 @@ const CreateFolderStructure = async (resource: vscode.Uri | undefined) => {
   if (!selectedFolderStructure) {
     return;
   }
-  const { customVariables, structure: files } = selectedFolderStructure;
+  const {
+    customVariables,
+    structure: files,
+    omitParentDirectory,
+  } = selectedFolderStructure;
 
   const ffsNameTuple = await getReplaceValueTuples(['FFSName']);
   //If no componentname is specified do nothing
@@ -63,6 +67,7 @@ const CreateFolderStructure = async (resource: vscode.Uri | undefined) => {
       [...ffsNameTuple, ...replaceValueTuples],
       files,
       resource,
+      omitParentDirectory,
     );
   }
   return 'done';

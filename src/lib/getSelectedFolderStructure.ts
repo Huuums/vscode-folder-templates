@@ -2,13 +2,13 @@ import * as vscode from 'vscode';
 import { FolderStructure } from '../types';
 
 const getSelectedFolderStructure = (
-  folderStructures: FolderStructure[],
+  folderStructures: FolderStructure[] | undefined,
   structureName = 'default',
 ) => {
-  let { structure, customVariables } = folderStructures[0];
+  let folderStructure = folderStructures?.[0];
   if (structureName !== 'default') {
-    const folderStructure = folderStructures.find(
-      folderStructure => folderStructure.name === structureName,
+    folderStructure = folderStructures?.find(
+      (folderStructure) => folderStructure.name === structureName,
     );
     if (!folderStructure) {
       vscode.window.showErrorMessage(
@@ -16,18 +16,14 @@ const getSelectedFolderStructure = (
       );
       return null;
     }
-    return {
-      structure: folderStructure.structure,
-      customVariables: folderStructure.customVariables,
-    };
   }
-  if (!structure) {
+  if (!folderStructure) {
     vscode.window.showErrorMessage(
       'Something went wrong, could not find folderstructure',
     );
     return undefined;
   }
-  return { structure, customVariables };
+  return folderStructure;
 };
 
 export default getSelectedFolderStructure;
