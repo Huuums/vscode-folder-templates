@@ -5,6 +5,7 @@
 - Added Create Template from Folder function
 - Added Remove Template function
 - Added `omitParentDirectory` flag
+- Added `snakecase` and `kebabcase` transformers. Thanks [Torben](https://github.com/eWert-Online)
 
 ### 1.0.1
 
