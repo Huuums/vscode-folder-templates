@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.1.1
+
+- Fix bug that filepaths weren't normalized when parent directory is ommited
+
 ### 1.1.0
 
 - Added Create Template from Folder function
