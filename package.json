@@ -27,18 +27,23 @@
   ],
   "activationEvents": [
     "onCommand:FFS.createFolderStructure",
-    "onCommand:FFS.createTemplateFromFolder"
+    "onCommand:FFS.createTemplateFromFolder",
+    "onCommand:FFS.removeTemplate"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "FFS.createFolderStructure",
-        "title": "Create New Folder from FFS-Template"
+        "title": "FFS: Create new Folder from template"
       },
       {
         "command": "FFS.createTemplateFromFolder",
-        "title": "Create new FFS-Template from this folder"
+        "title": "FFS: "
+      },
+      {
+        "command": "FFS.removeTemplate",
+        "title": "FFS: Remove Template"
       }
     ],
     "menus": {
@@ -70,7 +75,7 @@
                   "template": "TS React Functional Component"
                 },
                 {
-                  "fileName": "<FFSName>.scss"
+                  "fileName": "<FFSName>.css"
                 },
                 {
                   "fileName": "/__tests__/<FFSName>.test.ts"
@@ -89,7 +94,7 @@
                   "template": "JS React Functional Component"
                 },
                 {
-                  "fileName": "<FFSName>.scss"
+                  "fileName": "<FFSName>.css"
                 },
                 {
                   "fileName": "/__tests__/<FFSName>.test.js"
@@ -109,12 +114,12 @@
           "default": {
             "TS React Functional Component": [
               "import React from 'react';",
-              "import s from './<FFSName>.scss'",
+              "import './<FFSName>.css'",
               "",
               "interface <FFSName>Props {",
               "}",
               "",
-              "const <FFSName>: React.FC<<FFSName>Props> = (props) => {",
+              "const <FFSName> = (props: <FFSName>Props) => {",
               "  return <div/>;",
               "};",
               "",
@@ -127,7 +132,7 @@
             ],
             "JS React Functional Component": [
               "import React from 'react';",
-              "import s from './<FFSName>.scss'",
+              "import './<FFSName>.css'",
               "",
               "",
               "const <FFSName> = (props) => {",

@@ -127,6 +127,12 @@ It will then ask you
 - from which files you would like to have a filetemplate.
 - which values you would like to use as Customvariables (only asks for strings inside the template notation which are NOT HTMLtags)
 
+Note: FFS will automatically add the new template to your settings.
+
+## Known Issues
+
+- Deleting an existing template out of the settings and adding a new Template from an existing folder before restarting vscode adds the just deleted template again (No clue why this happens, have to figure it out.)
+
 ### Credits
 
 The idea for FFS came after seeing this extension [ee92.folderize](https://marketplace.visualstudio.com/items?itemName=ee92.folderize)
