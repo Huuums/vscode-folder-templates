@@ -16,7 +16,7 @@
     "Create Directories",
     "Productivity"
   ],
-  "version": "1.0.1",
+  "version": "1.1.0",
   "publisher": "Huuums",
   "engines": {
     "vscode": "^1.37.0"
@@ -26,14 +26,24 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:FFS.createFolderStructure"
+    "onCommand:FFS.createFolderStructure",
+    "onCommand:FFS.createTemplateFromFolder",
+    "onCommand:FFS.removeTemplate"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "FFS.createFolderStructure",
-        "title": "New Folder from FFS-Template"
+        "title": "FFS: Create new Folder"
+      },
+      {
+        "command": "FFS.createTemplateFromFolder",
+        "title": "FFS: Create Template from this folder"
+      },
+      {
+        "command": "FFS.removeTemplate",
+        "title": "FFS: Remove Template"
       }
     ],
     "menus": {
@@ -42,11 +52,16 @@
           "when": "explorerResourceIsFolder",
           "command": "FFS.createFolderStructure",
           "group": "2_workspace@500"
+        },
+        {
+          "when": "explorerResourceIsFolder",
+          "command": "FFS.createTemplateFromFolder",
+          "group": "2_workspace@400"
         }
       ]
     },
     "configuration": {
-      "title": "Fast Component Folders",
+      "title": "VS-Code Fast Folder Structure",
       "properties": {
         "fastFolderStructure.structures": {
           "type": "array",
@@ -60,7 +75,7 @@
                   "template": "TS React Functional Component"
                 },
                 {
-                  "fileName": "<FFSName>.scss"
+                  "fileName": "<FFSName>.css"
                 },
                 {
                   "fileName": "/__tests__/<FFSName>.test.ts"
@@ -79,7 +94,7 @@
                   "template": "JS React Functional Component"
                 },
                 {
-                  "fileName": "<FFSName>.scss"
+                  "fileName": "<FFSName>.css"
                 },
                 {
                   "fileName": "/__tests__/<FFSName>.test.js"
@@ -99,12 +114,12 @@
           "default": {
             "TS React Functional Component": [
               "import React from 'react';",
-              "import s from './<FFSName>.scss'",
+              "import './<FFSName>.css'",
               "",
               "interface <FFSName>Props {",
               "}",
               "",
-              "const <FFSName>: React.FC<<FFSName>Props> = (props) => {",
+              "const <FFSName> = (props: <FFSName>Props) => {",
               "  return <div/>;",
               "};",
               "",
@@ -117,7 +132,7 @@
             ],
             "JS React Functional Component": [
               "import React from 'react';",
-              "import s from './<FFSName>.scss'",
+              "import './<FFSName>.css'",
               "",
               "",
               "const <FFSName> = (props) => {",
@@ -142,8 +157,8 @@
     "@types/chai": "^4.2.9",
     "@types/chai-fs": "^2.0.2",
     "@types/glob": "^7.1.1",
-    "@types/mocha": "^7.0.2",
-    "@types/node": "^13.1.8",
+    "@types/mocha": "^8.0.0",
+    "@types/node": "^14.0.27",
     "@types/rimraf": "^3.0.0",
     "@types/sinon": "^9.0.0",
     "@types/sinon-chai": "^3.2.3",
@@ -151,12 +166,16 @@
     "chai": "^4.2.0",
     "chai-fs": "^2.0.0",
     "glob": "^7.1.4",
-    "mocha": "^7.0.0",
+    "mocha": "^8.0.1",
     "rimraf": "^3.0.2",
     "sinon": "^9.0.0",
     "sinon-chai": "^3.5.0",
     "tslint": "^6.0.0",
     "typescript": "^3.3.1",
     "vscode-test": "^1.0.2"
+  },
+  "dependencies": {
+    "@types/html-tags": "^3.0.1",
+    "html-tags": "^3.1.0"
   }
 }

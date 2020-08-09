@@ -1,4 +1,7 @@
-import { Template } from './types';
+import { Template, FolderContent, FileQuickPickItem } from './types';
+import * as vscode from 'vscode';
+import { readdirSync, readFileSync, PathLike } from 'fs';
+import { normalize } from 'path';
 
 const replaceText = function (
   target: string,
@@ -57,8 +60,9 @@ const convertFileContentToString = (content: Template | undefined) => {
 };
 
 const getReplaceRegexp = (variableName: string) => {
+  //finds <variableName( | transformer)> and  [variableName( | transformer)] in strings
   const regexp = new RegExp(
-    `<${variableName}\\s*(?:\\s*\\|\\s*([A-Za-z]+))?>`,
+    `(?:<|\\[)${variableName}\\s*(?:\\s*\\|\\s*([A-Za-z]+)\\s*?)?(?:>|\\])`,
     'g',
   );
   return regexp;
@@ -74,9 +78,93 @@ const replaceAllVariablesInString = (
   }, string);
 };
 
+const getFileContent = (path: PathLike) => {
+  try {
+    let fileContent = readFileSync(path, { encoding: 'utf8' });
+    return fileContent;
+  } catch (e) {
+    return null;
+  }
+};
+
+const getFolderContents = (uri: vscode.Uri): FolderContent[] => {
+  try {
+    const files = readdirSync(uri.fsPath, { withFileTypes: true });
+    const allPaths = files.map((file) => {
+      if (file.isDirectory()) {
+        return getFolderContents(vscode.Uri.joinPath(uri, file.name));
+      }
+      return [
+        {
+          filePath: vscode.Uri.joinPath(uri, file.name).fsPath,
+          content: getFileContent(`${uri.fsPath}/${file.name}`),
+        },
+      ];
+    });
+    if (allPaths.length === 0) {
+      return [
+        {
+          filePath: uri.fsPath,
+          content: 'EmptyDirectory',
+        },
+      ];
+    }
+    return allPaths.flat(Infinity) as FolderContent[];
+  } catch (e) {
+    vscode.window.showErrorMessage(
+      'Something went wrong getting Folder contents',
+    );
+    return [];
+  }
+};
+
+const shouldCreateTemplateFromFile = (
+  templateFiles: FileQuickPickItem[] | undefined,
+  filePath: string,
+) => templateFiles?.some((file) => file.filePath === filePath);
+
+const removeEmptyDirectories = (items: FileQuickPickItem[]) =>
+  items.filter((file) =>
+    Boolean(file.content && file.content !== 'EmptyDirectory'),
+  );
+
+const getPossibleFFSTemplateVariables = (
+  templateFiles: FileQuickPickItem[] | undefined,
+) => (row: FileQuickPickItem) => {
+  {
+    //using the g flag makes the regexp stateful so you would either have to set the lastindex to 0 for it to be usable multiple times or create the regexp twice.
+    const getAllPossibleStringTemplates = /(?:<|\[)(.*?)(?:\s*\|.*?)?(?:>|\])/g;
+
+    const filepathtemplatestrings = [
+      ...(row.filePath.matchAll(getAllPossibleStringTemplates) || []),
+    ];
+
+    if (shouldCreateTemplateFromFile(templateFiles, row.filePath)) {
+      const filecontenttemplatestrings = [
+        ...(row.content.matchAll(getAllPossibleStringTemplates) || []),
+      ];
+      // console.log(filecontenttemplatestrings, filepathtemplatestrings);
+      return [
+        ...filecontenttemplatestrings,
+        ...filepathtemplatestrings,
+      ].flatMap((row) => row.slice(1)); //gets value of first group
+    }
+
+    return filepathtemplatestrings.flatMap((row) => row.slice(1)); //gets value of first group
+  }
+};
+
+const unique = <T>(acc: T[], row: T) =>
+  acc.includes(row) ? acc : [...acc, row];
+
 export {
+  unique,
+  getFolderContents,
   getReplaceRegexp,
   replaceText,
   convertFileContentToString,
   replaceAllVariablesInString,
+  removeEmptyDirectories,
+  shouldCreateTemplateFromFile,
+  getPossibleFFSTemplateVariables,
 };

@@ -20,6 +20,9 @@ suite('Utilities suite', () => {
     replaceText(`<FFSName | lowercasefirstchar>`, regex, 'DDDd').should.equal(
       'dDDd',
     );
+    replaceText(`[FFSName | lowercasefirstchar]`, regex, 'DDDd').should.equal(
+      'dDDd',
+    );
 
     replaceText(
       `<FFSName | camelcase>`,
