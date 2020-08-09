@@ -1,5 +1,11 @@
 # Change Log
 
+### 1.1.0
+
+- Added Create Template from Folder function
+- Added Remove Template function
+- Added `omitParentDirectory` flag
+
 ### 1.0.1
 
 - Added transformer `lowercasefirstchar`

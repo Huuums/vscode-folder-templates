@@ -9,7 +9,7 @@ Why? Because creating the same directories over and over again is annoying to do
 ### Features
 
 - Create your own Templates for folder structures and files and then let the extension do the rest.
-- Take an existing folder and transform it into a template. (May still not work 100%)
+- Take an existing folder and transform it into a template.
 - Spend your time actually programming and not creating files.
 
 ![demo](images/demo.gif)
@@ -114,6 +114,8 @@ Two example filetemplates
 ```
 
 ## Creating a Template from an existing Folder
+
+### This may not work 100% yet, if you find any issues please create a new Issue on the [Github Repo](https://github.com/Huuums/vscode-fast-folder-structure/issues)
 
 Create a folder in the exact format you wish to have as a template.
 
