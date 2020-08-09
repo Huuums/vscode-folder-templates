@@ -1,83 +1,112 @@
 # VS-Code Fast Folder Structure
 
-## What is this and why
+### What is this and why
 
-VS-Code Fast Folder Structure is an extension which creates your folders/files as you specify in templates.
+VS-Code Fast Folder Structure is an extension which creates your folders/files as specified in custom templates.
 
-FFS (yes, this acronym is not by chance) is what I kept thinking when I had to create two folders and 4-5 files for every component I wrote. But I didn't want this anymore. And if you feel the same, this might just be the extension for you.
+Why? Because creating the same directories over and over again is annoying to do manually.
 
-## Features
+### Features
 
 - Create your own Templates for folder structures and files and then let the extension do the rest.
+- Take an existing folder and transform it into a template.
 - Spend your time actually programming and not creating files.
 
 ![demo](images/demo.gif)
 
-## Extension
+## Templating
 
-This extension contributes the following settings:
+To create your Templates you have two options.
 
-- `fastFolderStructure.structures`: Takes an `array of objects`
-- `fastFolderStructure.fileTemplates`: Takes an `object` where the `key` is the name of the template.
+1. Go into your `settings.json` from VSCode and create templates [manually](#template-format). (Open the command palette and select "Open Settings (JSON)" to easily access your settings.json)
+2. Right-click an existing Folder and choose "Create new FFS-Template from this folder"
+
+### Interpolation
+
+The value `<FFSName>` (`[FFSName]` works as well) will always be interpolated into the component name you are asked for when creating the structure.
+Adding a transformer with this pattern `<FFSName | transformer>` will give you the ability to transform your componentname wherever needed.
+The currently supported transformers are: 
+ - `uppercase`
+ - `lowercase`
+ - `capitalize`
+ - `lowercasefirstchar`
+ - `camelcase`
+ - `pascalcase`
+ - `snakecase`
+ - `kebabcase`
+
+As of version 0.4 you are able to specify custom variables. You will be prompted for every custom variable defined in your [fastFolderStructure.structures](#fastFolderStructure.structures) `structure.customVariables`. These custom variables can be transformed the same way as the default `<FFSName>`
+
+Examples
+
+| Input            | Transformer                       | Result           | Description                                                                               |
+| ---------------- | --------------------------------- | ---------------- | ----------------------------------------------------------------------------------------- |
+| myNewComponent   | \<FFSName \| uppercase\>          | MYNEWCOMPONENT   |
+| myNewComponent   | \<FFSName \| lowercase\>          | mynewcomponent   |
+| myNewComponent   | \<FFSName \| capitalize\>         | MyNewComponent   |
+| MyNewComponent   | \<FFSName \| lowercasefirstchar\> | myNewComponent   |
+| My-new-component | \<FFSName \| camelcase\>          | myNewComponent   | (First letter is lowercased. Every letter behind a special character will be capitalized) |
+| my-new-component | \<FFSName \| pascalcase\>         | MyNewComponent   | (First letter and every letter behind a special character will be capitalized)            |
+| myNewComponent   | \<FFSName \| snakecase\>          | my_new_component |
+| myNewComponent   | \<FFSName \| kebabcase\>          | my-new-component |
+
+## Creating your Template manually
+
+There are two key parts to creating your FFS Templates. [Folder Structures](#fastFolderStructure.structures) and [File Templates](#fastFolderStructure.fileTemplates).
 
 ### fastFolderStructure.structures
 
-- `name` is the name that will be shown in the select dropdown.
-- `customVariables` takes an `array of strings` with which you can define custom Variables for which you will be prompted upon creating a structure.
-  - You will have to annotate your customVariables with `< >` and can also be transformed .
-- `structure` folder structure you want to create. It takes an `array of objects` where every file you want to create is its own object.
-  - each file has a required `fileName` key and an optional `template` key.
-  - if a template key is specified it should match a key of one of your `fileTemplates`. See [fastFolderStructure.fileTemplates](#fastFolderStructure.fileTemplates)
+The `fastFolderStructure.structures` option takes an `array of objects` where one object equals one Folder Structure.
 
-#### Special cases
-
-As of now there is a special keyword for the `template` key.
-
-- EmptyDirectory (This will simply create an empty directory instead of a file).
+Example Structure
 
 ```json
 {
-  "fastFolderStructure.structures": [
-  {
-    "name": "Your name for the folder structure",
-    "customVariables": ["CustomVar", "CustomVar2"],
-    "structure": [
-      {
-        "fileName": "<FFSName>.jsx",
-        "template": "My JSX Template"
-      },
-      {
-        "fileName": "firstnestedfolder/secondnestedfolder/<FFSName>.test.js",
-      },
-      {
-        "fileName": "index.js",
-        "template": "Indexfile with only import/export",
-      },
-      {
-        "fileName": "My Empty Directory",
-        "template": "EmptyDirectory"
-      }
-      ...
-    ]
-  }
-]}
+  "name": "My Custom Template",
+  "customVariables": ["CustomVar", "CustomVar2"],
+  "omitParentDirectory": true,
+  "structure": [
+    {
+      "fileName": "<FFSName>.jsx",
+      "template": "Typescript Functional Component"
+    },
+    {
+      "fileName": "tests/<FFSName>.test.js"
+    },
+    {
+      "fileName": "index.js",
+      "template": "IndexFile"
+    },
+    {
+      "fileName": "<CustomVar>",
+      "template": "EmptyDirectory"
+    }
+  ]
+}
 ```
 
-Additional information:
+| Key                 | Type                                    | Description                                                                                                                                  |
+| ------------------- | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| name                | string                                  | Name of the Folder Structure.                                                                                                                |
+| customVariables     | string[]                                | Custom variables that will be replaced upon folder creation                                                                                  |
+| structure           | {fileName: string, template?: string}[] | Every object in this array represents a File or Folder that will be created                                                                  |
+| omitParentDirectory | boolean (default: false)                | If set to true FFS will create all files directly inside the current folder instead of creating a new folder and all the files inside of it. |
 
-- In the example above you can also see, that it's possible to create nested folders.
+If a template is specified for a file its value should match one of the names of your [fastFolderStructure.fileTemplates](#fastFolderStructure.fileTemplates) or have the `EmptyDirectory` value. If the template value is `EmptyDirectory` it will create an empty directory instead of a file.
 
 ### fastFolderStructure.fileTemplates
 
-- The `key` of the `key->value` pair is the name of the template
+- The `key` of the `key-value` pair is the name of the template
 - The value can either be
-  - an `Array` where every item in the array is a `String`. Every new item in the array will be written into a new line.
-  - a `String` and you can annotate the linebreaks yourself with `\n`.
+  - an `array` where every item in the array is a `string`. Every new item in the array will be written into a new line.
+  - a `string` and you can annotate the linebreaks yourself with `\n`.
+
+Two example filetemplates
 
 ```json
 {
   "fastFolderStructure.fileTemplates": {
-    "My JSX Template": [
+    "Typescript Functional Component": [
       "import React from 'react';",
       "",
       "interface <FFSName>Props {",
@@ -89,55 +118,31 @@ Additional information:
       "",
       "export default <FFSName>;"
     ],
-    "Indexfile with only import/export": [
-      "import <FFSName> from './<FFSName>'\n\nexport default <FFSName>;"
-    ]
+    "Indexfile": "import <FFSName> from './<FFSName>'\n\nexport default <FFSName>;"
   }
 }
 ```
 
-## Templating
+## Creating a Template from an existing Folder
 
-The value `<FFSName>` will always be replaced into the component name you specified in the input prompt in both your templates as well as your filenames
+### This may not work 100% yet, if you find any issues please create a new Issue on the [Github Repo](https://github.com/Huuums/vscode-fast-folder-structure/issues)
 
-Adding a transformer with this pattern `<FFSName | transformer>` will give you the ability to transform your componentname where needed.
+Create a folder in the exact format you wish to have as a template.
 
-The currently supported transformers are: 
- - `uppercase`
- - `lowercase`
- - `capitalize`
- - `lowercasefirstchar`
- - `camelcase`
- - `pascalcase`
- - `snakecase`
- - `kebabcase`
+You can use custom variables by putting them into either of the two template notations `[] or <>` inside filenames and filecontent.
 
-(I'm open for new suggestions any time)
+When FFS tries to convert the existing folder into a template it will parse all filenames and file content inside that folder.
 
-Given the componentname `myNewComponent` each of the transformers will result in:
+It will then ask you
 
-```
-myNewComponent => <FFSName | uppercase> => MYNEWCOMPONENT
-myNewComponent => <FFSName | lowercase> => mynewcomponent
-myNewComponent => <FFSName | capitalize> => MyNewComponent
-MyNewComponent => <FFSName | lowercasefirstchar> => myNewComponent
-My-new-component => <FFSName | camelcase> => myNewComponent (First letter is lowercased. Every letter behind a special character will be capitalized)
-my-new-component => <FFSName | pascalcase> => MyNewComponent (First letter and every letter behind a special character will be capitalized)
-myNewComponent => <FFSName | snakecase> => my_new_component
-myNewComponent => <FFSName | kebabcase> => my-new-component
-```
+- from which files you would like to have a filetemplate.
+- which values you would like to use as Customvariables (only asks for strings inside the template notation which are NOT HTMLtags)
 
-### Custom Variables
-
-As of version 0.4 you can also specify custom variables. You will be prompted for every custom variable defined in your [fastFolderStructure.structures](#fastFolderStructure.structures) `structure.customVariables` property separately. These custom variables can be transformed the same way as the default `<FFSName>`
-
-```
-<customVar | uppercase> => CUSTOMVARIABLEVALUE
-```
+Note: FFS will automatically add the new template to your settings.
 
 ## Known Issues
 
-- Not really an issue but I'd appreciate feedback on possible improvements and ideas how to make templating easier.
+- Deleting an existing template out of the settings and adding a new Template from an existing folder before restarting vscode adds the just deleted template again (No clue why this happens, have to figure it out.)
 
 ### Credits
 

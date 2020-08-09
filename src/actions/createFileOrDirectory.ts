@@ -13,6 +13,7 @@ const exists = promisify(fs.exists);
 export default (
   replaceValues: string[][],
   basePath = '',
+  omitParentDirectory: boolean,
   wsedit: vscode.WorkspaceEdit,
 ) => async (fileInstructions: FolderStructureFile) => {
   const config = vscode.workspace.getConfiguration('fastFolderStructure');
@@ -20,12 +21,20 @@ export default (
 
   const [[, componentName]] = replaceValues;
 
-  const targetFilePath = path.normalize(
-    `${basePath}/${componentName}/${replaceAllVariablesInString(
+  let targetFilePath;
+  if (omitParentDirectory) {
+    targetFilePath = `${basePath}/${replaceAllVariablesInString(
       fileInstructions.fileName,
       replaceValues,
-    )}`,
-  );
+    )}`;
+  } else {
+    targetFilePath = path.normalize(
+      `${basePath}/${componentName}/${replaceAllVariablesInString(
+        fileInstructions.fileName,
+        replaceValues,
+      )}`,
+    );
+  }
 
   //don't do anything if file exists. just skip this file
   if (await exists(targetFilePath)) {
@@ -43,7 +52,7 @@ export default (
   const newPath = vscode.Uri.file(targetFilePath);
   wsedit.createFile(newPath, { ignoreIfExists: false });
 
-  const template = templates?.[fileInstructions.template];
+  const template = templates?.[fileInstructions.template || ''];
 
   const fileContent = replaceAllVariablesInString(
     convertFileContentToString(template),
