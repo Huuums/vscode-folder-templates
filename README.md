@@ -25,15 +25,16 @@ To create your Templates you have two options.
 
 The value `<FFSName>` (`[FFSName]` works as well) will always be interpolated into the component name you are asked for when creating the structure.
 Adding a transformer with this pattern `<FFSName | transformer>` will give you the ability to transform your componentname wherever needed.
-The currently supported transformers are: 
- - `uppercase`
- - `lowercase`
- - `capitalize`
- - `lowercasefirstchar`
- - `camelcase`
- - `pascalcase`
- - `snakecase`
- - `kebabcase`
+The currently supported transformers are:
+
+- `uppercase`
+- `lowercase`
+- `capitalize`
+- `lowercasefirstchar`
+- `camelcase`
+- `pascalcase`
+- `snakecase`
+- `kebabcase`
 
 As of version 0.4 you are able to specify custom variables. You will be prompted for every custom variable defined in your [fastFolderStructure.structures](#fastFolderStructure.structures) `structure.customVariables`. These custom variables can be transformed the same way as the default `<FFSName>`
 
