@@ -1,5 +1,15 @@
 # Change Log
 
+### 2.0.0
+
+- BREAKING: Removed default structures and fileTemplates as they are generally not useful for anyone due to everyone having their own needs. You have to create your own templates now.
+
+- If you create a template from an existing folder this extension will now save the new Template in your global or workspace settings. This depends on if you already have a workspace settings file with a template in it or not.
+
+### 1.1.1
+
+- Fix bug that filepaths weren't normalized when parent directory is ommited
+
 ### 1.1.0
 
 - Added Create Template from Folder function

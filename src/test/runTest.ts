@@ -11,7 +11,7 @@ async function main() {
       __dirname,
       '../../test-fixtures/testworkspace',
     );
-    console.log(testWorkspace);
+
     // The path to test runner
     // Passed to --extensionTestsPath
     const extensionTestsPath = path.resolve(__dirname, './suite/index');

@@ -131,7 +131,7 @@ It will then ask you
 - from which files you would like to have a filetemplate.
 - which values you would like to use as Customvariables (only asks for strings inside the template notation which are NOT HTMLtags)
 
-Note: FFS will automatically add the new template to your settings.
+Note: FFS will automatically add the new template to your global settings or workspace settings depending on if you already have the `fastFolderStructure.structure` or `fastFolderStructure.fileTemplates` configuration in your workspace settings.
 
 ## Known Issues
 

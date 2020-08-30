@@ -58,7 +58,9 @@ const createTemplateFromFolder = async (resource: vscode.Uri | undefined) => {
     .flat()
     .reduce((acc, row) => unique<string>(acc, row), [] as Array<string>)
     .filter((row) => {
-      return row !== 'FFSName' && !htmlTags.includes(row.replace('/', ''));
+      return (
+        row !== 'FFSName' && !htmlTags.includes(row.replace('/', '').trim())
+      );
     });
 
   let customVariables: string[] | [] = [];
@@ -110,20 +112,30 @@ const createTemplateFromFolder = async (resource: vscode.Uri | undefined) => {
   });
 
   const config = vscode.workspace.getConfiguration('fastFolderStructure');
+
+  const hasWorkspaceConfig =
+    Boolean(config.inspect('fileTemplates')?.workspaceValue) ||
+    Boolean(config.inspect('structures')?.workspaceValue);
+
   const configStructures = config.get('structures');
   const configFileTemplates = config.get('fileTemplates');
-  console.log('structures');
-  console.log(configStructures);
-  console.log('filetemplates');
-  console.log(configFileTemplates);
-  await config.update('structures', [
-    ...((configStructures as FolderStructure[] | undefined) || []),
-    { name: templateName, customVariables: customVariables, structure },
-  ]);
-  await config.update('fileTemplates', {
-    ...(configFileTemplates as TemplateCollection),
-    ...fileTemplates,
-  });
+
+  await config.update(
+    'structures',
+    [
+      ...((configStructures as FolderStructure[] | undefined) || []),
+      { name: templateName, customVariables: customVariables, structure },
+    ],
+    !hasWorkspaceConfig,
+  );
+  await config.update(
+    'fileTemplates',
+    {
+      ...(configFileTemplates as TemplateCollection),
+      ...fileTemplates,
+    },
+    !hasWorkspaceConfig,
+  );
 
   return 'done';
 };
