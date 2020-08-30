@@ -16,7 +16,7 @@
     "Create Directories",
     "Productivity"
   ],
-  "version": "1.1.0",
+  "version": "2.0.0",
   "publisher": "Huuums",
   "engines": {
     "vscode": "^1.37.0"
@@ -66,82 +66,13 @@
         "fastFolderStructure.structures": {
           "type": "array",
           "scope": "window",
-          "default": [
-            {
-              "name": "TS React Functional Component",
-              "structure": [
-                {
-                  "fileName": "<FFSName>.tsx",
-                  "template": "TS React Functional Component"
-                },
-                {
-                  "fileName": "<FFSName>.css"
-                },
-                {
-                  "fileName": "/__tests__/<FFSName>.test.ts"
-                },
-                {
-                  "fileName": "index.ts",
-                  "template": "Indexfile Import/Export"
-                }
-              ]
-            },
-            {
-              "name": "JS React Functional Component",
-              "structure": [
-                {
-                  "fileName": "<FFSName>.jsx",
-                  "template": "JS React Functional Component"
-                },
-                {
-                  "fileName": "<FFSName>.css"
-                },
-                {
-                  "fileName": "/__tests__/<FFSName>.test.js"
-                },
-                {
-                  "fileName": "index.js",
-                  "template": "Indexfile Import/Export"
-                }
-              ]
-            }
-          ],
+          "default": [],
           "description": "Configure as many structures as you would like."
         },
         "fastFolderStructure.fileTemplates": {
           "type": "object",
           "scope": "window",
-          "default": {
-            "TS React Functional Component": [
-              "import React from 'react';",
-              "import './<FFSName>.css'",
-              "",
-              "interface <FFSName>Props {",
-              "}",
-              "",
-              "const <FFSName> = (props: <FFSName>Props) => {",
-              "  return <div/>;",
-              "};",
-              "",
-              "export default <FFSName>;"
-            ],
-            "Indexfile Import/Export": [
-              "import <FFSName> from './<FFSName>'",
-              "",
-              "export default <FFSName>;"
-            ],
-            "JS React Functional Component": [
-              "import React from 'react';",
-              "import './<FFSName>.css'",
-              "",
-              "",
-              "const <FFSName> = (props) => {",
-              "  return <div/>;",
-              "};",
-              "",
-              "export default <FFSName>;"
-            ]
-          }
+          "default": {}
         }
       }
     }
