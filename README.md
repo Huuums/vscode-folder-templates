@@ -25,20 +25,31 @@ To create your Templates you have two options.
 
 The value `<FFSName>` (`[FFSName]` works as well) will always be interpolated into the component name you are asked for when creating the structure.
 Adding a transformer with this pattern `<FFSName | transformer>` will give you the ability to transform your componentname wherever needed.
-The currently supported transformers are: `uppercase`, `lowercase`, `capitalize`, `lowercasefirstchar`, `camelcase` and `pascalcase`.
+The currently supported transformers are:
+
+- `uppercase`
+- `lowercase`
+- `capitalize`
+- `lowercasefirstchar`
+- `camelcase`
+- `pascalcase`
+- `snakecase`
+- `kebabcase`
 
 As of version 0.4 you are able to specify custom variables. You will be prompted for every custom variable defined in your [fastFolderStructure.structures](#fastFolderStructure.structures) `structure.customVariables`. These custom variables can be transformed the same way as the default `<FFSName>`
 
 Examples
 
-| Input            | Transformer                       | Result         | Description                                                                               |
-| ---------------- | --------------------------------- | -------------- | ----------------------------------------------------------------------------------------- |
-| myNewComponent   | \<FFSName \| uppercase\>          | MYNEWCOMPONENT |
-| myNewComponent   | \<FFSName \| lowercase\>          | mynewcomponent |
-| myNewComponent   | \<FFSName \| capitalize\>         | MyNewComponent |
-| MyNewComponent   | \<FFSName \| lowercasefirstchar\> | myNewComponent |
-| My-new-component | \<FFSName \| camelcase\>          | myNewComponent | (First letter is lowercased. Every letter behind a special character will be capitalized) |
-| my-new-component | \<FFSName \| pascalcase\>         | MyNewComponent | (First letter and every letter behind a special character will be capitalized)            |
+| Input            | Transformer                       | Result           | Description                                                                               |
+| ---------------- | --------------------------------- | ---------------- | ----------------------------------------------------------------------------------------- |
+| myNewComponent   | \<FFSName \| uppercase\>          | MYNEWCOMPONENT   |
+| myNewComponent   | \<FFSName \| lowercase\>          | mynewcomponent   |
+| myNewComponent   | \<FFSName \| capitalize\>         | MyNewComponent   |
+| MyNewComponent   | \<FFSName \| lowercasefirstchar\> | myNewComponent   |
+| My-new-component | \<FFSName \| camelcase\>          | myNewComponent   | (First letter is lowercased. Every letter behind a special character will be capitalized) |
+| my-new-component | \<FFSName \| pascalcase\>         | MyNewComponent   | (First letter and every letter behind a special character will be capitalized)            |
+| myNewComponent   | \<FFSName \| snakecase\>          | my_new_component |
+| myNewComponent   | \<FFSName \| kebabcase\>          | my-new-component |
 
 ## Creating your Template manually
 
@@ -118,9 +129,6 @@ Two example filetemplates
 ### This may not work 100% yet, if you find any issues please create a new Issue on the [Github Repo](https://github.com/Huuums/vscode-fast-folder-structure/issues)
 
 Create a folder in the exact format you wish to have as a template.
-
-You can use \<FFSName\> as well as \<FFSName \| transformer\> in the filenames as well as in the filecontent.
-_Note: Windows users have to use \[FFSName\] instead of \<FFSName\> inside filenames as windows doesn't allow `<` and `>` in filenames._
 
 You can use custom variables by putting them into either of the two template notations `[] or <>` inside filenames and filecontent.
 

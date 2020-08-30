@@ -20,6 +20,12 @@ suite('Utilities suite', () => {
     replaceText(`<FFSName | lowercasefirstchar>`, regex, 'DDDd').should.equal(
       'dDDd',
     );
+    replaceText(`<FFSName | kebabcase>`, regex, 'myNewComponent').should.equal(
+      'my-new-component',
+    );
+    replaceText(`<FFSName | snakecase>`, regex, 'myNewComponent').should.equal(
+      'my_new_component',
+    );
     replaceText(`[FFSName | lowercasefirstchar]`, regex, 'DDDd').should.equal(
       'dDDd',
     );

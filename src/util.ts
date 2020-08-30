@@ -31,6 +31,10 @@ const getTransformedSSFName = (replacement: string, transformer: string) => {
       return toCamelCase(capitalize(replacement));
     case 'camelcase':
       return toCamelCase(lowerCaseFirstChar(replacement));
+    case 'kebabcase':
+      return toKebabCase(replacement);
+    case 'snakecase':
+      return toSnakeCase(replacement);
     default:
       return replacement;
   }
@@ -40,6 +44,19 @@ const toCamelCase = (str: String) =>
   str.replace(/[^A-Za-z0-9]+(.)/g, (_, charAfterSpecialChars) => {
     return charAfterSpecialChars.toUpperCase();
   });
+
+const toKebabCase = (str: String) =>
+  str
+    .replace(/([a-z])([A-Z])/g, '$1-$2')    // get all lowercase letters that are near to uppercase ones
+    .replace(/[\s_]+/g, '-')                // replace all spaces and low dashes
+    .toLowerCase();                         // convert to lower case
+
+
+const toSnakeCase = (str: String) =>
+  str
+    .replace(/([a-z])([A-Z])/g, '$1_$2')    // get all lowercase letters that are near to uppercase ones
+    .replace(/[\s\-]+/g, '_')                // replace all spaces and low dashes
+    .toLowerCase();                         // convert to lower case
 
 const lowerCaseFirstChar = (string: String) => {
   return string.charAt(0).toLowerCase() + string.slice(1);

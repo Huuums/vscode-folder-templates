@@ -23,10 +23,12 @@ export default (
 
   let targetFilePath;
   if (omitParentDirectory) {
-    targetFilePath = `${basePath}/${replaceAllVariablesInString(
-      fileInstructions.fileName,
-      replaceValues,
-    )}`;
+    targetFilePath = path.normalize(
+      `${basePath}/${replaceAllVariablesInString(
+        fileInstructions.fileName,
+        replaceValues,
+      )}`,
+    );
   } else {
     targetFilePath = path.normalize(
       `${basePath}/${componentName}/${replaceAllVariablesInString(
