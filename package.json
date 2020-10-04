@@ -16,7 +16,7 @@
     "Create Directories",
     "Productivity"
   ],
-  "version": "2.0.0",
+  "version": "2.1.0",
   "publisher": "Huuums",
   "engines": {
     "vscode": "^1.37.0"

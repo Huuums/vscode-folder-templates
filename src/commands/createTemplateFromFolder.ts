@@ -1,30 +1,30 @@
-import * as vscode from 'vscode';
-import * as path from 'path';
+import * as vscode from "vscode";
+import * as path from "path";
 import {
   FolderStructureFile,
   TemplateCollection,
   FileQuickPickItem,
   FolderStructure,
-} from '../types';
+} from "../types";
 import {
   getFolderContents,
   removeEmptyDirectories,
   getPossibleFFSTemplateVariables,
   shouldCreateTemplateFromFile,
   unique,
-} from '../util';
-import * as htmlTags from 'html-tags';
+} from "../util";
+import * as htmlTags from "html-tags";
 
 const createTemplateFromFolder = async (resource: vscode.Uri | undefined) => {
   if (!resource) {
     vscode.window.showErrorMessage(
-      'Fast Folder Structure could not find the folder for some reason.',
+      "Fast Folder Structure could not find the folder for some reason."
     );
     return false;
   }
 
   const templateName = await vscode.window.showInputBox({
-    placeHolder: 'Please enter the name of your new Template.',
+    placeHolder: "Please enter the name of your new Template.",
   });
 
   const folderContents = getFolderContents(resource);
@@ -34,12 +34,12 @@ const createTemplateFromFolder = async (resource: vscode.Uri | undefined) => {
 
   const fileQuickpickItems: FileQuickPickItem[] = folderContents.map(
     (currentPath) => ({
-      content: currentPath.content || '',
+      content: currentPath.content || "",
       label: vscode.workspace.asRelativePath(currentPath.filePath),
       picked: true,
       description: `full file path: ${currentPath.filePath}`,
       filePath: currentPath.filePath,
-    }),
+    })
   );
 
   //let user pick which files should be converted to templates
@@ -47,9 +47,9 @@ const createTemplateFromFolder = async (resource: vscode.Uri | undefined) => {
     removeEmptyDirectories(fileQuickpickItems),
     {
       placeHolder:
-        'Choose the Files from which you would like to create file templates',
+        "Choose the Files from which you would like to create file templates",
       canPickMany: true,
-    },
+    }
   );
 
   // get all strings inside < > or [] inside filename and if file is supposed to be converted to a template from file content as well.
@@ -59,7 +59,7 @@ const createTemplateFromFolder = async (resource: vscode.Uri | undefined) => {
     .reduce((acc, row) => unique<string>(acc, row), [] as Array<string>)
     .filter((row) => {
       return (
-        row !== 'FFSName' && !htmlTags.includes(row.replace('/', '').trim())
+        row !== "FFSName" && !htmlTags.includes(row.replace("/", "").trim())
       );
     });
 
@@ -70,8 +70,8 @@ const createTemplateFromFolder = async (resource: vscode.Uri | undefined) => {
       {
         canPickMany: true,
         placeHolder:
-          'Found multiple strings that could be customVariables for FFS Template, please select the ones that are custom FFS-Variables',
-      },
+          "Found multiple strings that could be customVariables for FFS Template, please select the ones that are custom FFS-Variables",
+      }
     );
     customVariables = pickedCustomVariables?.map((row) => row.label) || [];
   }
@@ -79,7 +79,7 @@ const createTemplateFromFolder = async (resource: vscode.Uri | undefined) => {
   const getFileTemplateName = (filePath: string) => {
     return `${templateName}-${path
       .relative(resource.fsPath, filePath)
-      .replace(/\\/g, '-')}`;
+      .replace(/\\/g, "-")}`;
   };
 
   const fileTemplates: TemplateCollection | undefined = templateFiles?.reduce(
@@ -87,56 +87,56 @@ const createTemplateFromFolder = async (resource: vscode.Uri | undefined) => {
       return {
         ...acc,
         [getFileTemplateName(currentFile.filePath)]: currentFile.content.split(
-          '\n',
+          "\n"
         ),
       };
     },
-    {},
+    {}
   );
 
   const structure: FolderStructureFile[] = folderContents.map((currentFile) => {
     const fileName = path
       .relative(resource.fsPath, currentFile.filePath)
-      .replace(/\\/g, '/');
+      .replace(/\\/g, "/");
     if (shouldCreateTemplateFromFile(templateFiles, currentFile.filePath)) {
       const name = getFileTemplateName(currentFile.filePath);
       return { fileName, template: name };
     }
-    if (currentFile.content === 'EmptyDirectory') {
+    if (currentFile.content === "EmptyDirectory") {
       return {
         fileName,
-        template: 'EmptyDirectory',
+        template: "EmptyDirectory",
       };
     }
     return { fileName };
   });
 
-  const config = vscode.workspace.getConfiguration('fastFolderStructure');
+  const config = vscode.workspace.getConfiguration("fastFolderStructure");
 
   const hasWorkspaceConfig =
-    Boolean(config.inspect('fileTemplates')?.workspaceValue) ||
-    Boolean(config.inspect('structures')?.workspaceValue);
+    Boolean(config.inspect("fileTemplates")?.workspaceValue) ||
+    Boolean(config.inspect("structures")?.workspaceValue);
 
-  const configStructures = config.get('structures');
-  const configFileTemplates = config.get('fileTemplates');
+  const configStructures = config.get("structures");
+  const configFileTemplates = config.get("fileTemplates");
 
   await config.update(
-    'structures',
+    "structures",
     [
       ...((configStructures as FolderStructure[] | undefined) || []),
       { name: templateName, customVariables: customVariables, structure },
     ],
-    !hasWorkspaceConfig,
+    !hasWorkspaceConfig
   );
   await config.update(
-    'fileTemplates',
+    "fileTemplates",
     {
       ...(configFileTemplates as TemplateCollection),
       ...fileTemplates,
     },
-    !hasWorkspaceConfig,
+    !hasWorkspaceConfig
   );
 
-  return 'done';
+  return "done";
 };
 export default createTemplateFromFolder;

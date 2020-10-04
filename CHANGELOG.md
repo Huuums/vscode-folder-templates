@@ -1,5 +1,9 @@
 # Change Log
 
+### 2.1.0
+
+- You can now pass in your own path argument with keybinds.
+
 ### 2.0.0
 
 - BREAKING: Removed default structures and fileTemplates as they are generally not useful for anyone due to everyone having their own needs. You have to create your own templates now.
