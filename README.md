@@ -141,6 +141,20 @@ It will then ask you
 
 Note: FFS will automatically add the new template to your global settings or workspace settings depending on if you already have the `fastFolderStructure.structure` or `fastFolderStructure.fileTemplates` configuration in your workspace settings.
 
+### Using the command createFolderStructure with a keybind
+
+You can add a `string` argument to the keybind you are using to define a static folder in which you want the new folder to be created.
+
+```json
+{
+  "key": "ctrl+0", //or your preffered keybind,
+  "command": "FFS.createFolderStructure",
+  "args": "src/components"
+}
+```
+
+If you put the argument `"__current"` it will create the folder **next** to the file that is currently open in the editor.
+
 ## Known Issues
 
 - Deleting an existing template out of the settings and adding a new Template from an existing folder before restarting vscode adds the just deleted template again (No clue why this happens, have to figure it out.)

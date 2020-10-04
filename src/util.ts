@@ -1,16 +1,15 @@
-import { Template, FolderContent, FileQuickPickItem } from './types';
-import * as vscode from 'vscode';
-import { readdirSync, readFileSync, PathLike } from 'fs';
-import { normalize } from 'path';
+import { Template, FolderContent, FileQuickPickItem } from "./types";
+import * as vscode from "vscode";
+import { readdirSync, readFileSync, PathLike } from "fs";
 
 const replaceText = function (
   target: string,
   stringToReplace: RegExp,
-  replacement: string,
+  replacement: string
 ) {
   return target.replace(stringToReplace, (_, transformer) =>
     //only need the transformer
-    getTransformedSSFName(replacement, transformer),
+    getTransformedSSFName(replacement, transformer)
   );
 };
 
@@ -19,21 +18,21 @@ const getTransformedSSFName = (replacement: string, transformer: string) => {
     return replacement;
   }
   switch (removeSpecialCharacters(transformer).toLowerCase()) {
-    case 'lowercase':
+    case "lowercase":
       return replacement.toLowerCase();
-    case 'lowercasefirstchar':
+    case "lowercasefirstchar":
       return lowerCaseFirstChar(replacement);
-    case 'uppercase':
+    case "uppercase":
       return replacement.toUpperCase();
-    case 'capitalize':
+    case "capitalize":
       return capitalize(replacement);
-    case 'pascalcase':
+    case "pascalcase":
       return toCamelCase(capitalize(replacement));
-    case 'camelcase':
+    case "camelcase":
       return toCamelCase(lowerCaseFirstChar(replacement));
-    case 'kebabcase':
+    case "kebabcase":
       return toKebabCase(replacement);
-    case 'snakecase':
+    case "snakecase":
       return toSnakeCase(replacement);
     default:
       return replacement;
@@ -47,23 +46,22 @@ const toCamelCase = (str: String) =>
 
 const toKebabCase = (str: String) =>
   str
-    .replace(/([a-z])([A-Z])/g, '$1-$2')    // get all lowercase letters that are near to uppercase ones
-    .replace(/[\s_]+/g, '-')                // replace all spaces and low dashes
-    .toLowerCase();                         // convert to lower case
-
+    .replace(/([a-z])([A-Z])/g, "$1-$2") // get all lowercase letters that are near to uppercase ones
+    .replace(/[\s_]+/g, "-") // replace all spaces and low dashes
+    .toLowerCase(); // convert to lower case
 
 const toSnakeCase = (str: String) =>
   str
-    .replace(/([a-z])([A-Z])/g, '$1_$2')    // get all lowercase letters that are near to uppercase ones
-    .replace(/[\s\-]+/g, '_')                // replace all spaces and low dashes
-    .toLowerCase();                         // convert to lower case
+    .replace(/([a-z])([A-Z])/g, "$1_$2") // get all lowercase letters that are near to uppercase ones
+    .replace(/[\s\-]+/g, "_") // replace all spaces and low dashes
+    .toLowerCase(); // convert to lower case
 
 const lowerCaseFirstChar = (string: String) => {
   return string.charAt(0).toLowerCase() + string.slice(1);
 };
 
 const removeSpecialCharacters = (string: string) =>
-  string.replace(/[^a-zA-Z]/g, '');
+  string.replace(/[^a-zA-Z]/g, "");
 
 const capitalize = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -71,23 +69,23 @@ const capitalize = (string: string) => {
 
 const convertFileContentToString = (content: Template | undefined) => {
   if (!content) {
-    return '';
+    return "";
   }
-  return Array.isArray(content) ? content.join('\n') : content;
+  return Array.isArray(content) ? content.join("\n") : content;
 };
 
 const getReplaceRegexp = (variableName: string) => {
   //finds <variableName( | transformer)> and  [variableName( | transformer)] in strings
   const regexp = new RegExp(
     `(?:<|\\[)${variableName}\\s*(?:\\s*\\|\\s*([A-Za-z]+)\\s*?)?(?:>|\\])`,
-    'g',
+    "g"
   );
   return regexp;
 };
 
 const replaceAllVariablesInString = (
   string: string,
-  replaceValues: string[][],
+  replaceValues: string[][]
 ) => {
   return replaceValues.reduce((acc, row) => {
     const [variableName, replaceValue] = row;
@@ -97,7 +95,7 @@ const replaceAllVariablesInString = (
 
 const getFileContent = (path: PathLike) => {
   try {
-    let fileContent = readFileSync(path, { encoding: 'utf8' });
+    let fileContent = readFileSync(path, { encoding: "utf8" });
     return fileContent;
   } catch (e) {
     return null;
@@ -122,14 +120,14 @@ const getFolderContents = (uri: vscode.Uri): FolderContent[] => {
       return [
         {
           filePath: uri.fsPath,
-          content: 'EmptyDirectory',
+          content: "EmptyDirectory",
         },
       ];
     }
     return allPaths.flat(Infinity) as FolderContent[];
   } catch (e) {
     vscode.window.showErrorMessage(
-      'Something went wrong getting Folder contents',
+      "Something went wrong getting Folder contents"
     );
     return [];
   }
@@ -137,16 +135,16 @@ const getFolderContents = (uri: vscode.Uri): FolderContent[] => {
 
 const shouldCreateTemplateFromFile = (
   templateFiles: FileQuickPickItem[] | undefined,
-  filePath: string,
+  filePath: string
 ) => templateFiles?.some((file) => file.filePath === filePath);
 
 const removeEmptyDirectories = (items: FileQuickPickItem[]) =>
   items.filter((file) =>
-    Boolean(file.content && file.content !== 'EmptyDirectory'),
+    Boolean(file.content && file.content !== "EmptyDirectory")
   );
 
 const getPossibleFFSTemplateVariables = (
-  templateFiles: FileQuickPickItem[] | undefined,
+  templateFiles: FileQuickPickItem[] | undefined
 ) => (row: FileQuickPickItem) => {
   {
     //using the g flag makes the regexp stateful so you would either have to set the lastindex to 0 for it to be usable multiple times or create the regexp twice.
