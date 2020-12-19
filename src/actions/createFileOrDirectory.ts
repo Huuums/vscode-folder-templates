@@ -1,64 +1,75 @@
-import * as vscode from 'vscode';
-import * as fs from 'fs';
-import * as path from 'path';
-import { promisify } from 'util';
-import { FolderStructureFile, TemplateCollection } from '../types';
+import * as vscode from "vscode";
+import * as fs from "fs";
+import * as path from "path";
+import { promisify } from "util";
+import {
+  FileSettings,
+  FileTemplateCollection,
+  StringReplaceTuple,
+} from "../types";
 import {
   convertFileContentToString,
   replaceAllVariablesInString,
-} from '../util';
+} from "../lib/stringHelpers";
+import { readConfig, showInfo } from "../lib/vscodeHelpers";
+import { createDirectory } from "../lib/fsHelpers";
 
 const exists = promisify(fs.exists);
 
 export default (
-  replaceValues: string[][],
-  basePath = '',
+  replaceValues: StringReplaceTuple[],
+  basePath = "",
   omitParentDirectory: boolean,
-  wsedit: vscode.WorkspaceEdit,
-) => async (fileInstructions: FolderStructureFile) => {
-  const config = vscode.workspace.getConfiguration('fastFolderStructure');
-  const templates: TemplateCollection | undefined = config.get('fileTemplates');
+  wsedit: vscode.WorkspaceEdit
+) => async (fileInstructions: FileSettings) => {
+  const templates: FileTemplateCollection | undefined = readConfig(
+    "fileTemplates"
+  );
 
   const [[, componentName]] = replaceValues;
 
-  let targetFilePath;
+  let filePath;
   if (omitParentDirectory) {
-    targetFilePath = path.normalize(
+    filePath = path.normalize(
       `${basePath}/${replaceAllVariablesInString(
         fileInstructions.fileName,
-        replaceValues,
-      )}`,
+        replaceValues
+      )}`
     );
   } else {
-    targetFilePath = path.normalize(
+    filePath = path.normalize(
       `${basePath}/${componentName}/${replaceAllVariablesInString(
         fileInstructions.fileName,
-        replaceValues,
-      )}`,
+        replaceValues
+      )}`
     );
   }
 
   //don't do anything if file exists. just skip this file
-  if (await exists(targetFilePath)) {
-    vscode.window.showInformationMessage(
-      `${targetFilePath} already exists. Skipping file`,
-    );
+  if (await exists(filePath)) {
+    showInfo(`${filePath} already exists. Skipping file`);
     return null;
   }
 
-  if (fileInstructions.template === 'EmptyDirectory') {
-    fs.mkdirSync(targetFilePath, { recursive: true });
+  if (fileInstructions.template === "EmptyDirectory") {
+    createDirectory(filePath);
     return null;
   }
 
-  const newPath = vscode.Uri.file(targetFilePath);
+  const newPath = vscode.Uri.file(filePath);
   wsedit.createFile(newPath, { ignoreIfExists: false });
 
-  const template = templates?.[fileInstructions.template || ''];
+  let template;
+  if (typeof fileInstructions.template === "string") {
+    template =
+      templates?.[fileInstructions.template || ""] || fileInstructions.template;
+  } else {
+    template = fileInstructions.template;
+  }
 
   const fileContent = replaceAllVariablesInString(
     convertFileContentToString(template),
-    replaceValues,
+    replaceValues
   );
 
   wsedit.insert(newPath, new vscode.Position(0, 0), fileContent);

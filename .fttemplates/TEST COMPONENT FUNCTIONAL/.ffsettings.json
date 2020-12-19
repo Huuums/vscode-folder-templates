@@ -1,0 +1,4 @@
+{
+  "customVariables": ["var1=>var1value", "var2=>var2value"],
+  "name": "asdf"
+}

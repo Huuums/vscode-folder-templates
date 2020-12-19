@@ -87,9 +87,9 @@ Example Structure
 ```
 
 | Key                 | Type                                    | Description                                                                                                                                  |
-| ------------------- | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| ------------------- | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
 | name                | string                                  | Name of the Folder Structure.                                                                                                                |
-| customVariables     | string[]                                | Custom variables that will be replaced upon folder creation                                                                                  |
+| customVariables     | string[]                                | Custom variables that will be replaced upon folder creation                                                                                  | "variableName=>defaultvalue" |
 | structure           | {fileName: string, template?: string}[] | Every object in this array represents a File or Folder that will be created                                                                  |
 | omitParentDirectory | boolean (default: false)                | If set to true FFS will create all files directly inside the current folder instead of creating a new folder and all the files inside of it. |
 
@@ -126,20 +126,9 @@ Two example filetemplates
 
 ## Creating a Template from an existing Folder
 
-### This may not work 100% yet, if you find any issues please create a new Issue on the [Github Repo](https://github.com/Huuums/vscode-fast-folder-structure/issues)
+### The automatic template creation from folders is DEPRECATED as of 3.0
 
-Create a folder in the exact format you wish to have as a template.
-
-You can use custom variables by putting them into either of the two template notations `[] or <>` inside filenames and filecontent.
-
-When FFS tries to convert the existing folder into a template it will parse all filenames and file content inside that folder.
-
-It will then ask you
-
-- from which files you would like to have a filetemplate.
-- which values you would like to use as Customvariables (only asks for strings inside the template notation which are NOT HTMLtags)
-
-Note: FFS will automatically add the new template to your global settings or workspace settings depending on if you already have the `fastFolderStructure.structure` or `fastFolderStructure.fileTemplates` configuration in your workspace settings.
+Copying a folder into the .FFStemplates folder and adjusting them there by hand is easier to reason about for the user. One would have had to create the template by hand anyway so it could be read into the config.
 
 ### Using the command createFolderStructure with a keybind
 
