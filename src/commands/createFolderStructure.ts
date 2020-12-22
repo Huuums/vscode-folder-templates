@@ -3,9 +3,14 @@ import createStructure from "../actions/createStructure";
 
 import { FolderTemplate } from "../types";
 import getReplaceValueTuples from "../lib/getReplaceValueTuples";
-import { getLocalTemplatePath, getTargetPath } from "../lib/vscodeHelpers";
+import {
+  getLocalTemplatePath,
+  getTargetPath,
+  readConfig,
+} from "../lib/vscodeHelpers";
 import { showError, showInfo } from "../lib/vscodeHelpers";
-import { getAllFolderTemplates, pickTemplate } from "../lib/extensionHelpers";
+import { getTemplatesFromFS, pickTemplate } from "../lib/extensionHelpers";
+import { isDirectory } from "../lib/fsHelpers";
 
 const CreateFolderStructure = async (
   resource: vscode.Uri | string | undefined,
@@ -14,11 +19,13 @@ const CreateFolderStructure = async (
   const targetUri = await getTargetPath(resource);
 
   const templateFolderPath = [getLocalTemplatePath(), globalTemplatePath];
-  const validPaths = templateFolderPath.filter(Boolean) as string[];
+  const validPaths = templateFolderPath.filter(isDirectory) as string[];
 
+  const configTemplates: FolderTemplate[] = readConfig("structures") || [];
   const folderTemplates: FolderTemplate[] = validPaths
-    .map((path: string) => getAllFolderTemplates(path))
-    .flat();
+    .map((path: string) => getTemplatesFromFS(path))
+    .flat()
+    .concat(configTemplates);
 
   if (!folderTemplates.length) {
     return showError("No configured Folder Templates found!");

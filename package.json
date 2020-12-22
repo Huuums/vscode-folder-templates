@@ -4,7 +4,7 @@
   "description": "template folder structures and file templates and apply them easily",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Huuums/vscode-fast-folder-structure"
+    "url": "https://github.com/Huuums/vscode-folder-templates"
   },
   "keywords": [
     "Folder Creator",

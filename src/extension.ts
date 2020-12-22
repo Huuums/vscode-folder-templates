@@ -20,11 +20,8 @@ export function activate(context: vscode.ExtensionContext) {
     "FT.openGlobalFolder",
     () => {
       try {
-        const data = open(globalTemplateFolderPath);
-        console.log({ data });
-      } catch (e) {
-        console.log({ e });
-      }
+        open(globalTemplateFolderPath);
+      } catch (e) {}
     }
   );
 

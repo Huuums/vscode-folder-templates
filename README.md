@@ -54,7 +54,9 @@ Examples
 
 You can either create a `.fttemplates` folder in your project root and save all templates you want to access in this project there or use the global `.fttemplates` folder that exists in the directory of this extension. (Use the `Open Global Folder Templates Directory` command in the command palette to get there quickly)
 
-Create a folder and put in the placeholders wherever you need them. That's it. You created your template. It works out of the box but if you need some special settings for a template you can specify a `.ftsettings.json` file.
+Create a folder with files and folders inside it and put in the placeholders wherever you need them. That's it. You created your template. It works out of the box but if you need some special settings for a template you can create a `.ftsettings.json` file inside your template folder.
+
+See more in the [examples](https://github.com/Huuums/vscode-folder-templates/tree/master/examples)
 
 ### Available .ftsettings.json Properties
 
@@ -63,8 +65,6 @@ Create a folder and put in the placeholders wherever you need them. That's it. Y
 | name                | string (default: Name of the parent Folder ) | Name of the Folder Template                                                                                                                 |
 | customVariables     | string[]                                     | Custom variables that will be replaced upon folder creation                                                                                 | "variableName=>defaultvalue" |
 | omitParentDirectory | boolean (default: false)                     | If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it. |
-
-See more in the [examples](https://)
 
 ## Creating your Template in VS Code settings.json
 
@@ -101,7 +101,7 @@ Example Structure
 }
 ```
 
-| Key                 | Type                                    | Description                                                                                                                                 |
+| Key                 | Type                                    | yDescription                                                                                                                                |
 | ------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
 | name                | string                                  | Name of the Folder Template.                                                                                                                |
 | customVariables     | string[]                                | Custom variables that will be replaced upon folder creation                                                                                 | "variableName=>defaultvalue" |

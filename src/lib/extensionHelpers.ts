@@ -35,7 +35,7 @@ const convertFolderContentToStructure = (
   );
 };
 
-const getTemplatesFromFS = (folderPath: PathLike) => {
+export const getTemplatesFromFS = (folderPath: PathLike) => {
   const fsTemplates = readdirSync(folderPath, { withFileTypes: true });
   return fsTemplates
     .map((file) => {
@@ -43,7 +43,7 @@ const getTemplatesFromFS = (folderPath: PathLike) => {
         return null;
       }
       const settings =
-        parseSettingsFile(`${folderPath}/${file.name}/.ffsettings.json`) || {};
+        parseSettingsFile(`${folderPath}/${file.name}/.ftsettings.json`) || {};
 
       const contents = getFolderContents(
         vscode.Uri.parse(`${folderPath}/${file.name}`)
@@ -52,7 +52,7 @@ const getTemplatesFromFS = (folderPath: PathLike) => {
       const structure = convertFolderContentToStructure(
         contents,
         `${folderPath}/${file.name}`
-      ).filter((val) => val.fileName !== ".ffsettings.json");
+      ).filter((val) => val.fileName !== ".ftsettings.json");
 
       return {
         ...settings,
@@ -62,14 +62,6 @@ const getTemplatesFromFS = (folderPath: PathLike) => {
     })
     .filter(Boolean) as FolderTemplate[];
   //TS doesn't narrow the type from filtering correctly :'(
-};
-
-export const getAllFolderTemplates = (
-  folderPath: PathLike
-): FolderTemplate[] => {
-  const configTemplates: FolderTemplate[] = readConfig("structures") || [];
-  const fsTemplates = getTemplatesFromFS(folderPath);
-  return fsTemplates.concat(configTemplates);
 };
 
 const getSelectedFolderStructure = (
@@ -108,6 +100,5 @@ export const pickTemplate = async (allStructures: FolderTemplate[]) => {
     );
   }
 
-  console.log(structureName);
   return getSelectedFolderStructure(allStructures, structureName);
 };

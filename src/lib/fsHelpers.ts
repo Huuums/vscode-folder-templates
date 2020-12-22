@@ -51,7 +51,10 @@ export const getFolderContents = (uri: vscode.Uri): FolderContent[] => {
   }
 };
 
-export const isDirectory = (path: PathLike) => {
+export const isDirectory = (path: PathLike | null) => {
+  if (path === null) {
+    return false;
+  }
   return existsSync(path) && lstatSync(path).isDirectory();
 };
 
