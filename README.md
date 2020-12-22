@@ -61,9 +61,9 @@ See more in the [examples](https://github.com/Huuums/vscode-folder-templates/tre
 ### Available .ftsettings.json Properties
 
 | Key                 | Type                                         | Description                                                                                                                                 |
-| ------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| ------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | name                | string (default: Name of the parent Folder ) | Name of the Folder Template                                                                                                                 |
-| customVariables     | string[]                                     | Custom variables that will be replaced upon folder creation                                                                                 | "variableName=>defaultvalue" |
+| customVariables     | string[] `variableName=>defaultvalue`        | Custom variables that will be replaced upon folder creation                                                                                 |
 | omitParentDirectory | boolean (default: false)                     | If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it. |
 
 ## Creating your Template in VS Code settings.json
