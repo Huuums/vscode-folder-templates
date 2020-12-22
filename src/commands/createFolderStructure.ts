@@ -1,58 +1,68 @@
 import * as vscode from "vscode";
 import createStructure from "../actions/createStructure";
-import getStructure from "../lib/getSelectedFolderStructure";
-import { FolderStructure } from "../types";
+
+import { FolderTemplate } from "../types";
 import getReplaceValueTuples from "../lib/getReplaceValueTuples";
-import getTargetPath from "../lib/pathUtils";
+import {
+  getLocalTemplatePath,
+  getTargetPath,
+  readConfig,
+} from "../lib/vscodeHelpers";
+import { showError, showInfo } from "../lib/vscodeHelpers";
+import { getTemplatesFromFS, pickTemplate } from "../lib/extensionHelpers";
+import { isDirectory } from "../lib/fsHelpers";
 
 const CreateFolderStructure = async (
-  resource: vscode.Uri | string | undefined
+  resource: vscode.Uri | string | undefined,
+  globalTemplatePath: string
 ) => {
   const targetUri = await getTargetPath(resource);
 
-  const config = vscode.workspace.getConfiguration("fastFolderStructure");
-  const folderStructures: FolderStructure[] | undefined = config.get(
-    "structures"
-  );
-  let selectedStructureName = undefined;
-  //If more than one possible structure is configured prompt user to select which one
-  if (folderStructures && folderStructures.length > 1) {
-    selectedStructureName = await vscode.window.showQuickPick(
-      folderStructures.map((structure: FolderStructure) => structure.name)
+  const templateFolderPath = [getLocalTemplatePath(), globalTemplatePath];
+  const validPaths = templateFolderPath.filter(isDirectory) as string[];
+
+  const configTemplates: FolderTemplate[] = readConfig("structures") || [];
+  const folderTemplates: FolderTemplate[] = validPaths
+    .map((path: string) => getTemplatesFromFS(path))
+    .flat()
+    .concat(configTemplates);
+
+  if (!folderTemplates.length) {
+    return showError("No configured Folder Templates found!");
+  }
+
+  const pickedTemplate = await pickTemplate(folderTemplates);
+
+  if (!pickedTemplate) {
+    return showInfo(
+      "Aborted folder creation. Cannot continue without template selection."
     );
   }
-  const selectedFolderStructure = getStructure(
-    folderStructures || [],
-    selectedStructureName
-  );
-  if (!selectedFolderStructure) {
-    return;
-  }
+
   const {
     customVariables,
     structure: files,
     omitParentDirectory,
-  } = selectedFolderStructure;
+  } = pickedTemplate;
 
-  const ffsNameTuple = await getReplaceValueTuples(["FFSName"]);
+  const ftNameTuple = await getReplaceValueTuples(["FTName"]);
   //If no componentname is specified do nothing
-  if (!ffsNameTuple[0][1]) {
-    return Promise.resolve();
+  if (!ftNameTuple[0][1]) {
+    return showInfo("Aborted folder creation. Cannot continue without a name");
   }
 
   //Get all inputs for replacement of customvariables
-  const replaceValueTuples: string[][] = await getReplaceValueTuples([
-    ...(customVariables || []),
-  ]);
+  const replaceValueTuples = await getReplaceValueTuples(
+    ([] as string[]).concat(customVariables || [])
+  );
 
-  if (folderStructures) {
-    await createStructure(
-      [...ffsNameTuple, ...replaceValueTuples],
-      files,
-      targetUri,
-      omitParentDirectory
-    );
-  }
+  await createStructure(
+    ftNameTuple.concat(replaceValueTuples),
+    files,
+    targetUri,
+    omitParentDirectory
+  );
+
   return "done";
 };
 export default CreateFolderStructure;

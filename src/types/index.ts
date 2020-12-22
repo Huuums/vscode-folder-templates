@@ -1,27 +1,28 @@
-export type FolderStructure = {
+export interface FolderTemplateConfig {
+  name?: string;
+  customVariables?: string[];
+  omitParentDirectory?: boolean;
+}
+
+export interface FolderTemplate extends FolderTemplateConfig {
   name: string;
-  customVariables: string[];
-  structure: FolderStructureFile[];
-  omitParentDirectory: boolean;
+  structure: FolderStructure;
+}
+
+export type FolderStructure = FileSettings[];
+
+export type FileSettings = {
+  fileName: string;
+  template?: string | string[];
 };
 
-export type FolderStructureFile = {
-  fileName: string;
-  template?: string;
-};
 export type FolderContent = {
   filePath: string;
   content: string | null;
 };
 
-export type TemplateCollection = Record<string, Template>;
+export type FileTemplateCollection = Record<string, FileTemplate>;
 
-export type Template = string[] | string;
+export type FileTemplate = string[] | string;
 
-export type FileQuickPickItem = {
-  content: string;
-  label: string;
-  picked: boolean;
-  description: string;
-  filePath: string;
-};
+export type StringReplaceTuple = [string, string];

@@ -1,22 +1,24 @@
 {
   "name": "vscode-fast-folder-structure",
-  "displayName": "Fast Folder Structure (FFS)",
+  "displayName": "Folder Templates",
   "description": "template folder structures and file templates and apply them easily",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Huuums/vscode-fast-folder-structure"
+    "url": "https://github.com/Huuums/vscode-folder-templates"
   },
   "keywords": [
     "Folder Creator",
     "File templates",
     "Folder Templates",
     "template",
-    "ffs",
-    "scaffolding",
     "Create Directories",
-    "Productivity"
+    "Productivity",
+    "scaffold",
+    "react",
+    "angular",
+    "vue"
   ],
-  "version": "2.1.0",
+  "version": "3.0.0",
   "publisher": "Huuums",
   "engines": {
     "vscode": "^1.37.0"
@@ -26,50 +28,40 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:FFS.createFolderStructure",
-    "onCommand:FFS.createTemplateFromFolder",
-    "onCommand:FFS.removeTemplate"
+    "onCommand:FT.createFolderStructure",
+    "onCommand:FT.openGlobalFolder"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "FFS.createFolderStructure",
-        "title": "FFS: Create new Folder"
+        "command": "FT.createFolderStructure",
+        "title": "Create New Templated Folder"
       },
       {
-        "command": "FFS.createTemplateFromFolder",
-        "title": "FFS: Create Template from this folder"
-      },
-      {
-        "command": "FFS.removeTemplate",
-        "title": "FFS: Remove Template"
+        "command": "FT.openGlobalFolder",
+        "title": "Open Global Folder Templates Directory"
       }
     ],
     "menus": {
       "explorer/context": [
         {
           "when": "explorerResourceIsFolder",
-          "command": "FFS.createFolderStructure",
+          "command": "FT.createFolderStructure",
           "group": "2_workspace@500"
-        },
-        {
-          "when": "explorerResourceIsFolder",
-          "command": "FFS.createTemplateFromFolder",
-          "group": "2_workspace@400"
         }
       ]
     },
     "configuration": {
-      "title": "VS-Code Fast Folder Structure",
+      "title": "Folder Templates",
       "properties": {
-        "fastFolderStructure.structures": {
+        "folderTemplates.structures": {
           "type": "array",
           "scope": "window",
           "default": [],
           "description": "Configure as many structures as you would like."
         },
-        "fastFolderStructure.fileTemplates": {
+        "folderTemplates.fileTemplates": {
           "type": "object",
           "scope": "window",
           "default": {}
@@ -102,11 +94,12 @@
     "sinon": "^9.0.0",
     "sinon-chai": "^3.5.0",
     "tslint": "^6.0.0",
-    "typescript": "^3.3.1",
+    "typescript": "^4.1.2",
     "vscode-test": "^1.0.2"
   },
   "dependencies": {
     "@types/html-tags": "^3.0.1",
-    "html-tags": "^3.1.0"
+    "html-tags": "^3.1.0",
+    "open": "^7.3.0"
   }
 }

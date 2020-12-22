@@ -1,7 +1,6 @@
-import * as vscode from 'vscode';
-import createFolderStructure from './commands/createFolderStructure';
-import createTemplateFromFolder from './commands/createTemplateFromFolder';
-import removeTemplate from './commands/removeTemplate';
+import * as vscode from "vscode";
+import createFolderStructure from "./commands/createFolderStructure";
+import * as open from "open";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -9,22 +8,25 @@ export function activate(context: vscode.ExtensionContext) {
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
+  const globalTemplateFolderPath = context.asAbsolutePath(".fttemplates");
+
   let createStructure = vscode.commands.registerCommand(
-    'FFS.createFolderStructure',
-    createFolderStructure,
+    "FT.createFolderStructure",
+    (resource) => {
+      return createFolderStructure(resource, globalTemplateFolderPath);
+    }
   );
-  let createTemplate = vscode.commands.registerCommand(
-    'FFS.createTemplateFromFolder',
-    createTemplateFromFolder,
-  );
-  let deleteTemplate = vscode.commands.registerCommand(
-    'FFS.removeTemplate',
-    removeTemplate,
+  let openFolderTemplatesGlobalFolder = vscode.commands.registerCommand(
+    "FT.openGlobalFolder",
+    () => {
+      try {
+        open(globalTemplateFolderPath);
+      } catch (e) {}
+    }
   );
 
   context.subscriptions.push(createStructure);
-  context.subscriptions.push(createTemplate);
-  context.subscriptions.push(deleteTemplate);
+  context.subscriptions.push(openFolderTemplatesGlobalFolder);
 }
 
 // this method is called when your extension is deactivated

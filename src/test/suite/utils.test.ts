@@ -1,57 +1,74 @@
-import * as chai from 'chai';
+import * as chai from "chai";
 chai.should();
 import {
-  replaceText,
+  replacePlaceholder,
   getReplaceRegexp,
   convertFileContentToString,
   replaceAllVariablesInString,
-} from '../../util';
+} from "../../lib/stringHelpers";
 
-suite('Utilities suite', () => {
-  test('replaceText to work with all Transformers', async () => {
-    const variableName = 'FFSName';
+suite("lib/stringHelpersities suite", () => {
+  test("replacePlaceholder to work with all Transformers", async () => {
+    const variableName = "FTName";
     // Get all parts of a string enclosed in < >
     const regex = getReplaceRegexp(variableName);
 
-    replaceText(`<FFSName>`, regex, 'dDDd').should.equal('dDDd');
-    replaceText(`<FFSName | uppercase>`, regex, 'dDDd').should.equal('DDDD');
-    replaceText(`<FFSName | lowercase>`, regex, 'dDDd').should.equal('dddd');
-    replaceText(`<FFSName | capitalize>`, regex, 'dDDd').should.equal('DDDd');
-    replaceText(`<FFSName | lowercasefirstchar>`, regex, 'DDDd').should.equal(
-      'dDDd',
+    replacePlaceholder(`<FTName>`, regex, "dDDd").should.equal("dDDd");
+    replacePlaceholder(`<FTName | uppercase>`, regex, "dDDd").should.equal(
+      "DDDD"
     );
-    replaceText(`<FFSName | kebabcase>`, regex, 'myNewComponent').should.equal(
-      'my-new-component',
+    replacePlaceholder(`<FTName % uppercase>`, regex, "dDDd").should.equal(
+      "DDDD"
     );
-    replaceText(`<FFSName | snakecase>`, regex, 'myNewComponent').should.equal(
-      'my_new_component',
+    replacePlaceholder(`<FTName | lowercase>`, regex, "dDDd").should.equal(
+      "dddd"
     );
-    replaceText(`[FFSName | lowercasefirstchar]`, regex, 'DDDd').should.equal(
-      'dDDd',
+    replacePlaceholder(`<FTName | capitalize>`, regex, "dDDd").should.equal(
+      "DDDd"
     );
-
-    replaceText(
-      `<FFSName | camelcase>`,
+    replacePlaceholder(
+      `<FTName | lowercasefirstchar>`,
       regex,
-      'Start-_test   with* specialchars!"§$%&/89whoop',
-    ).should.equal('startTestWithSpecialchars89whoop');
-    replaceText(
-      `<FFSName | pascalcase>`,
+      "DDDd"
+    ).should.equal("dDDd");
+    replacePlaceholder(
+      `<FTName | kebabcase>`,
       regex,
-      'start-_test   with* specialchars!"§$%&/89whoop',
-    ).should.equal('StartTestWithSpecialchars89whoop');
+      "myNewComponent"
+    ).should.equal("my-new-component");
+    replacePlaceholder(
+      `<FTName | snakecase>`,
+      regex,
+      "myNewComponent"
+    ).should.equal("my_new_component");
+    replacePlaceholder(
+      `[FTName | lowercasefirstchar]`,
+      regex,
+      "DDDd"
+    ).should.equal("dDDd");
 
-    replaceText(`<ASDF | capitalize>`, regex, 'dDDd').should.equal(
-      '<ASDF | capitalize>',
+    replacePlaceholder(
+      `<FTName | camelcase>`,
+      regex,
+      'Start-_test   with* specialchars!"§$%&/89whoop'
+    ).should.equal("startTestWithSpecialchars89whoop");
+    replacePlaceholder(
+      `<FTName | pascalcase>`,
+      regex,
+      'start-_test   with* specialchars!"§$%&/89whoop'
+    ).should.equal("StartTestWithSpecialchars89whoop");
+
+    replacePlaceholder(`<ASDF | capitalize>`, regex, "dDDd").should.equal(
+      "<ASDF | capitalize>"
     );
-    replaceText(`FFSName`, regex, 'dDDd').should.equal('FFSName');
-    replaceText(`<FFSName`, regex, 'dDDd').should.equal('<FFSName');
-    replaceText(`FFSName>`, regex, 'dDDd').should.equal('FFSName>');
+    replacePlaceholder(`FTName`, regex, "dDDd").should.equal("FTName");
+    replacePlaceholder(`<FTName`, regex, "dDDd").should.equal("<FTName");
+    replacePlaceholder(`FTName>`, regex, "dDDd").should.equal("FTName>");
   });
 
-  test('convertFileContent to return correct string', async () => {
-    const array = ['asdf', '', 'abcd', '        dddd'];
-    const string = 'asdf\n\nabcd\n        dddd';
+  test("convertFileContent to return correct string", async () => {
+    const array = ["asdf", "", "abcd", "        dddd"];
+    const string = "asdf\n\nabcd\n        dddd";
     // Get all parts of a string enclosed in < >
     const targetString = `asdf
 
@@ -59,19 +76,19 @@ abcd
         dddd`;
     convertFileContentToString(array).should.equal(targetString);
     convertFileContentToString(string).should.equal(targetString);
-    convertFileContentToString(undefined).should.equal('');
+    convertFileContentToString(undefined).should.equal("");
   });
 
-  test('replaceAllVariablesInString to have replaced everything correctly', async () => {
+  test("replaceAllVariablesInString to have replaced everything correctly", async () => {
     const replaceTuples = [
-      ['FFSName', 'asddFf'],
-      ['customVar1', 'variablE'],
-      ['customVar2', 'variablE2'],
+      ["FTName", "asddFf"],
+      ["customVar1", "variablE"],
+      ["customVar2", "variablE2"],
     ];
     const initialString =
-      '<FFSName | uppercase> <customVar1 | lowercase> <customVar2 | capitalize> <FFSName | asdf> <FFSNam>';
+      "<FTName | uppercase> <customVar1 | lowercase> <customVar2 | capitalize> <FTName | asdf> <FTNam>";
     replaceAllVariablesInString(initialString, replaceTuples).should.equal(
-      'ASDDFF variable VariablE2 asddFf <FFSNam>',
+      "ASDDFF variable VariablE2 asddFf <FTNam>"
     );
   });
 });
