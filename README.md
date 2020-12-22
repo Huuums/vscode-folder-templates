@@ -101,10 +101,10 @@ Example Structure
 }
 ```
 
-| Key                 | Type                                    | yDescription                                                                                                                                |
-| ------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| Key                 | Type                                    | Description                                                                                                                                 |
+| ------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | name                | string                                  | Name of the Folder Template.                                                                                                                |
-| customVariables     | string[]                                | Custom variables that will be replaced upon folder creation                                                                                 | "variableName=>defaultvalue" |
+| customVariables     | string[]                                | Custom variables that will be replaced upon folder creation "variableName=>defaultvalue"                                                    |
 | structure           | {fileName: string, template?: string}[] | Every object in this array represents a File or Folder that will be created                                                                 |
 | omitParentDirectory | boolean (default: false)                | If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it. |
 
