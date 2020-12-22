@@ -1,5 +1,19 @@
 # Change Log
 
+### 3.0.0
+
+Some breaking changes, I'm really sorry but I wanted to do this right and had to do it earlier rather than later. This will hopefully be the last breaking change
+
+- **BREAKING**: The `FFSName` Placeholder no longer works. Please replace it with the new placeholder `FTName`
+
+- **BREAKING**: Configuration namechange. Please switch the configuration keys from `fastFolderStructure.structures` to `folderTemplates.structures` and `fastFolderStructure.fileTemplates` to `folderTemplates.fileTemplates`.
+
+- **BREAKING**: Calling the `FFS.createFolderStructure` command will no longer work. Please replace it with `FT.createFolderStructure`
+
+- REMOVED: Creating a Template from an existing folder is no longer supported because you can now save templates on the filesystem.
+
+- ADDED: Reading Folder Templates from your File System. You can now choose where to create your templates. In the config file or as a Folder on the File System.
+
 ### 2.1.0
 
 - You can now pass in your own path argument with keybinds.

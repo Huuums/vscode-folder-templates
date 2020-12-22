@@ -1,8 +1,6 @@
 import * as vscode from "vscode";
 import createFolderStructure from "./commands/createFolderStructure";
-// import createTemplateFromFolder from "./commands/createTemplateFromFolder";
-// import removeTemplate from "./commands/removeTemplate";
-import { createDirectory, isDirectory } from "./lib/fsHelpers";
+import * as open from "open";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -13,13 +11,25 @@ export function activate(context: vscode.ExtensionContext) {
   const globalTemplateFolderPath = context.asAbsolutePath(".fttemplates");
 
   let createStructure = vscode.commands.registerCommand(
-    "FFS.createFolderStructure",
+    "FT.createFolderStructure",
     (resource) => {
       return createFolderStructure(resource, globalTemplateFolderPath);
     }
   );
+  let openFolderTemplatesGlobalFolder = vscode.commands.registerCommand(
+    "FT.openGlobalFolder",
+    () => {
+      try {
+        const data = open(globalTemplateFolderPath);
+        console.log({ data });
+      } catch (e) {
+        console.log({ e });
+      }
+    }
+  );
 
   context.subscriptions.push(createStructure);
+  context.subscriptions.push(openFolderTemplatesGlobalFolder);
 }
 
 // this method is called when your extension is deactivated

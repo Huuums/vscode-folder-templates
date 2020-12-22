@@ -39,31 +39,31 @@ suite("Fast Folder Structure Extension Suite", () => {
     sinon.reset();
   });
 
-  test("FFSName interpolation on filename and filecontent should work as expected", async () => {
-    const path = `${componentsPath}/fFSNameInterpolation`;
+  test("FTName interpolation on filename and filecontent should work as expected", async () => {
+    const path = `${componentsPath}/fTNameInterpolation`;
     //path to folder
     inputBox.onCall(0).resolves("src/components");
 
     //Structure choice
-    quickpick.onCall(0).returns(Promise.resolve<any>("FFSName Interpolation"));
+    quickpick.onCall(0).returns(Promise.resolve<any>("FTName Interpolation"));
 
-    //FFSName
-    inputBox.onCall(1).resolves("fFSNameInterpolation");
+    //FTName
+    inputBox.onCall(1).resolves("fTNameInterpolation");
 
-    await vscode.commands.executeCommand("FFS.createFolderStructure");
+    await vscode.commands.executeCommand("FT.createFolderStructure");
     quickpick.should.have.been.calledOnce;
     inputBox.should.have.been.calledTwice;
 
     path.should.be.a
       .directory()
-      .and.equal(`${guideLineFolderPath}/FFSName Interpolation`);
+      .and.equal(`${guideLineFolderPath}/FTName Interpolation`);
 
     // have to do this for some reason so the content is there
 
-    `${path}/FFSNameInterpolation.txt`.should.be.a
+    `${path}/FTNameInterpolation.txt`.should.be.a
       .file()
       .and.equal(
-        `${guideLineFolderPath}/FFSName Interpolation/FFSNameInterpolation.txt`
+        `${guideLineFolderPath}/FTName Interpolation/FTNameInterpolation.txt`
       );
   });
 
@@ -77,8 +77,8 @@ suite("Fast Folder Structure Extension Suite", () => {
       .onCall(0)
       .returns(Promise.resolve<any>("Custom Variable Interpolation"));
 
-    await vscode.commands.executeCommand("FFS.createFolderStructure");
-    //path, ffsname and once for every custom variable
+    await vscode.commands.executeCommand("FT.createFolderStructure");
+    //path, ftname and once for every custom variable
     inputBox.should.have.been.callCount(4);
     quickpick.should.have.been.calledOnce;
     path.should.be.a
@@ -100,8 +100,8 @@ suite("Fast Folder Structure Extension Suite", () => {
     inputBox.onCall(1).resolves("EmptyDirectoryTest");
     quickpick.onCall(0).returns(Promise.resolve<any>("Empty Directory Test"));
 
-    await vscode.commands.executeCommand("FFS.createFolderStructure");
-    //path, ffsname and once for every custom variable
+    await vscode.commands.executeCommand("FT.createFolderStructure");
+    //path, ftname and once for every custom variable
     inputBox.should.have.been.callCount(2);
     quickpick.should.have.been.calledOnce;
     path.should.be.a
@@ -122,8 +122,8 @@ suite("Fast Folder Structure Extension Suite", () => {
     inputBox.onCall(1).resolves("nodeletiontest");
     quickpick.onCall(0).returns(Promise.resolve<any>("No Deletion Test"));
     const infoMessage = sinon.stub(vscode.window, "showInformationMessage");
-    await vscode.commands.executeCommand("FFS.createFolderStructure");
-    //path, ffsname and once for every custom variable
+    await vscode.commands.executeCommand("FT.createFolderStructure");
+    //path, ftname and once for every custom variable
     inputBox.should.have.been.callCount(2);
     quickpick.should.have.been.calledOnce;
     infoMessage.should.have.been.calledTwice;

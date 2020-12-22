@@ -9,51 +9,51 @@ import {
 
 suite("lib/stringHelpersities suite", () => {
   test("replacePlaceholder to work with all Transformers", async () => {
-    const variableName = "FFSName";
+    const variableName = "FTName";
     // Get all parts of a string enclosed in < >
     const regex = getReplaceRegexp(variableName);
 
-    replacePlaceholder(`<FFSName>`, regex, "dDDd").should.equal("dDDd");
-    replacePlaceholder(`<FFSName | uppercase>`, regex, "dDDd").should.equal(
+    replacePlaceholder(`<FTName>`, regex, "dDDd").should.equal("dDDd");
+    replacePlaceholder(`<FTName | uppercase>`, regex, "dDDd").should.equal(
       "DDDD"
     );
-    replacePlaceholder(`<FFSName % uppercase>`, regex, "dDDd").should.equal(
+    replacePlaceholder(`<FTName % uppercase>`, regex, "dDDd").should.equal(
       "DDDD"
     );
-    replacePlaceholder(`<FFSName | lowercase>`, regex, "dDDd").should.equal(
+    replacePlaceholder(`<FTName | lowercase>`, regex, "dDDd").should.equal(
       "dddd"
     );
-    replacePlaceholder(`<FFSName | capitalize>`, regex, "dDDd").should.equal(
+    replacePlaceholder(`<FTName | capitalize>`, regex, "dDDd").should.equal(
       "DDDd"
     );
     replacePlaceholder(
-      `<FFSName | lowercasefirstchar>`,
+      `<FTName | lowercasefirstchar>`,
       regex,
       "DDDd"
     ).should.equal("dDDd");
     replacePlaceholder(
-      `<FFSName | kebabcase>`,
+      `<FTName | kebabcase>`,
       regex,
       "myNewComponent"
     ).should.equal("my-new-component");
     replacePlaceholder(
-      `<FFSName | snakecase>`,
+      `<FTName | snakecase>`,
       regex,
       "myNewComponent"
     ).should.equal("my_new_component");
     replacePlaceholder(
-      `[FFSName | lowercasefirstchar]`,
+      `[FTName | lowercasefirstchar]`,
       regex,
       "DDDd"
     ).should.equal("dDDd");
 
     replacePlaceholder(
-      `<FFSName | camelcase>`,
+      `<FTName | camelcase>`,
       regex,
       'Start-_test   with* specialchars!"§$%&/89whoop'
     ).should.equal("startTestWithSpecialchars89whoop");
     replacePlaceholder(
-      `<FFSName | pascalcase>`,
+      `<FTName | pascalcase>`,
       regex,
       'start-_test   with* specialchars!"§$%&/89whoop'
     ).should.equal("StartTestWithSpecialchars89whoop");
@@ -61,9 +61,9 @@ suite("lib/stringHelpersities suite", () => {
     replacePlaceholder(`<ASDF | capitalize>`, regex, "dDDd").should.equal(
       "<ASDF | capitalize>"
     );
-    replacePlaceholder(`FFSName`, regex, "dDDd").should.equal("FFSName");
-    replacePlaceholder(`<FFSName`, regex, "dDDd").should.equal("<FFSName");
-    replacePlaceholder(`FFSName>`, regex, "dDDd").should.equal("FFSName>");
+    replacePlaceholder(`FTName`, regex, "dDDd").should.equal("FTName");
+    replacePlaceholder(`<FTName`, regex, "dDDd").should.equal("<FTName");
+    replacePlaceholder(`FTName>`, regex, "dDDd").should.equal("FTName>");
   });
 
   test("convertFileContent to return correct string", async () => {
@@ -81,14 +81,14 @@ abcd
 
   test("replaceAllVariablesInString to have replaced everything correctly", async () => {
     const replaceTuples = [
-      ["FFSName", "asddFf"],
+      ["FTName", "asddFf"],
       ["customVar1", "variablE"],
       ["customVar2", "variablE2"],
     ];
     const initialString =
-      "<FFSName | uppercase> <customVar1 | lowercase> <customVar2 | capitalize> <FFSName | asdf> <FFSNam>";
+      "<FTName | uppercase> <customVar1 | lowercase> <customVar2 | capitalize> <FTName | asdf> <FTNam>";
     replaceAllVariablesInString(initialString, replaceTuples).should.equal(
-      "ASDDFF variable VariablE2 asddFf <FFSNam>"
+      "ASDDFF variable VariablE2 asddFf <FTNam>"
     );
   });
 });

@@ -1,21 +1,21 @@
 {
-  "fastFolderStructure.fileTemplates": {
-    "FFSName Interpolation": ["<FFSName | uppercase>"],
+  "folderTemplates.fileTemplates": {
+    "FTName Interpolation": ["<FTName | uppercase>"],
     "Custom Variable Interpolation": [
-      "names <FFSName> inside <testVar> string",
+      "names <FTName> inside <testVar> string",
       "<testVar2 | lowercase>",
       "",
       "fillerText1",
       "fillerText2"
     ]
   },
-  "fastFolderStructure.structures": [
+  "folderTemplates.structures": [
     {
-      "name": "FFSName Interpolation",
+      "name": "FTName Interpolation",
       "structure": [
         {
-          "fileName": "<FFSName | capitalize>.txt",
-          "template": "FFSName Interpolation"
+          "fileName": "<FTName | capitalize>.txt",
+          "template": "FTName Interpolation"
         }
       ]
     },
@@ -24,7 +24,7 @@
       "customVariables": ["testVar", "testVar2"],
       "structure": [
         {
-          "fileName": "<FFSName>.jsx",
+          "fileName": "<FTName>.jsx",
           "template": "Custom Variable Interpolation"
         },
         {
@@ -40,14 +40,14 @@
       "structure": [
         {
           "fileName": "existingfile.js",
-          "template": "FFSName Interpolation"
+          "template": "FTName Interpolation"
         },
         {
           "fileName": "existingfile2.js"
         },
         {
           "fileName": "newfile.js",
-          "template": "FFSName Interpolation"
+          "template": "FTName Interpolation"
         }
       ]
     },
@@ -55,7 +55,7 @@
       "name": "Empty Directory Test",
       "structure": [
         {
-          "fileName": "<FFSName>",
+          "fileName": "<FTName>",
           "template": "EmptyDirectory"
         },
         {

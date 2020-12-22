@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import { isDirectory } from "./fsHelpers";
 
 export const readConfig = (key: string): any => {
-  const config = vscode.workspace.getConfiguration("fastFolderStructure");
+  const config = vscode.workspace.getConfiguration("folderTemplates");
   return config.get(key);
 };
 

@@ -11,7 +11,7 @@ export default (variableNames: string[]) => {
         .split("=>")
         .map((val) => val.trim());
 
-      if (name === "FFSName") {
+      if (name === "FTName") {
         prompt = `Enter the name of your new component`;
       }
       if (defaultValue) {

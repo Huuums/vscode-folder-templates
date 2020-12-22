@@ -13,11 +13,12 @@ const CreateFolderStructure = async (
 ) => {
   const targetUri = await getTargetPath(resource);
 
-  const templateFolderPath = getLocalTemplatePath() || globalTemplatePath;
+  const templateFolderPath = [getLocalTemplatePath(), globalTemplatePath];
+  const validPaths = templateFolderPath.filter(Boolean) as string[];
 
-  const folderTemplates: FolderTemplate[] = getAllFolderTemplates(
-    templateFolderPath
-  );
+  const folderTemplates: FolderTemplate[] = validPaths
+    .map((path: string) => getAllFolderTemplates(path))
+    .flat();
 
   if (!folderTemplates.length) {
     return showError("No configured Folder Templates found!");
@@ -37,9 +38,9 @@ const CreateFolderStructure = async (
     omitParentDirectory,
   } = pickedTemplate;
 
-  const ffsNameTuple = await getReplaceValueTuples(["FFSName"]);
+  const ftNameTuple = await getReplaceValueTuples(["FTName"]);
   //If no componentname is specified do nothing
-  if (!ffsNameTuple[0][1]) {
+  if (!ftNameTuple[0][1]) {
     return showInfo("Aborted folder creation. Cannot continue without a name");
   }
 
@@ -49,7 +50,7 @@ const CreateFolderStructure = async (
   );
 
   await createStructure(
-    ffsNameTuple.concat(replaceValueTuples),
+    ftNameTuple.concat(replaceValueTuples),
     files,
     targetUri,
     omitParentDirectory
