@@ -1,4 +1,4 @@
-# VS-Code Fast Folder Structure
+# VS-Code Folder Templates
 
 ### What is this and why
 
