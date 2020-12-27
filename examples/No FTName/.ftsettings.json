@@ -1,0 +1,5 @@
+{
+  "omitFTName": true,
+  "omitParentDirectory": true,
+  "customVariables": ["customVar1"]
+}
