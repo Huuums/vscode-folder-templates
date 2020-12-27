@@ -1,8 +1,8 @@
 # Change Log
 
-### 3.1.0
+### 3.0.1
 
-- Added option to omit FTName prompt
+- Fixed `Open Global Folder Template Directory` Command
 
 ### 3.0.0
 
@@ -17,6 +17,9 @@ Some breaking changes, I'm really sorry but I wanted to do this right and had to
 - REMOVED: Creating a Template from an existing folder is no longer supported because you can now save templates on the filesystem.
 
 - ADDED: Reading Folder Templates from your File System. You can now choose where to create your templates. In the config file or as a Folder on the File System.
+- ADDED: You can now define defaultvalues for your customvariables with the new `variablename=>defaultvalue` notation.
+
+Also added an examples folder.
 
 ### 2.1.0
 
