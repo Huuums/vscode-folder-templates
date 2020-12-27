@@ -1,5 +1,9 @@
 # Change Log
 
+### 3.1.0
+
+- Added option to omit FTName prompt
+
 ### 3.0.0
 
 Some breaking changes, I'm really sorry but I wanted to do this right and had to do it earlier rather than later. This will hopefully be the last breaking change
