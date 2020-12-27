@@ -5,11 +5,12 @@ export default (variableNames: string[]) => {
   return variableNames.reduce(
     async (acc: Promise<StringReplaceTuple[]>, variableName) => {
       const prevAcc = await acc;
-      let prompt = `Enter Replace value to replace custom variable <${variableName}>`;
-      let value;
       const [name, defaultValue] = variableName
         .split("=>")
         .map((val) => val.trim());
+
+      let prompt = `Enter Replace value to replace custom variable <${name}>`;
+      let value;
 
       if (name === "FTName") {
         prompt = `Enter the name of your new component`;

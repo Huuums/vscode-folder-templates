@@ -1,5 +1,9 @@
 # Change Log
 
+### 3.1.1
+
+- fixed display error in inputbox when a customvariable has a defaultvalue
+
 ### 3.1.0
 
 - added omitFTName option
