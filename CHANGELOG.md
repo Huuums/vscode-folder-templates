@@ -1,5 +1,9 @@
 # Change Log
 
+### 3.1.0
+
+- added omitFTName option
+
 ### 3.0.1
 
 - Fixed `Open Global Folder Template Directory` Command
