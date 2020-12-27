@@ -16,6 +16,12 @@ import { createDirectory } from "../lib/fsHelpers";
 
 const exists = promisify(fs.exists);
 
+const isStringReplaceTuple = (
+  val: StringReplaceTuple[] | []
+): val is StringReplaceTuple[] => {
+  return val[0] !== undefined;
+};
+
 export default (
   replaceValues: StringReplaceTuple[],
   basePath = "",
@@ -26,10 +32,13 @@ export default (
     "fileTemplates"
   );
 
-  const [[, componentName]] = replaceValues;
+  let componentName: undefined | string;
+  if (isStringReplaceTuple(replaceValues)) {
+    [[, componentName]] = replaceValues;
+  }
 
   let filePath;
-  if (omitParentDirectory) {
+  if (omitParentDirectory || !componentName) {
     filePath = path.normalize(
       `${basePath}/${replaceAllVariablesInString(
         fileInstructions.fileName,

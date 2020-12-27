@@ -1,6 +1,6 @@
-import "./<FFSName>.css";
+import "./<FTName>.css";
 
-const <FFSName | capitalize> = () => {
+const <FTName | capitalize> = () => {
   return (
     <>
       <div className="bg-secondary color-primary"></div>
@@ -9,4 +9,4 @@ const <FFSName | capitalize> = () => {
   )
 }
 
-export default <FFSName | capitalize>;
+export default <FTName | capitalize>;

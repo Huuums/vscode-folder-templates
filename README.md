@@ -65,6 +65,7 @@ See more in the [examples](https://github.com/Huuums/vscode-folder-templates/tre
 | name                | string (default: Name of the parent Folder ) | Name of the Folder Template                                                                                                                 |
 | customVariables     | string[] `variableName=>defaultvalue`        | Custom variables that will be replaced upon folder creation                                                                                 |
 | omitParentDirectory | boolean (default: false)                     | If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it. |
+| omitFTName          | boolean (default: false)                     | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                       |
 
 ## Creating your Template in VS Code settings.json
 
@@ -107,6 +108,7 @@ Example Structure
 | customVariables     | string[]                                | Custom variables that will be replaced upon folder creation "variableName=>defaultvalue"                                                    |
 | structure           | {fileName: string, template?: string}[] | Every object in this array represents a File or Folder that will be created                                                                 |
 | omitParentDirectory | boolean (default: false)                | If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it. |
+| omitFTName          | boolean (default: false)                | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                       |
 
 If a template is specified for a file its value should match one of the names of your [folderTemplates.fileTemplates](#folderTemplates.fileTemplates) or have the `EmptyDirectory` value. If the template value is `EmptyDirectory` it will create an empty directory instead of a file.
 

@@ -1,7 +1,7 @@
 {
   "name": "vscode-fast-folder-structure",
   "displayName": "Folder Templates",
-  "description": "template folder structures and file templates and apply them easily",
+  "description": "Create Templates for Folders and Files for easy reusability",
   "repository": {
     "type": "git",
     "url": "https://github.com/Huuums/vscode-folder-templates"
@@ -18,7 +18,7 @@
     "angular",
     "vue"
   ],
-  "version": "3.0.1",
+  "version": "3.1.0",
   "publisher": "Huuums",
   "engines": {
     "vscode": "^1.37.0"
