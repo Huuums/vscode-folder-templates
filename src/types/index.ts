@@ -2,6 +2,7 @@ export interface FolderTemplateConfig {
   name?: string;
   customVariables?: string[];
   omitParentDirectory?: boolean;
+  omitFTName?: boolean;
 }
 
 export interface FolderTemplate extends FolderTemplateConfig {
