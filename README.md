@@ -26,29 +26,49 @@ The value `<FTName>` (or `[FTName]`) will always be interpolated into the compon
 Adding a transformer with this pattern `<FTName | transformer>` (or `<FTName % transformer>`) will give you the ability to transform your componentname wherever needed.
 The currently supported transformers are:
 
-- `uppercase`
-- `lowercase`
-- `capitalize`
-- `lowercasefirstchar`
-- `camelcase`
-- `pascalcase`
-- `snakecase`
-- `kebabcase`
+- `lowerCase`
+- `upperCase`
+- `camelCase`
+- `capitalCase`
+- `constantCase`
+- `dotCase`
+- `headerCase`
+- `noCase`
+- `paramCase`
+- `pascalCase`
+- `pathCase`
+- `sentenceCase`
+- `snakeCase`
+- `singular`
+- `plural`
 
 It is possible to specify a set of custom Variables which will be interpolated as well. You will be asked to enter a value for every custom variable defined. They can be transformed the same way as the default `<FTName>`
 
 Examples
 
-| Input            | Transformer                      | Result           | Description                                                                               |
-| ---------------- | -------------------------------- | ---------------- | ----------------------------------------------------------------------------------------- |
-| myNewComponent   | \<FTName \| uppercase\>          | MYNEWCOMPONENT   |
-| myNewComponent   | \<FTName \| lowercase\>          | mynewcomponent   |
-| myNewComponent   | \<FTName \| capitalize\>         | MyNewComponent   |
-| MyNewComponent   | \<FTName \| lowercasefirstchar\> | myNewComponent   |
-| My-new-component | \<FTName \| camelcase\>          | myNewComponent   | (First letter is lowercased. Every letter behind a special character will be capitalized) |
-| my-new-component | \<FTName \| pascalcase\>         | MyNewComponent   | (First letter and every letter behind a special character will be capitalized)            |
-| myNewComponent   | \<FTName \| snakecase\>          | my_new_component |
-| myNewComponent   | \<FTName \| kebabcase\>          | my-new-component |
+| Input            | Transformer                                | Result           | Description                                            |
+| ---------------- | -------------------------------------------| ---------------- | -------------------------------------------------------|
+| LOWERCASE        | \<FTName \| lowerCase\>                    | lowercase        |
+| uppercase        | \<FTName \| upperCase\>                    | UPPERCASE        |
+| test string      | \<FTName \| camelCase\>                    | testString       |
+| test string      | \<FTName \| capitalCase\>                  | Test String      |
+| test string      | \<FTName \| constantCase\>                 | TEST_STRING      |
+| test string      | \<FTName \| dotCase\>                      | test.string      |
+| test string      | \<FTName \| headerCase\>                   | Test-String      |
+| test string      | \<FTName \| noCase\>                       | test string      |
+| test string      | \<FTName \| paramCase\>                    | test-string      |
+| test string      | \<FTName \| pascalCase\>                   | TestString       |
+| test string      | \<FTName \| pathCase\>                     | test/string      |
+| test string      | \<FTName \| sentenceCase\>                 | Test string      |
+| test string      | \<FTName \| snakeCase\>                    | test_string      |
+| boxes            | \<FTName \| singular\>                     | box              |
+| box              | \<FTName \| plural\>                       | boxes            |
+| wooden box       | \<FTName \| plural?snakeCase?upperCase\>   | WOODEN_BOXES     | it is possible to combine transformations with the "?" operator, these will be performed from left to right.
+
+### Thanks to the change-case and pluralize libraries, for the transformations
+
+- https://github.com/blakeembrey/change-case
+- https://www.npmjs.com/package/pluralize
 
 ## Creating templates on the File System
 

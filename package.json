@@ -18,7 +18,7 @@
     "angular",
     "vue"
   ],
-  "version": "3.1.1",
+  "version": "4.0.0",
   "publisher": "Huuums",
   "engines": {
     "vscode": "^1.37.0"
@@ -71,6 +71,7 @@
   },
   "scripts": {
     "vscode:prepublish": "yarn run compile",
+    "package": "yarn run compile && vsce package",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "yarn run compile",
@@ -82,6 +83,7 @@
     "@types/glob": "^7.1.1",
     "@types/mocha": "^8.0.0",
     "@types/node": "^14.0.27",
+    "@types/pluralize": "^0.0.29",
     "@types/rimraf": "^3.0.0",
     "@types/sinon": "^9.0.0",
     "@types/sinon-chai": "^3.2.3",
@@ -99,7 +101,10 @@
   },
   "dependencies": {
     "@types/html-tags": "^3.0.1",
+    "change-case": "^4.1.2",
     "html-tags": "^3.1.0",
-    "open": "^7.3.0"
+    "open": "^7.3.0",
+    "pluralize": "^8.0.0",
+    "x-match-expression": "^0.2.1"
   }
 }
