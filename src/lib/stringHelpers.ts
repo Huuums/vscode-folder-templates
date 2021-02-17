@@ -11,6 +11,8 @@ import {
   pathCase,
   sentenceCase,
   snakeCase,
+  camelCaseTransformMerge,
+  pascalCaseTransformMerge
 } from "change-case";
 import { match } from "x-match-expression";
 import { FileTemplate } from "../types";
@@ -33,29 +35,34 @@ const getTransformedSSFName = (replacement: string, transformer: string) =>
     .filter((s) => s !== '')
     .reduce((acc, cur) => transform(acc, cur), replacement) ?? replacement;
 
+
 const transform = (replacement: string, transformer: string) => match(removeSpecialCharacters(transformer).toLowerCase())
   .caseEqual('lowercase', replacement.toLowerCase())
   .caseEqual('uppercase', replacement.toUpperCase())
-  .caseEqual('camelcase', camelCase(replacement))
+  .caseEqual('camelcase', camelCase(replacement, { transform: camelCaseTransformMerge }))
   .caseEqual('capitalcase', capitalCase(replacement))
   .caseEqual('constantcase', constantCase(replacement))
   .caseEqual('dotcase', dotCase(replacement))
   .caseEqual('headercase', headerCase(replacement))
   .caseEqual('nocase', noCase(replacement))
   .caseEqual('paramcase', paramCase(replacement))
-  .caseEqual('pascalcase', pascalCase(replacement))
+  .caseEqual('pascalcase', pascalCase(replacement, { transform: pascalCaseTransformMerge }))
   .caseEqual('pathcase', pathCase(replacement))
   .caseEqual('sentencecase', sentenceCase(replacement))
   .caseEqual('snakecase', snakeCase(replacement))
   .caseEqual('singular', singular(replacement))
   .caseEqual('plural', plural(replacement))
   .caseEqual('lowercasefirstchar', lowerCaseFirstChar(replacement))
-  .caseEqual('capitalize', capitalCase(replacement))
+  .caseEqual('capitalize', capitalize(replacement))
   .caseEqual('kebabcase', paramCase(replacement))
   .default(replacement);
 
 const lowerCaseFirstChar = (string: String) => {
   return string.charAt(0).toLowerCase() + string.slice(1);
+};
+
+const capitalize = (string: string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
 const removeSpecialCharacters = (string: string) =>
