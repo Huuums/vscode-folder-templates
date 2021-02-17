@@ -26,44 +26,50 @@ The value `<FTName>` (or `[FTName]`) will always be interpolated into the compon
 Adding a transformer with this pattern `<FTName | transformer>` (or `<FTName % transformer>`) will give you the ability to transform your componentname wherever needed.
 The currently supported transformers are:
 
-- `lowerCase`
-- `upperCase`
-- `camelCase`
-- `capitalCase`
-- `constantCase`
-- `dotCase`
-- `headerCase`
-- `noCase`
-- `paramCase`
-- `pascalCase`
-- `pathCase`
-- `sentenceCase`
-- `snakeCase`
+- `lowercase`
+- `uppercase`
+- `camelcase`
+- `capitalcase`
+- `constantcase`
+- `dotcase`
+- `headercase`
+- `nocase`
+- `paramcase`
+- `pascalcase`
+- `pathcase`
+- `sentencecase`
+- `snakecase`
 - `singular`
 - `plural`
+- `lowercasefirstchar`
+- `capitalize`
+- `kebabcase`
 
 It is possible to specify a set of custom Variables which will be interpolated as well. You will be asked to enter a value for every custom variable defined. They can be transformed the same way as the default `<FTName>`
 
 Examples
 
-| Input            | Transformer                                | Result           | Description                                            |
-| ---------------- | -------------------------------------------| ---------------- | -------------------------------------------------------|
-| LOWERCASE        | \<FTName \| lowerCase\>                    | lowercase        |
-| uppercase        | \<FTName \| upperCase\>                    | UPPERCASE        |
-| test string      | \<FTName \| camelCase\>                    | testString       |
-| test string      | \<FTName \| capitalCase\>                  | Test String      |
-| test string      | \<FTName \| constantCase\>                 | TEST_STRING      |
-| test string      | \<FTName \| dotCase\>                      | test.string      |
-| test string      | \<FTName \| headerCase\>                   | Test-String      |
-| test string      | \<FTName \| noCase\>                       | test string      |
-| test string      | \<FTName \| paramCase\>                    | test-string      |
-| test string      | \<FTName \| pascalCase\>                   | TestString       |
-| test string      | \<FTName \| pathCase\>                     | test/string      |
-| test string      | \<FTName \| sentenceCase\>                 | Test string      |
-| test string      | \<FTName \| snakeCase\>                    | test_string      |
+| Input            | Transformer                                | Result           | Description                                                                                                     |
+| ---------------- | -------------------------------------------| ---------------- | ----------------------------------------------------------------------------------------------------------------|
+| LOWERCASE        | \<FTName \| lowercase\>                    | lowercase        |
+| uppercase        | \<FTName \| uppercase\>                    | UPPERCASE        |
+| My-new-component | \<FTName \| camelcase\>                    | myNewComponent   | (First letter is lowercased. Every letter behind a special character will be capitalized)                       |
+| test string      | \<FTName \| capitalcase\>                  | Test String      |
+| test string      | \<FTName \| constantcase\>                 | TEST_STRING      |
+| test string      | \<FTName \| dotcase\>                      | test.string      |
+| test string      | \<FTName \| headercase\>                   | Test-String      |
+| test string      | \<FTName \| nocase\>                       | test string      |
+| test string      | \<FTName \| paramcase\>                    | test-string      |
+| my-new-component | \<FTName \| pascalcase\>                   | MyNewComponent   | (First letter and every letter behind a special character will be capitalized)                                  |
+| test string      | \<FTName \| pathcase\>                     | test/string      |
+| test string      | \<FTName \| sentencecase\>                 | Test string      |
+| test string      | \<FTName \| snakecase\>                    | test_string      |
 | boxes            | \<FTName \| singular\>                     | box              |
 | box              | \<FTName \| plural\>                       | boxes            |
-| wooden box       | \<FTName \| plural?snakeCase?upperCase\>   | WOODEN_BOXES     | it is possible to combine transformations with the "?" operator, these will be performed from left to right.
+| wooden box       | \<FTName \| plural?snakecase?uppercase\>   | WOODEN_BOXES     | it is possible to combine transformations with the "?" operator, these will be performed from left to right.    |
+| MyNewComponent   | \<FTName \| lowercasefirstchar\>           | myNewComponent   |
+| myNewComponent   | \<FTName \| capitalize\>                   | MyNewComponent   | just like capitalcase
+| myNewComponent   | \<FTName \| kebabcase\>                    | my-new-component | just like paramcase
 
 ### Thanks to the change-case and pluralize libraries, for the transformations
 

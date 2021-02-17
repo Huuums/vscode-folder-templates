@@ -33,23 +33,33 @@ const getTransformedSSFName = (replacement: string, transformer: string) =>
     .filter((s) => s !== '')
     .reduce((acc, cur) => transform(acc, cur), replacement) ?? replacement;
 
-const transform = (replacement: string, transformer: string) => match(transformer)
-  .caseEqual('lowerCase', replacement.toLowerCase())
-  .caseEqual('upperCase', replacement.toUpperCase())
-  .caseEqual('camelCase', camelCase(replacement))
-  .caseEqual('capitalCase', capitalCase(replacement))
-  .caseEqual('constantCase', constantCase(replacement))
-  .caseEqual('dotCase', dotCase(replacement))
-  .caseEqual('headerCase', headerCase(replacement))
-  .caseEqual('noCase', noCase(replacement))
-  .caseEqual('paramCase', paramCase(replacement))
-  .caseEqual('pascalCase', pascalCase(replacement))
-  .caseEqual('pathCase', pathCase(replacement))
-  .caseEqual('sentenceCase', sentenceCase(replacement))
-  .caseEqual('snakeCase', snakeCase(replacement))
+const transform = (replacement: string, transformer: string) => match(removeSpecialCharacters(transformer).toLowerCase())
+  .caseEqual('lowercase', replacement.toLowerCase())
+  .caseEqual('uppercase', replacement.toUpperCase())
+  .caseEqual('camelcase', camelCase(replacement))
+  .caseEqual('capitalcase', capitalCase(replacement))
+  .caseEqual('constantcase', constantCase(replacement))
+  .caseEqual('dotcase', dotCase(replacement))
+  .caseEqual('headercase', headerCase(replacement))
+  .caseEqual('nocase', noCase(replacement))
+  .caseEqual('paramcase', paramCase(replacement))
+  .caseEqual('pascalcase', pascalCase(replacement))
+  .caseEqual('pathcase', pathCase(replacement))
+  .caseEqual('sentencecase', sentenceCase(replacement))
+  .caseEqual('snakecase', snakeCase(replacement))
   .caseEqual('singular', singular(replacement))
   .caseEqual('plural', plural(replacement))
+  .caseEqual('lowercasefirstchar', lowerCaseFirstChar(replacement))
+  .caseEqual('capitalize', capitalCase(replacement))
+  .caseEqual('kebabcase', paramCase(replacement))
   .default(replacement);
+
+const lowerCaseFirstChar = (string: String) => {
+  return string.charAt(0).toLowerCase() + string.slice(1);
+};
+
+const removeSpecialCharacters = (string: string) =>
+  string.replace(/[^a-zA-Z]/g, "");
 
 const convertFileContentToString = (content: FileTemplate | undefined) => {
   if (!content) {
