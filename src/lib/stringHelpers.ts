@@ -1,3 +1,20 @@
+import { plural, singular } from "pluralize";
+import {
+  camelCase,
+  capitalCase,
+  constantCase,
+  dotCase,
+  headerCase,
+  noCase,
+  paramCase,
+  pascalCase,
+  pathCase,
+  sentenceCase,
+  snakeCase,
+  camelCaseTransformMerge,
+  pascalCaseTransformMerge
+} from "change-case";
+import { match } from "x-match-expression";
 import { FileTemplate } from "../types";
 
 const replacePlaceholder = function (
@@ -11,59 +28,45 @@ const replacePlaceholder = function (
   );
 };
 
-const getTransformedSSFName = (replacement: string, transformer: string) => {
-  if (!transformer) {
-    return replacement;
-  }
-  switch (removeSpecialCharacters(transformer).toLowerCase()) {
-    case "lowercase":
-      return replacement.toLowerCase();
-    case "lowercasefirstchar":
-      return lowerCaseFirstChar(replacement);
-    case "uppercase":
-      return replacement.toUpperCase();
-    case "capitalize":
-      return capitalize(replacement);
-    case "pascalcase":
-      return toCamelCase(capitalize(replacement));
-    case "camelcase":
-      return toCamelCase(lowerCaseFirstChar(replacement));
-    case "kebabcase":
-      return toKebabCase(replacement);
-    case "snakecase":
-      return toSnakeCase(replacement);
-    default:
-      return replacement;
-  }
-};
+const getTransformedSSFName = (replacement: string, transformer: string) =>
+  transformer
+    ?.split('?')
+    .map((s) => s.trim())
+    .filter((s) => s !== '')
+    .reduce((acc, cur) => transform(acc, cur), replacement) ?? replacement;
 
-const toCamelCase = (str: String) =>
-  str.replace(/[^A-Za-z0-9]+(.)/g, (_, charAfterSpecialChars) => {
-    return charAfterSpecialChars.toUpperCase();
-  });
 
-const toKebabCase = (str: String) =>
-  str
-    .replace(/([a-z])([A-Z])/g, "$1-$2") // get all lowercase letters that are near to uppercase ones
-    .replace(/[\s_]+/g, "-") // replace all spaces and low dashes
-    .toLowerCase(); // convert to lower case
-
-const toSnakeCase = (str: String) =>
-  str
-    .replace(/([a-z])([A-Z])/g, "$1_$2") // get all lowercase letters that are near to uppercase ones
-    .replace(/[\s\-]+/g, "_") // replace all spaces and low dashes
-    .toLowerCase(); // convert to lower case
+const transform = (replacement: string, transformer: string) => match(removeSpecialCharacters(transformer).toLowerCase())
+  .caseEqual('lowercase', replacement.toLowerCase())
+  .caseEqual('uppercase', replacement.toUpperCase())
+  .caseEqual('camelcase', camelCase(replacement, { transform: camelCaseTransformMerge }))
+  .caseEqual('capitalcase', capitalCase(replacement))
+  .caseEqual('constantcase', constantCase(replacement))
+  .caseEqual('dotcase', dotCase(replacement))
+  .caseEqual('headercase', headerCase(replacement))
+  .caseEqual('nocase', noCase(replacement))
+  .caseEqual('paramcase', paramCase(replacement))
+  .caseEqual('pascalcase', pascalCase(replacement, { transform: pascalCaseTransformMerge }))
+  .caseEqual('pathcase', pathCase(replacement))
+  .caseEqual('sentencecase', sentenceCase(replacement))
+  .caseEqual('snakecase', snakeCase(replacement))
+  .caseEqual('singular', singular(replacement))
+  .caseEqual('plural', plural(replacement))
+  .caseEqual('lowercasefirstchar', lowerCaseFirstChar(replacement))
+  .caseEqual('capitalize', capitalize(replacement))
+  .caseEqual('kebabcase', paramCase(replacement))
+  .default(replacement);
 
 const lowerCaseFirstChar = (string: String) => {
   return string.charAt(0).toLowerCase() + string.slice(1);
 };
 
-const removeSpecialCharacters = (string: string) =>
-  string.replace(/[^a-zA-Z]/g, "");
-
 const capitalize = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
+
+const removeSpecialCharacters = (string: string) =>
+  string.replace(/[^a-zA-Z]/g, "");
 
 const convertFileContentToString = (content: FileTemplate | undefined) => {
   if (!content) {
@@ -75,7 +78,7 @@ const convertFileContentToString = (content: FileTemplate | undefined) => {
 const getReplaceRegexp = (variableName: string) => {
   //finds <variableName( (| or %) transformer)> and  [variableName( (| or %) transformer)] in strings
   const regexp = new RegExp(
-    `(?:<|\\[)${variableName}\\s*(?:\\s*(?:\\||\\%)\\s*([A-Za-z]+)\\s*?)?(?:>|\\])`,
+    `(?:<|\\[)${variableName}\\s*(?:\\s*(?:\\||\\%)\\s*([A-Za-z\?]+)\\s*?)?(?:>|\\])`,
     "g"
   );
 
