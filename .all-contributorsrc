@@ -1,0 +1,138 @@
+{
+  "projectName": "vscode-folder-templates",
+  "projectOwner": "Huuums",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 50,
+  "commit": false,
+  "commitConvention": "eslint",
+  "contributors": [
+    {
+      "login": "Huuums",
+      "name": "Dennis Collon",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9745322?v=4",
+      "profile": "https://github.com/Huuums",
+      "contributions": [
+        "code",
+        "ideas",
+        "doc"
+      ]
+    },
+    {
+      "login": "marcocavanna",
+      "name": "Marco Cavanna",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23149008?v=4",
+      "profile": "https://github.com/marcocavanna",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "ResoDev",
+      "name": "Matej Rešetár",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18404788?v=4",
+      "profile": "http://resocoder.com/",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "Brydom",
+      "name": "Brydon McCluskey",
+      "avatar_url": "https://avatars.githubusercontent.com/u/31896612?v=4",
+      "profile": "https://github.com/Brydom",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "gytisgreitai",
+      "name": "Gytis Ramanauskas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1690228?v=4",
+      "profile": "https://github.com/gytisgreitai",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "howagain",
+      "name": "howagain",
+      "avatar_url": "https://avatars.githubusercontent.com/u/59291747?v=4",
+      "profile": "https://github.com/howagain",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "eWert-Online",
+      "name": "Torben Ewert",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7459510?v=4",
+      "profile": "https://github.com/eWert-Online",
+      "contributions": [
+        "code",
+        "ideas",
+        "doc"
+      ]
+    },
+    {
+      "login": "arash-bizcover",
+      "name": "arash-bizcover",
+      "avatar_url": "https://avatars.githubusercontent.com/u/62287461?v=4",
+      "profile": "https://github.com/arash-bizcover",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "ofir130",
+      "name": "ofir130",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58131874?v=4",
+      "profile": "https://github.com/ofir130",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "njoppi2",
+      "name": "Nelson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16853682?v=4",
+      "profile": "https://github.com/njoppi2",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "oxk4r01",
+      "name": "Óscar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1032224?v=4",
+      "profile": "https://github.com/oxk4r01",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "N7K4",
+      "name": "Nicolas Karg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/50399433?v=4",
+      "profile": "https://n13.org/",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "mrelemerson",
+      "name": "mrelemerson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9539916?v=4",
+      "profile": "https://github.com/mrelemerson",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
