@@ -192,3 +192,37 @@ The name of the extension was changed which resulted in some placeholders and th
 ### Credits
 
 The idea for FT came after seeing this extension [ee92.folderize](https://marketplace.visualstudio.com/items?itemName=ee92.folderize)
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/Huuums"><img src="https://avatars.githubusercontent.com/u/9745322?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Dennis Collon</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/commits?author=Huuums" title="Code">💻</a> <a href="#ideas-Huuums" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/Huuums/vscode-folder-templates/commits?author=Huuums" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/marcocavanna"><img src="https://avatars.githubusercontent.com/u/23149008?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Marco Cavanna</b></sub></a><br /><a href="#ideas-marcocavanna" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="http://resocoder.com/"><img src="https://avatars.githubusercontent.com/u/18404788?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Matej Rešetár</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/issues?q=author%3AResoDev" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/Brydom"><img src="https://avatars.githubusercontent.com/u/31896612?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Brydon McCluskey</b></sub></a><br /><a href="#ideas-Brydom" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/gytisgreitai"><img src="https://avatars.githubusercontent.com/u/1690228?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Gytis Ramanauskas</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/issues?q=author%3Agytisgreitai" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/howagain"><img src="https://avatars.githubusercontent.com/u/59291747?v=4?s=50" width="50px;" alt=""/><br /><sub><b>howagain</b></sub></a><br /><a href="#ideas-howagain" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/eWert-Online"><img src="https://avatars.githubusercontent.com/u/7459510?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Torben Ewert</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/commits?author=eWert-Online" title="Code">💻</a> <a href="#ideas-eWert-Online" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/Huuums/vscode-folder-templates/commits?author=eWert-Online" title="Documentation">📖</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/arash-bizcover"><img src="https://avatars.githubusercontent.com/u/62287461?v=4?s=50" width="50px;" alt=""/><br /><sub><b>arash-bizcover</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/issues?q=author%3Aarash-bizcover" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/ofir130"><img src="https://avatars.githubusercontent.com/u/58131874?v=4?s=50" width="50px;" alt=""/><br /><sub><b>ofir130</b></sub></a><br /><a href="#ideas-ofir130" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/njoppi2"><img src="https://avatars.githubusercontent.com/u/16853682?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Nelson</b></sub></a><br /><a href="#ideas-njoppi2" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/oxk4r01"><img src="https://avatars.githubusercontent.com/u/1032224?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Óscar</b></sub></a><br /><a href="#ideas-oxk4r01" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://n13.org/"><img src="https://avatars.githubusercontent.com/u/50399433?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Nicolas Karg</b></sub></a><br /><a href="#ideas-N7K4" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/mrelemerson"><img src="https://avatars.githubusercontent.com/u/9539916?v=4?s=50" width="50px;" alt=""/><br /><sub><b>mrelemerson</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/commits?author=mrelemerson" title="Code">💻</a> <a href="https://github.com/Huuums/vscode-folder-templates/commits?author=mrelemerson" title="Documentation">📖</a> <a href="#ideas-mrelemerson" title="Ideas, Planning, & Feedback">🤔</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
