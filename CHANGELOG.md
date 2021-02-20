@@ -1,5 +1,12 @@
 # Change Log
 
+### 3.2.0
+
+- Thanks for all of these [mrelemerson](https://github.com/mrelemerson)
+  - Added several new transformers.
+  - Added functionality to chain transformers
+  - Updated Docs
+
 ### 3.1.1
 
 - fixed display error in inputbox when a customvariable has a defaultvalue
