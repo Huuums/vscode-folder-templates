@@ -18,7 +18,8 @@
     "angular",
     "vue"
   ],
-  "version": "3.2.0",
+  "icon": "images/extension-icon.png",
+  "version": "3.2.1",
   "publisher": "Huuums",
   "engines": {
     "vscode": "^1.37.0"

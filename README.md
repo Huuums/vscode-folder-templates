@@ -217,6 +217,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/oxk4r01"><img src="https://avatars.githubusercontent.com/u/1032224?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Óscar</b></sub></a><br /><a href="#ideas-oxk4r01" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://n13.org/"><img src="https://avatars.githubusercontent.com/u/50399433?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Nicolas Karg</b></sub></a><br /><a href="#ideas-N7K4" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/mrelemerson"><img src="https://avatars.githubusercontent.com/u/9539916?v=4?s=50" width="50px;" alt=""/><br /><sub><b>mrelemerson</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/commits?author=mrelemerson" title="Code">💻</a> <a href="https://github.com/Huuums/vscode-folder-templates/commits?author=mrelemerson" title="Documentation">📖</a> <a href="#ideas-mrelemerson" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/thimo1"><img src="https://avatars.githubusercontent.com/u/20241082?v=4?s=50" width="50px;" alt=""/><br /><sub><b>thimo1</b></sub></a><br /><a href="#design-thimo1" title="Design">🎨</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/pdgustavo"><img src="https://avatars.githubusercontent.com/u/49566969?v=4?s=50" width="50px;" alt=""/><br /><sub><b>pdgustavo</b></sub></a><br /><a href="#ideas-pdgustavo" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
