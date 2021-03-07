@@ -132,6 +132,24 @@
         "doc",
         "ideas"
       ]
+    },
+    {
+      "login": "thimo1",
+      "name": "thimo1",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20241082?v=4",
+      "profile": "https://github.com/thimo1",
+      "contributions": [
+        "design"
+      ]
+    },
+    {
+      "login": "pdgustavo",
+      "name": "pdgustavo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49566969?v=4",
+      "profile": "https://github.com/pdgustavo",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7

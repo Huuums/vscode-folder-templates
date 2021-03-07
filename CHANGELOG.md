@@ -1,5 +1,8 @@
 # Change Log
 
+
+### 3.2.1
+- Added Extension Icon
 ### 3.2.0
 
 - Thanks for all of these [mrelemerson](https://github.com/mrelemerson)
