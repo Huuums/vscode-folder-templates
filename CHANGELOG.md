@@ -1,6 +1,8 @@
 # Change Log
 
-
+### 3.3.0
+- Added Multifolder workspace support
+- Fixed a bug where you couldn't have projects on a drive other than your system drive
 ### 3.2.1
 - Added Extension Icon
 ### 3.2.0
