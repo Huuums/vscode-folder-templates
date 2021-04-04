@@ -18,7 +18,7 @@ const CreateFolderStructure = async (
 ) => {
   const targetUri = await getTargetPath(resource);
 
-  const templateFolderPath = [getLocalTemplatePath(), globalTemplatePath];
+  const templateFolderPath = [await getLocalTemplatePath(targetUri), globalTemplatePath];
   const validPaths = templateFolderPath.filter(isDirectory) as string[];
 
   const configTemplates: FolderTemplate[] = readConfig("structures") || [];

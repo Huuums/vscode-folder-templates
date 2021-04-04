@@ -150,6 +150,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "afmeirelles",
+      "name": "André Feijó Meirelles",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6554655?v=4",
+      "profile": "https://github.com/afmeirelles",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7

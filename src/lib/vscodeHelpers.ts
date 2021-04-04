@@ -70,12 +70,20 @@ export const openAndSaveFile = async (uri: vscode.Uri | null) => {
   }
 };
 
-export const getLocalTemplatePath = () => {
-  const workspacePath = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
-  if (isDirectory(`${workspacePath}/.fttemplates`)) {
-    // Match any TypeScript file in the root of this workspace folder
-    return `${workspacePath}/.fttemplates`;
-    // Match any TypeScript file in `someFolder` inside this workspace folder
+export const getLocalTemplatePath = async (resourceUri: vscode.Uri | undefined) => {
+  let workspace: vscode.WorkspaceFolder | undefined;
+  if(resourceUri){
+    workspace = vscode.workspace.getWorkspaceFolder(resourceUri);
+  } else {
+    workspace = await vscode.window.showWorkspaceFolderPick({placeHolder: "Pick the workspace in which you would like to create the Folder"});
+  }
+  if(workspace){
+    const templateFolderPath = `${workspace.uri.fsPath}/.fttemplates`;
+    if (isDirectory(templateFolderPath)) {
+      // Match any TypeScript file in the root of this workspace folder
+      return templateFolderPath;
+      // Match any TypeScript file in `someFolder` inside this workspace folder
+    }
   }
   return null;
 };
