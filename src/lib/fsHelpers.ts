@@ -7,15 +7,17 @@ import {
   lstatSync,
   mkdirSync,
 } from "fs";
+import {normalize} from 'path';
 import { FolderContent } from "../types";
 
-export const getFileContent = (path: PathLike) => {
+export const getFileContent = (path: string) => {
   try {
-    let fileContent = readFileSync(path, {
+    let fileContent = readFileSync(normalize(path), {
       encoding: "utf8",
     });
     return fileContent;
   } catch (e) {
+    console.log({e});
     return null;
   }
 };

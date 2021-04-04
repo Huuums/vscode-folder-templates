@@ -159,6 +159,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "yourimiyi",
+      "name": "Yourim Yi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9496172?v=4",
+      "profile": "https://github.com/yourimiyi",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7
