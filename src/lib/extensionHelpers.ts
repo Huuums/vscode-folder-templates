@@ -12,7 +12,7 @@ import { readConfig } from "./vscodeHelpers";
 import * as path from "path";
 
 export const parseSettingsFile = (
-  path: PathLike
+  path: string
 ): FolderTemplateConfig | null => {
   const settings = getFileContent(path);
   if (!settings) {
@@ -45,8 +45,8 @@ export const getTemplatesFromFS = (folderPath: PathLike) => {
       const settings =
         parseSettingsFile(`${folderPath}/${file.name}/.ftsettings.json`) || {};
 
-      const contents = getFolderContents(
-        vscode.Uri.parse(`${folderPath}/${file.name}`)
+        const contents = getFolderContents(
+        vscode.Uri.file(`${folderPath}/${file.name}`)
       );
 
       const structure = convertFolderContentToStructure(
