@@ -168,7 +168,17 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "DenverCoder1",
+      "name": "Jonah Lawrence",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20955511?v=4",
+      "profile": "https://freshidea.com/jonah",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
