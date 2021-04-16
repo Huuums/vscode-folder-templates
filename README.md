@@ -223,6 +223,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/pdgustavo"><img src="https://avatars.githubusercontent.com/u/49566969?v=4?s=50" width="50px;" alt=""/><br /><sub><b>pdgustavo</b></sub></a><br /><a href="#ideas-pdgustavo" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/afmeirelles"><img src="https://avatars.githubusercontent.com/u/6554655?v=4?s=50" width="50px;" alt=""/><br /><sub><b>André Feijó Meirelles</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/issues?q=author%3Aafmeirelles" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/yourimiyi"><img src="https://avatars.githubusercontent.com/u/9496172?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Yourim Yi</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/issues?q=author%3Ayourimiyi" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://freshidea.com/jonah"><img src="https://avatars.githubusercontent.com/u/20955511?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Jonah Lawrence</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/commits?author=DenverCoder1" title="Documentation">📖</a></td>
   </tr>
 </table>
 
