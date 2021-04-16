@@ -171,7 +171,7 @@ Two example filetemplates
 
 You can add a `string` argument to the keybind you are using to define a static folder in which you want the new folder to be created.
 
-```json
+```jsonc
 {
   "key": "ctrl+0", //or your preffered keybind,
   "command": "FT.createFolderStructure",
