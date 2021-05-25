@@ -29,6 +29,7 @@
     "Other"
   ],
   "activationEvents": [
+    "onFileSystem:.ftsettings.json",
     "onCommand:FT.createFolderStructure",
     "onCommand:FT.openGlobalFolder"
   ],
@@ -60,15 +61,119 @@
           "type": "array",
           "scope": "window",
           "default": [],
-          "description": "Configure as many structures as you would like."
+          "description": "An array of objects where one object equals one natural file system folder structure.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "$ref": "https://raw.githubusercontent.com/Huuums/vscode-folder-templates/master/src/schemas/defs.json#definitions/string_nonempty"
+              },
+              "customVariables": {
+                "type": "array",
+                "description": "Custom variables that will be replaced upon folder creation",
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "https://raw.githubusercontent.com/Huuums/vscode-folder-templates/master/src/schemas/defs.json#definitions/cvar"
+                }
+              },
+              "omitParentDirectory": {
+                "type": "boolean",
+                "default": false,
+                "description": "If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it"
+              },
+              "omitFTName": {
+                "type": "boolean",
+                "default": false,
+                "description": "If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)"
+              },
+              "structure": {
+                "type": "array",
+                "description": "Every object in this array represents a file or folder that will be created. To create an empty directory, set the `template` property to `EmptyDirectory`",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+
+                  "required": [
+                    "fileName"
+                  ],
+
+                  "properties": {
+                    "fileName": {
+                      "$ref": "https://raw.githubusercontent.com/Huuums/vscode-folder-templates/master/src/schemas/defs.json#definitions/string_nonempty",
+                      "description": "Filenames can contain interpolated custom variables or can be assigned to subfolders by typing the full path. If a subfolder does not exist in the full path provided, it will be created at runtime",
+                      "examples": [
+                        "<FTName>.jsx",
+                        "root/subfolderA/subfolderB/test.js",
+                        "<CustomVar>"
+                      ]
+                    },
+                    "template": {
+                      "description": "",
+                      "anyOf": [
+                        {
+                          "const": "EmptyDirectory"
+                        },
+                        {
+                          "$ref": "https://raw.githubusercontent.com/Huuums/vscode-folder-templates/master/src/schemas/defs.json#definitions/string_nonempty"
+                        }
+                      ],
+                      "examples": [
+                        "Typescript Functional Component",
+                        "IndexFile",
+                        "EmptyDirectory"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "if": {
+              "properties": {
+                "omitParentDirectory": { "const": true }
+              }
+            },
+            "then": {
+              "properties": {
+                  "omitFTName": { "enum": [ true ]
+                }
+              }
+            }
+          }
         },
         "folderTemplates.fileTemplates": {
           "type": "object",
           "scope": "window",
-          "default": {}
+          "default": {},
+          "examples": [
+            "\"Indexfile\": \"import <FTName> from './<FTName>'\n\nexport default <FTName>;"
+          ],
+          "additionalProperties": false,
+          "patternProperties": {
+            "^.+$": {
+              "anyOf": [
+                {
+                  "$ref": "https://raw.githubusercontent.com/Huuums/vscode-folder-templates/master/src/schemas/defs.json#definitions/string_nonempty"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "default" : ""
+                  }
+                }
+              ]
+            }
+          }
         }
       }
-    }
+    },
+    "jsonValidation": [
+      {
+        "fileMatch": ".ftsettings.json",
+        "url": "./src/schemas/ftsettings.json"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "yarn run compile",

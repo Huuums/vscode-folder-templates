@@ -1,0 +1,21 @@
+{
+    "title": "JSON schema for the .ftsettings configuration file",
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "definitions": {
+        "string_nonempty": {
+            "type": "string",
+            "default": "",
+            "minLength": 1,
+            "pattern": "^([^\\s].*[^\\s]*)$"
+        },
+        "cvar": {
+            "type": "string",
+            "examples": [
+                "mainColor=>red",
+                "secondaryColor=>#cecece"
+            ],
+            "description": "A key-value pair (kvp) declaration delimited by '=>'. The left hand side is the name of the variable and the right hand side is the value to replace it",
+            "pattern": "^[\\w]+=>[^\\s]+$"
+        }
+    }
+}
