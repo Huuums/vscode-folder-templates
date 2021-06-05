@@ -5,7 +5,7 @@ import {
 } from "../types";
 
 import { createDirectory, fileExists } from "../lib/fsHelpers";
-import { existsSync } from "node:fs";
+
 
 export default (
   wsedit: vscode.WorkspaceEdit

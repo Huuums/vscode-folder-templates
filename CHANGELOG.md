@@ -1,5 +1,8 @@
 # Change Log
 
+### 3.4.1
+
+-fixed .ftsettings.json schema
 ### 3.4.0
 
 - Added `overwriteExistingFiles` property to structure settings

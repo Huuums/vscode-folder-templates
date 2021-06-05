@@ -19,10 +19,10 @@
     "vue"
   ],
   "icon": "images/extension-icon.png",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "publisher": "Huuums",
   "engines": {
-    "vscode": "^1.37.0"
+    "vscode": "^1.56.0"
   },
   "license": "MIT",
   "categories": [
@@ -184,7 +184,7 @@
     "jsonValidation": [
       {
         "fileMatch": ".ftsettings.json",
-        "url": "./src/schemas/ftsettings.json"
+        "url": "./schemas/ftsettings.json"
       }
     ]
   },
