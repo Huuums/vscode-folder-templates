@@ -8,7 +8,8 @@ import {
   mkdirSync,
 } from "fs";
 import {normalize} from 'path';
-import { FolderContent } from "../types";
+import { FileSettings, FolderContent, StringReplaceTuple } from "../types";
+import { replaceAllVariablesInString } from "./stringHelpers";
 
 export const getFileContent = (path: string) => {
   try {
@@ -62,4 +63,26 @@ export const isDirectory = (path: PathLike | null) => {
 
 export const createDirectory = (path: PathLike) => {
   mkdirSync(path, { recursive: true });
+};
+
+export const getFullFilePath = (fileName: string, resourcePath: string = '', replaceValues: StringReplaceTuple[], omitParentDirectory: boolean) => {
+  const [[, componentName]] = replaceValues;
+
+  if(omitParentDirectory){
+    return normalize(
+      `${resourcePath}/${replaceAllVariablesInString(
+        fileName,
+        replaceValues
+        )}`
+        );
+      }
+      return normalize(
+      `${resourcePath}/${componentName}/${replaceAllVariablesInString(
+        fileName,
+        replaceValues
+      )}`);
+};
+
+export const fileExists = (file: FileSettings) => {
+  return existsSync(file.fileName);
 };

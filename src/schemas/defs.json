@@ -12,10 +12,11 @@
             "type": "string",
             "examples": [
                 "mainColor=>red",
-                "secondaryColor=>#cecece"
+                "secondaryColor=>#cecece",
+                "tertiaryColor"
             ],
             "description": "A key-value pair (kvp) declaration delimited by '=>'. The left hand side is the name of the variable and the right hand side is the value to replace it",
-            "pattern": "^[\\w]+=>[^\\s]+$"
+            "pattern": "^[\\w]+(=>([^\\s])+)?$"
         }
     }
 }

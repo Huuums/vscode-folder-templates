@@ -3,6 +3,7 @@ export interface FolderTemplateConfig {
   customVariables?: string[];
   omitParentDirectory?: boolean;
   omitFTName?: boolean;
+  overwriteExistingFiles?: 'never' | 'always' | 'prompt';
 }
 
 export interface FolderTemplate extends FolderTemplateConfig {

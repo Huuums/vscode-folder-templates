@@ -92,6 +92,7 @@ See more in the [examples](https://github.com/Huuums/vscode-folder-templates/tre
 | customVariables     | string[] `variableName=>defaultvalue`        | Custom variables that will be replaced upon folder creation                                                                                 |
 | omitParentDirectory | boolean (default: false)                     | If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it. |
 | omitFTName          | boolean (default: false)                     | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                       |
+| overwriteExistingFiles          | "never" \| "always" \| "prompt" (default: "never")                     | If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation.                        |
 
 ## Creating your Template in VS Code settings.json
 
@@ -135,6 +136,8 @@ Example Structure
 | structure           | {fileName: string, template?: string}[] | Every object in this array represents a File or Folder that will be created                                                                 |
 | omitParentDirectory | boolean (default: false)                | If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it. |
 | omitFTName          | boolean (default: false)                | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                       |
+| overwriteExistingFiles          | "never" \| "always" \| "prompt" (default: "never")                     | If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation.                        |
+
 
 If a template is specified for a file its value should match one of the names of your [folderTemplates.fileTemplates](#folderTemplates.fileTemplates) or have the `EmptyDirectory` value. If the template value is `EmptyDirectory` it will create an empty directory instead of a file.
 
@@ -224,6 +227,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/afmeirelles"><img src="https://avatars.githubusercontent.com/u/6554655?v=4?s=50" width="50px;" alt=""/><br /><sub><b>André Feijó Meirelles</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/issues?q=author%3Aafmeirelles" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/yourimiyi"><img src="https://avatars.githubusercontent.com/u/9496172?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Yourim Yi</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/issues?q=author%3Ayourimiyi" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://freshidea.com/jonah"><img src="https://avatars.githubusercontent.com/u/20955511?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Jonah Lawrence</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/commits?author=DenverCoder1" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://davidfreer.me/"><img src="https://avatars.githubusercontent.com/u/11242654?v=4?s=50" width="50px;" alt=""/><br /><sub><b>David Freer</b></sub></a><br /><a href="#ideas-soulshined" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/Huuums/vscode-folder-templates/commits?author=soulshined" title="Documentation">📖</a></td>
   </tr>
 </table>
 

@@ -1,5 +1,8 @@
 # Change Log
 
+### 3.4.0
+
+- Added `overwriteExistingFiles` property to structure settings
 ### 3.3.0
 - Added Multifolder workspace support
 - Fixed a bug where you couldn't have projects on a drive other than your system drive

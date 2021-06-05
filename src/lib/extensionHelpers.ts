@@ -2,14 +2,18 @@ import * as vscode from "vscode";
 import { readdirSync, PathLike } from "fs";
 import {
   FileSettings,
+  FileTemplate,
+  FileTemplateCollection,
   FolderContent,
   FolderStructure,
   FolderTemplate,
   FolderTemplateConfig,
+  StringReplaceTuple,
 } from "../types";
 import { getFileContent, getFolderContents } from "./fsHelpers";
 import { readConfig } from "./vscodeHelpers";
 import * as path from "path";
+import { convertFileContentToString, replaceAllVariablesInString } from "./stringHelpers";
 
 export const parseSettingsFile = (
   path: string
@@ -101,4 +105,25 @@ export const pickTemplate = async (allStructures: FolderTemplate[]) => {
   }
 
   return getSelectedFolderStructure(allStructures, structureName);
+};
+
+export const replaceTemplateContent = (fileTemplate: FileTemplate | undefined, replaceValues: StringReplaceTuple[]) => {
+  const configTemplates: FileTemplateCollection | undefined = readConfig(
+    "fileTemplates"
+  );
+
+  let template;
+  if (typeof fileTemplate === "string") {
+    //if fileTemplate corresponds to a template in vs code settings use that template otherwise just use string directly
+    template = configTemplates?.[fileTemplate || ""] || fileTemplate;
+  } else {
+    template = fileTemplate;
+  }
+
+  const fileContent = replaceAllVariablesInString(
+    convertFileContentToString(template),
+    replaceValues
+  );
+
+  return fileContent;
 };
