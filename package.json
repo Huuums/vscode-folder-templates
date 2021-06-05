@@ -87,17 +87,25 @@
                 "default": false,
                 "description": "If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)"
               },
+              "overwriteExistingFiles": {
+                "type": "string",
+                "default": "never",
+                "enum": [
+                  "never",
+                  "always",
+                  "prompt"
+                ],
+                "description": "If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation. "
+              },
               "structure": {
                 "type": "array",
                 "description": "Every object in this array represents a file or folder that will be created. To create an empty directory, set the `template` property to `EmptyDirectory`",
                 "items": {
                   "type": "object",
                   "additionalProperties": false,
-
                   "required": [
                     "fileName"
                   ],
-
                   "properties": {
                     "fileName": {
                       "$ref": "https://raw.githubusercontent.com/Huuums/vscode-folder-templates/master/src/schemas/defs.json#definitions/string_nonempty",
@@ -130,12 +138,17 @@
             },
             "if": {
               "properties": {
-                "omitParentDirectory": { "const": true }
+                "omitParentDirectory": {
+                  "const": true
+                }
               }
             },
             "then": {
               "properties": {
-                  "omitFTName": { "enum": [ true ]
+                "omitFTName": {
+                  "enum": [
+                    true
+                  ]
                 }
               }
             }
@@ -159,7 +172,7 @@
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "default" : ""
+                    "default": ""
                   }
                 }
               ]
@@ -184,26 +197,26 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.9",
+    "@types/chai": "^4.2.18",
     "@types/chai-fs": "^2.0.2",
     "@types/glob": "^7.1.1",
     "@types/mocha": "^8.0.0",
-    "@types/node": "^14.0.27",
+    "@types/node": "^14.17.2",
     "@types/pluralize": "^0.0.29",
     "@types/rimraf": "^3.0.0",
     "@types/sinon": "^9.0.0",
     "@types/sinon-chai": "^3.2.3",
-    "@types/vscode": "^1.37.0",
+    "@types/vscode": "^1.56.0",
     "all-contributors-cli": "^6.20.0",
     "chai": "^4.2.0",
     "chai-fs": "^2.0.0",
-    "glob": "^7.1.4",
-    "mocha": "^8.0.1",
+    "glob": "^7.1.7",
+    "mocha": "^8.4.0",
     "rimraf": "^3.0.2",
     "sinon": "^9.0.0",
-    "sinon-chai": "^3.5.0",
+    "sinon-chai": "^3.7.0",
     "tslint": "^6.0.0",
-    "typescript": "^4.1.2",
+    "typescript": "^4.3.2",
     "vscode-test": "^1.0.2"
   },
   "dependencies": {

@@ -4,29 +4,35 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
-        "name" : {
-            "$ref": "./defs.json/#/definitions/string_nonempty",
-            "description": "If a value is not provided, the default is the name of the parent folder",
-            "title": "Name of the folder template"
-        },
-        "customVariables" : {
-            "type": "array",
-            "description": "Custom variables that will be replaced upon folder creation",
-            "uniqueItems": true,
-            "items": {
-                "$ref": "./defs.json/#/definitions/cvar"
-            }
-        },
-        "omitParentDirectory": {
-            "type": "boolean",
-            "default": false,
-            "description": "If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it"
-        },
-        "omitFTName": {
-            "type": "boolean",
-            "default": false,
-            "description": "If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)"
+      "name": {
+        "$ref": "./defs.json/#/definitions/string_nonempty",
+        "description": "If a value is not provided, the default is the name of the parent folder",
+        "title": "Name of the folder template"
+      },
+      "customVariables": {
+        "type": "array",
+        "description": "Custom variables that will be replaced upon folder creation",
+        "uniqueItems": true,
+        "items": {
+          "$ref": "./defs.json/#/definitions/cvar"
         }
+      },
+      "overwriteExistingFiles": {
+        "type": "string",
+        "default": "never",
+        "enum": ["never", "always", "prompt"],
+        "description": "If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation. "
+      },
+      "omitParentDirectory": {
+        "type": "boolean",
+        "default": false,
+        "description": "If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it"
+      },
+      "omitFTName": {
+        "type": "boolean",
+        "default": false,
+        "description": "If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)"
+      }
     },
     "if": {
         "properties": {

@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import createStructure from "../actions/createStructure";
 
-import { FolderTemplate, StringReplaceTuple } from "../types";
+import { FolderStructure, FolderTemplate, StringReplaceTuple } from "../types";
 import getReplaceValueTuples from "../lib/getReplaceValueTuples";
 import {
   getLocalTemplatePath,
@@ -9,8 +9,10 @@ import {
   readConfig,
 } from "../lib/vscodeHelpers";
 import { showError, showInfo } from "../lib/vscodeHelpers";
-import { getTemplatesFromFS, pickTemplate } from "../lib/extensionHelpers";
-import { isDirectory } from "../lib/fsHelpers";
+import { getTemplatesFromFS, pickTemplate, replaceTemplateContent } from "../lib/extensionHelpers";
+import { fileExists, getFullFilePath, isDirectory } from "../lib/fsHelpers";
+import { existsSync } from "fs";
+import { relative } from "path";
 
 const CreateFolderStructure = async (
   resource: vscode.Uri | string | undefined,
@@ -42,8 +44,9 @@ const CreateFolderStructure = async (
   const {
     customVariables,
     structure: files,
-    omitParentDirectory,
-    omitFTName,
+    omitParentDirectory = false,
+    omitFTName = false,
+    overwriteExistingFiles = 'never'
   } = pickedTemplate;
 
   if (omitFTName && !omitParentDirectory) {
@@ -64,12 +67,29 @@ const CreateFolderStructure = async (
   }
 
   //Get all inputs for replacement of customvariables
-  const replaceValueTuples = await getReplaceValueTuples(customVariables || []);
+  const replaceValueTuples = ftNameTuple.concat(await getReplaceValueTuples(customVariables || []));
+  const structureContents = files.map(row => ({
+    fileName: getFullFilePath(row.fileName, targetUri?.fsPath, replaceValueTuples, omitParentDirectory),
+    template: replaceTemplateContent(row.template, replaceValueTuples)
+  }));
+
+  let filesToCreate: FolderStructure;
+
+  if (overwriteExistingFiles === 'always') {
+    filesToCreate = structureContents;
+  } else if(overwriteExistingFiles === 'prompt'){
+    //Doesn't work yet. Fix when coming back. Files to create are figured out in a wrong way
+    const existingFiles = structureContents.filter(fileExists);
+    const newFiles = structureContents.filter(file => !fileExists(file));
+    const filesToOverwrite = existingFiles.length ? await vscode.window.showQuickPick(existingFiles.map(row => ({...row, label: relative(targetUri?.fsPath || '', row.fileName)})), {canPickMany:true, placeHolder: 'Please select the files that should be overwritten'}) || [] : [];
+    filesToCreate = newFiles.concat(structureContents.filter(file => filesToOverwrite.find(row => row.fileName === file.fileName)));
+  } else {
+    filesToCreate = structureContents.filter(file => !fileExists(file));
+    structureContents.filter(fileExists).forEach(file => showInfo(`Skipped creating file ${file.fileName} because it exists already`));
+  }
+
   await createStructure(
-    ftNameTuple.concat(replaceValueTuples),
-    files,
-    targetUri,
-    omitParentDirectory
+    filesToCreate,
   );
 
   return "done";
