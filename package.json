@@ -22,7 +22,7 @@
   "version": "3.4.0",
   "publisher": "Huuums",
   "engines": {
-    "vscode": "^1.37.0"
+    "vscode": "^1.56.0"
   },
   "license": "MIT",
   "categories": [
