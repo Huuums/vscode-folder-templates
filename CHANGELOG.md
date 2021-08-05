@@ -1,5 +1,9 @@
 # Change Log
 
+### 3.5.0
+- fixed json schemapath for vscode settings.json
+- added the possibility to configure the template folder path.
+- added a __static__ replace, replacefirst and replacelast function
 ### 3.4.1
 
 -fixed .ftsettings.json schema

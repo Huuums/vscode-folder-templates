@@ -11,7 +11,6 @@ import {
 import { showError, showInfo } from "../lib/vscodeHelpers";
 import { getTemplatesFromFS, pickTemplate, replaceTemplateContent } from "../lib/extensionHelpers";
 import { fileExists, getFullFilePath, isDirectory } from "../lib/fsHelpers";
-import { existsSync } from "fs";
 import { relative } from "path";
 
 const CreateFolderStructure = async (

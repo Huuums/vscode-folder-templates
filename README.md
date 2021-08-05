@@ -70,6 +70,9 @@ Examples
 | MyNewComponent   | \<FTName \| lowercasefirstchar\>           | myNewComponent   |
 | myNewComponent   | \<FTName \| capitalize\>                   | MyNewComponent   | just like capitalcase
 | myNewComponent   | \<FTName \| kebabcase\>                    | my-new-component | just like paramcase
+| aaa              | \<FTName \| replacefirst('a', 'b')\>       | baa              |
+| aaa              | \<FTName \| replacelast('a', 'b')\>        | aab              |
+| aaa              | \<FTName \| replace('a', 'b')\>            | bbb              |
 
 ### Thanks to the change-case and pluralize libraries, for the transformations
 
@@ -140,6 +143,12 @@ Example Structure
 
 
 If a template is specified for a file its value should match one of the names of your [folderTemplates.fileTemplates](#folderTemplates.fileTemplates) or have the `EmptyDirectory` value. If the template value is `EmptyDirectory` it will create an empty directory instead of a file.
+
+### folderTemplates.templateFolderPath
+
+This setting is used to deviate from the default `.fttemplates` folder path at the root of your project folder. If this setting is set then Folder Templates will look for your templates at the specified path (relative to your project root)
+
+- Default `.fttemplates`
 
 ### folderTemplates.fileTemplates
 
