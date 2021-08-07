@@ -19,7 +19,7 @@
     "vue"
   ],
   "icon": "images/extension-icon.png",
-  "version": "3.5.1",
+  "version": "3.5.2",
   "publisher": "Huuums",
   "engines": {
     "vscode": "^1.56.0"
@@ -172,7 +172,7 @@
             "^.+$": {
               "anyOf": [
                 {
-                  "$ref": "https://raw.githubusercontent.com/Huuums/vscode-folder-templates/master/src/schemas/defs.json#definitions/string_nonempty"
+                  "$ref": "https://raw.githubusercontent.com/Huuums/vscode-folder-templates/master/schemas/defs.json#definitions/string_nonempty"
                 },
                 {
                   "type": "array",

@@ -1,5 +1,8 @@
 # Change Log
 
+### 3.5.2
+
+- fixed json schema reference for settings file
 ### 3.5.1
 
 - Changed Readme a bit more (I really need to get into writing better and easier to understand docs)
