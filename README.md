@@ -70,9 +70,9 @@ Examples
 | MyNewComponent   | \<FTName \| lowercasefirstchar\>           | myNewComponent   |
 | myNewComponent   | \<FTName \| capitalize\>                   | MyNewComponent   | just like capitalcase
 | myNewComponent   | \<FTName \| kebabcase\>                    | my-new-component | just like paramcase
-| aaa              | \<FTName \| replacefirst('a', 'b')\>       | baa              |
-| aaa              | \<FTName \| replacelast('a', 'b')\>        | aab              |
-| aaa              | \<FTName \| replace('a', 'b')\>            | bbb              |
+| aaa              | \<FTName \| replacefirst('a', 'b')\>       | baa              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replacefirst function.
+| aaa              | \<FTName \| replacelast('a', 'b')\>        | aab              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replacelast function.
+| aaa              | \<FTName \| replace('a', 'b')\>            | bbb              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replace function.
 
 ### Thanks to the change-case and pluralize libraries, for the transformations
 
