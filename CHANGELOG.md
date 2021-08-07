@@ -1,5 +1,8 @@
 # Change Log
 
+### 3.5.1
+
+- Changed Readme a bit more (I really need to get into writing better and easier to understand docs)
 ### 3.5.0
 - fixed json schemapath for vscode settings.json
 - added the possibility to configure the template folder path.
