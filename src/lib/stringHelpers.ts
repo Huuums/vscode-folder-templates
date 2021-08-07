@@ -28,15 +28,31 @@ const replacePlaceholder = function (
   );
 };
 
-const getTransformedSSFName = (replacement: string, transformer: string) =>
-  transformer
+const getTransformedSSFName = (replacement: string, transformer: string) => {
+  return transformer
     ?.split('?')
     .map((s) => s.trim())
     .filter((s) => s !== '')
     .reduce((acc, cur) => transform(acc, cur), replacement) ?? replacement;
+};
+
+const replaceFirstTransformer = (originalString:string,replaceFrom: string, replaceWith: string) => originalString.replace(replaceFrom, replaceWith);
+const replaceLastTransformer = (originalString:string,replaceFrom: string, replaceWith: string) => originalString.substring(0, originalString.lastIndexOf(replaceFrom)) + replaceWith;
+const replaceTransformer = (originalString:string,replaceFrom: string, replaceWith: string) => originalString.replaceAll(replaceFrom, replaceWith);
 
 
-const transform = (replacement: string, transformer: string) => match(removeSpecialCharacters(transformer).toLowerCase())
+const transform = (replacement: string, transformer: string) => {
+  if(transformer.includes('replacefirst')) {
+    return replaceFirstTransformer(replacement, transformer.split("'")[1], transformer.split("'")[3]);
+  }
+  if(transformer.includes('replacelast')) {
+    return replaceLastTransformer(replacement, transformer.split("'")[1], transformer.split("'")[3]);
+  }
+  if(transformer.includes('replace')) {
+    return replaceTransformer(replacement, transformer.split("'")[1], transformer.split("'")[3]);
+  }
+
+  return match(removeSpecialCharacters(transformer).toLowerCase())
   .caseEqual('lowercase', replacement.toLowerCase())
   .caseEqual('uppercase', replacement.toUpperCase())
   .caseEqual('camelcase', camelCase(replacement, { transform: camelCaseTransformMerge }))
@@ -56,6 +72,7 @@ const transform = (replacement: string, transformer: string) => match(removeSpec
   .caseEqual('capitalize', capitalize(replacement))
   .caseEqual('kebabcase', paramCase(replacement))
   .default(replacement);
+};
 
 const lowerCaseFirstChar = (string: String) => {
   return string.charAt(0).toLowerCase() + string.slice(1);
@@ -78,9 +95,11 @@ const convertFileContentToString = (content: FileTemplate | undefined) => {
 const getReplaceRegexp = (variableName: string) => {
   //finds <variableName( (| or %) transformer)> and  [variableName( (| or %) transformer)] in strings
   const regexp = new RegExp(
-    `(?:<|\\[)${variableName}\\s*(?:\\s*(?:\\||\\%)\\s*([A-Za-z\?]+)\\s*?)?(?:>|\\])`,
+    `(?:<|\\[)${variableName}\\s*(?:\\s*(?:\\||\\%)\\s*((?:[A-Za-z]\\?*)*|(?:[A-Za-z]+\\?)*replace(?:first|last)?\\('.*?',\\s*'.*?'\\)(?:\\?[A-Za-z]+)*)\\s*)*(?:>|\\])`,
     "g"
   );
+
+  //(?:<|\[)FTName\s*(?:\s*(?:\||\%)\s*((?:[A-Za-z]\?)+|(?:[A-Za-z]+\?)*replace\(\[.*?\]\,\s*\[.*?\]\)(?:\?[A-Za-z]+)*)\s*?)*(?:>|\])
 
   return regexp;
 };

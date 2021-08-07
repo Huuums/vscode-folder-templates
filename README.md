@@ -70,6 +70,9 @@ Examples
 | MyNewComponent   | \<FTName \| lowercasefirstchar\>           | myNewComponent   |
 | myNewComponent   | \<FTName \| capitalize\>                   | MyNewComponent   | just like capitalcase
 | myNewComponent   | \<FTName \| kebabcase\>                    | my-new-component | just like paramcase
+| aaa              | \<FTName \| replacefirst('a', 'b')\>       | baa              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replacefirst function.
+| aaa              | \<FTName \| replacelast('a', 'b')\>        | aab              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replacelast function.
+| aaa              | \<FTName \| replace('a', 'b')\>            | bbb              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replace function.
 
 ### Thanks to the change-case and pluralize libraries, for the transformations
 
@@ -140,6 +143,12 @@ Example Structure
 
 
 If a template is specified for a file its value should match one of the names of your [folderTemplates.fileTemplates](#folderTemplates.fileTemplates) or have the `EmptyDirectory` value. If the template value is `EmptyDirectory` it will create an empty directory instead of a file.
+
+### folderTemplates.templateFolderPath
+
+This setting is used to deviate from the default `.fttemplates` folder path at the root of your project folder. If this setting is set then Folder Templates will look for your templates at the specified path (relative to your project root)
+
+- Default `.fttemplates`
 
 ### folderTemplates.fileTemplates
 
@@ -228,6 +237,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/yourimiyi"><img src="https://avatars.githubusercontent.com/u/9496172?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Yourim Yi</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/issues?q=author%3Ayourimiyi" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://freshidea.com/jonah"><img src="https://avatars.githubusercontent.com/u/20955511?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Jonah Lawrence</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/commits?author=DenverCoder1" title="Documentation">📖</a></td>
     <td align="center"><a href="https://davidfreer.me/"><img src="https://avatars.githubusercontent.com/u/11242654?v=4?s=50" width="50px;" alt=""/><br /><sub><b>David Freer</b></sub></a><br /><a href="#ideas-soulshined" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/Huuums/vscode-folder-templates/commits?author=soulshined" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/deasems"><img src="https://avatars.githubusercontent.com/u/52422742?v=4?s=50" width="50px;" alt=""/><br /><sub><b>deasems</b></sub></a><br /><a href="#ideas-deasems" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/magick93"><img src="https://avatars.githubusercontent.com/u/2173213?v=4?s=50" width="50px;" alt=""/><br /><sub><b>magick93</b></sub></a><br /><a href="#ideas-magick93" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 

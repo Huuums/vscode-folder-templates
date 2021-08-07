@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { readdirSync, PathLike } from "fs";
+import { readdirSync, PathLike, existsSync } from "fs";
 import {
   FileSettings,
   FileTemplate,
@@ -18,6 +18,9 @@ import { convertFileContentToString, replaceAllVariablesInString } from "./strin
 export const parseSettingsFile = (
   path: string
 ): FolderTemplateConfig | null => {
+  if(!existsSync(path)){
+     return null;
+  }
   const settings = getFileContent(path);
   if (!settings) {
     return null;

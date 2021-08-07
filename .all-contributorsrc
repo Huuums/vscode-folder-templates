@@ -187,6 +187,24 @@
         "ideas",
         "doc"
       ]
+    },
+    {
+      "login": "deasems",
+      "name": "deasems",
+      "avatar_url": "https://avatars.githubusercontent.com/u/52422742?v=4",
+      "profile": "https://github.com/deasems",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "magick93",
+      "name": "magick93",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2173213?v=4",
+      "profile": "https://github.com/magick93",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
