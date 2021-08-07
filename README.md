@@ -81,11 +81,18 @@ Examples
 
 ## Creating templates on the File System
 
-You can either create a `.fttemplates` folder in your project root and save all templates you want to access in this project there or use the global `.fttemplates` folder that exists in the directory of this extension. (Use the `Open Global Folder Templates Directory` command in the command palette to get there quickly)
+One option is to create a `.fttemplates` (changeable via the folderTemplates.templateFolderPath in your vscode settings) folder in your project root and save all templates you want to access in this project there. You could also use the global `.fttemplates` folder that exists in the directory of this extension. (Use the `Open Global Folder Templates Directory` command in the command palette to get there quickly)
 
 Create a folder with files and folders inside it and put in the placeholders wherever you need them. That's it. You created your template. It works out of the box but if you need some special settings for a template you can create a `.ftsettings.json` file inside your template folder.
 
 See more in the [examples](https://github.com/Huuums/vscode-folder-templates/tree/master/examples)
+
+### folderTemplates.templateFolderPath
+
+This setting is used to deviate from the default `.fttemplates` folder path at the root of your project folder. If this setting is set then Folder Templates will look for your templates at the specified path (relative to your project root)
+
+- Default `.fttemplates`
+
 
 ### Available .ftsettings.json Properties
 
@@ -143,13 +150,6 @@ Example Structure
 
 
 If a template is specified for a file its value should match one of the names of your [folderTemplates.fileTemplates](#folderTemplates.fileTemplates) or have the `EmptyDirectory` value. If the template value is `EmptyDirectory` it will create an empty directory instead of a file.
-
-### folderTemplates.templateFolderPath
-
-This setting is used to deviate from the default `.fttemplates` folder path at the root of your project folder. If this setting is set then Folder Templates will look for your templates at the specified path (relative to your project root)
-
-- Default `.fttemplates`
-
 ### folderTemplates.fileTemplates
 
 - The `key` of the `key-value` pair is the name of the template
