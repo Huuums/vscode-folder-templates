@@ -1,5 +1,8 @@
 # Change Log
 
+### 3.5.3
+
+- added '&' operator to support chaining transformers in a filename
 ### 3.5.2
 
 - fixed json schema reference for settings file

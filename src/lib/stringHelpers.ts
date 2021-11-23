@@ -30,7 +30,7 @@ const replacePlaceholder = function (
 
 const getTransformedSSFName = (replacement: string, transformer: string) => {
   return transformer
-    ?.split('?')
+    ?.split(/(\?|\&)/)
     .map((s) => s.trim())
     .filter((s) => s !== '')
     .reduce((acc, cur) => transform(acc, cur), replacement) ?? replacement;
@@ -95,7 +95,7 @@ const convertFileContentToString = (content: FileTemplate | undefined) => {
 const getReplaceRegexp = (variableName: string) => {
   //finds <variableName( (| or %) transformer)> and  [variableName( (| or %) transformer)] in strings
   const regexp = new RegExp(
-    `(?:<|\\[)${variableName}\\s*(?:\\s*(?:\\||\\%)\\s*((?:[A-Za-z]\\?*)*|(?:[A-Za-z]+\\?)*replace(?:first|last)?\\('.*?',\\s*'.*?'\\)(?:\\?[A-Za-z]+)*)\\s*)*(?:>|\\])`,
+    `(?:<|\\[)${variableName}\\s*(?:\\s*(?:\\||\\%)\\s*((?:[A-Za-z](\\?|\\&)*)*|(?:[A-Za-z]+(\\?|\\&))*replace(?:first|last)?\\('.*?',\\s*'.*?'\\)(?:(\\?|\\&)[A-Za-z]+)*)\\s*)*(?:>|\\])`,
     "g"
   );
 

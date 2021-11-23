@@ -80,9 +80,7 @@ export const getLocalTemplatePath = async (resourceUri: vscode.Uri | undefined) 
   }
   if(workspace){
     const templateFolderPath = `${workspace.uri.fsPath}/${configTemplateFolderPath}`;
-    console.log({templateFolderPath});
     if (isDirectory(templateFolderPath)) {
-      console.log(`is folder ${templateFolderPath}`);
       // Match any TypeScript file in the root of this workspace folder
       return templateFolderPath;
       // Match any TypeScript file in `someFolder` inside this workspace folder

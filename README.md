@@ -66,7 +66,8 @@ Examples
 | test string      | \<FTName \| snakecase\>                    | test_string      |
 | boxes            | \<FTName \| singular\>                     | box              |
 | box              | \<FTName \| plural\>                       | boxes            |
-| wooden box       | \<FTName \| plural?snakecase?uppercase\>   | WOODEN_BOXES     | it is possible to combine transformations with the "?" operator, these will be performed from left to right.    |
+| wooden box       | \<FTName \| plural?snakecase?uppercase\>   | WOODEN_BOXES     | it is possible to combine transformations with the "?" or "&" operator, these will be performed from left to right.    |
+| wooden box       | \[FTName \% plural&snakecase&uppercase\]   | WOODEN_BOXES     | "&" operator example of row above    |
 | MyNewComponent   | \<FTName \| lowercasefirstchar\>           | myNewComponent   |
 | myNewComponent   | \<FTName \| capitalize\>                   | MyNewComponent   | just like capitalcase
 | myNewComponent   | \<FTName \| kebabcase\>                    | my-new-component | just like paramcase
@@ -239,6 +240,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://davidfreer.me/"><img src="https://avatars.githubusercontent.com/u/11242654?v=4?s=50" width="50px;" alt=""/><br /><sub><b>David Freer</b></sub></a><br /><a href="#ideas-soulshined" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/Huuums/vscode-folder-templates/commits?author=soulshined" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/deasems"><img src="https://avatars.githubusercontent.com/u/52422742?v=4?s=50" width="50px;" alt=""/><br /><sub><b>deasems</b></sub></a><br /><a href="#ideas-deasems" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/magick93"><img src="https://avatars.githubusercontent.com/u/2173213?v=4?s=50" width="50px;" alt=""/><br /><sub><b>magick93</b></sub></a><br /><a href="#ideas-magick93" title="Ideas, Planning, & Feedback">🤔</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/jrmora"><img src="https://avatars.githubusercontent.com/u/9900351?v=4?s=50" width="50px;" alt=""/><br /><sub><b>jrmora</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/issues?q=author%3Ajrmora" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 

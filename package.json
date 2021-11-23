@@ -19,7 +19,7 @@
     "vue"
   ],
   "icon": "images/extension-icon.png",
-  "version": "3.5.2",
+  "version": "3.5.3",
   "publisher": "Huuums",
   "engines": {
     "vscode": "^1.56.0"
@@ -231,6 +231,7 @@
     "html-tags": "^3.1.0",
     "open": "^7.3.0",
     "pluralize": "^8.0.0",
-    "x-match-expression": "^0.2.1"
+    "x-match-expression": "^0.2.1",
+    "yarn": "^1.22.17"
   }
 }
