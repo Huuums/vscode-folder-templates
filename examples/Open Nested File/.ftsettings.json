@@ -1,0 +1,6 @@
+{
+  "omitParentDirectory": true,
+  "openFilesWhenDone": [
+    "nestedfolder/[FTName % capitalize].test.js"
+  ]
+}

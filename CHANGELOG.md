@@ -1,29 +1,45 @@
 # Change Log
 
+### 3.6.0
+
+- Thank you very much [ThumNet](https://github.com/ThumNet)
+  - added an option to open specific files automatically when template creation is done.
+
 ### 3.5.3
 
 - added '&' operator to support chaining transformers in a filename
+
 ### 3.5.2
 
 - fixed json schema reference for settings file
+
 ### 3.5.1
 
 - Changed Readme a bit more (I really need to get into writing better and easier to understand docs)
+
 ### 3.5.0
+
 - fixed json schemapath for vscode settings.json
 - added the possibility to configure the template folder path.
 - added a __static__ replace, replacefirst and replacelast function
+
 ### 3.4.1
 
 -fixed .ftsettings.json schema
+
 ### 3.4.0
 
 - Added `overwriteExistingFiles` property to structure settings
+
 ### 3.3.0
+
 - Added Multifolder workspace support
 - Fixed a bug where you couldn't have projects on a drive other than your system drive
+
 ### 3.2.1
+
 - Added Extension Icon
+
 ### 3.2.0
 
 - Thanks for all of these [mrelemerson](https://github.com/mrelemerson)
