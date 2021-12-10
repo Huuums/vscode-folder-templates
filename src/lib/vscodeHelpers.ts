@@ -70,9 +70,9 @@ export const openAndSaveFile = async (uri: vscode.Uri | null) => {
   }
 };
 
-export const openFile = (filePath: string) => {  
+export const openFile = async (filePath: string) => {  
   if (fileExistsByName(filePath)){
-    return vscode.window.showTextDocument(vscode.Uri.file(filePath), { preview: false });
+    return await vscode.window.showTextDocument(vscode.Uri.file(filePath), { preview: false });
   }
 }
 
