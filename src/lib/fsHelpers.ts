@@ -83,6 +83,10 @@ export const getFullFilePath = (fileName: string, resourcePath: string = '', rep
       )}`);
 };
 
+export const fileExistsByName = (fileName: string) => {
+  return existsSync(fileName);
+};
+
 export const fileExists = (file: FileSettings) => {
   return existsSync(file.fileName);
 };

@@ -6,6 +6,7 @@ import getReplaceValueTuples from "../lib/getReplaceValueTuples";
 import {
   getLocalTemplatePath,
   getTargetPath,
+  openFile,
   readConfig,
 } from "../lib/vscodeHelpers";
 import { showError, showInfo } from "../lib/vscodeHelpers";
@@ -43,6 +44,7 @@ const CreateFolderStructure = async (
   const {
     customVariables,
     structure: files,
+    openFilesWhenDone,
     omitParentDirectory = false,
     omitFTName = false,
     overwriteExistingFiles = 'never'
@@ -90,6 +92,12 @@ const CreateFolderStructure = async (
   await createStructure(
     filesToCreate,
   );
+
+  if (openFilesWhenDone && targetUri) {
+    await Promise.all(
+      openFilesWhenDone.map(file => openFile(getFullFilePath(file, targetUri.fsPath, replaceValueTuples, omitParentDirectory)))
+    )
+  }
 
   return "done";
 };

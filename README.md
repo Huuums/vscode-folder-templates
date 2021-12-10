@@ -104,6 +104,8 @@ This setting is used to deviate from the default `.fttemplates` folder path at t
 | omitParentDirectory | boolean (default: false)                     | If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it. |
 | omitFTName          | boolean (default: false)                     | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                       |
 | overwriteExistingFiles          | "never" \| "always" \| "prompt" (default: "never")                     | If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation.                        |
+| openFilesWhenDone     | string[]        | List of files to open when the Folder Template is created. (Supports use of variables, see examples)                                                      |
+
 
 ## Creating your Template in VS Code settings.json
 
