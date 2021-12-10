@@ -32,6 +32,14 @@
         "type": "boolean",
         "default": false,
         "description": "If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)"
+      },
+      "openFilesWhenDone": {
+        "type": "array",
+        "description": "Files to open after the folder template is created",
+        "uniqueItems": true,
+        "items": {
+          "$ref": "./defs.json/#/definitions/string_nonempty"
+        }
       }
     },
     "if": {

@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { isDirectory } from "./fsHelpers";
+import { isDirectory, fileExistsByName } from "./fsHelpers";
 
 export const readConfig = (key: string): any => {
   const config = vscode.workspace.getConfiguration("folderTemplates");
@@ -69,6 +69,12 @@ export const openAndSaveFile = async (uri: vscode.Uri | null) => {
     return document.save();
   }
 };
+
+export const openFile = async (filePath: string) => {  
+  if (fileExistsByName(filePath)){
+    return await vscode.window.showTextDocument(vscode.Uri.file(filePath), { preview: false });
+  }
+}
 
 export const getLocalTemplatePath = async (resourceUri: vscode.Uri | undefined) => {
   const configTemplateFolderPath = await readConfig('templateFolderPath') || '.fttemplates';

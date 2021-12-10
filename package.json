@@ -103,6 +103,14 @@
                 ],
                 "description": "If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation. "
               },
+              "openFilesWhenDone": {
+                "type": "array",
+                "description": "Files to open after the folder template is created",
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "https://raw.githubusercontent.com/Huuums/vscode-folder-templates/master/schemas/defs.json/#/definitions/string_nonempty"
+                }
+              },
               "structure": {
                 "type": "array",
                 "description": "Every object in this array represents a file or folder that will be created. To create an empty directory, set the `template` property to `EmptyDirectory`",

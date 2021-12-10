@@ -4,6 +4,7 @@ export interface FolderTemplateConfig {
   omitParentDirectory?: boolean;
   omitFTName?: boolean;
   overwriteExistingFiles?: 'never' | 'always' | 'prompt';
+  openFilesWhenDone?: string[];
 }
 
 export interface FolderTemplate extends FolderTemplateConfig {
