@@ -96,7 +96,7 @@ const CreateFolderStructure = async (
   if (openFilesWhenDone && targetUri) {
     await Promise.all(
       openFilesWhenDone.map(file => openFile(getFullFilePath(file, targetUri.fsPath, replaceValueTuples, omitParentDirectory)))
-    )
+    );
   }
 
   return "done";
