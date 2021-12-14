@@ -65,8 +65,11 @@ export const createDirectory = (path: PathLike) => {
   mkdirSync(path, { recursive: true });
 };
 
-export const getFullFilePath = (fileName: string, resourcePath: string = '', replaceValues: StringReplaceTuple[], omitParentDirectory: boolean) => {
-  const [[, componentName]] = replaceValues;
+export const getFullFilePath = (fileName: string, resourcePath: string = '', replaceValues: StringReplaceTuple[] | [], omitParentDirectory: boolean) => {
+  let componentName = "";
+  if(replaceValues.length > 0) {
+    ([[, componentName]] = replaceValues);
+  }
 
   if(omitParentDirectory){
     return normalize(
@@ -74,13 +77,13 @@ export const getFullFilePath = (fileName: string, resourcePath: string = '', rep
         fileName,
         replaceValues
         )}`
-        );
-      }
-      return normalize(
-      `${resourcePath}/${componentName}/${replaceAllVariablesInString(
-        fileName,
-        replaceValues
-      )}`);
+    );
+  }
+  return normalize(
+  `${resourcePath}/${componentName}/${replaceAllVariablesInString(
+    fileName,
+    replaceValues
+  )}`);
 };
 
 export const fileExistsByName = (fileName: string) => {

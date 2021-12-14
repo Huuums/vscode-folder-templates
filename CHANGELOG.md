@@ -1,5 +1,9 @@
 # Change Log
 
+### 3.6.1
+
+- Fixed an issue where the extension would crash when no replace value is used
+
 ### 3.6.0
 
 - Thank you very much [ThumNet](https://github.com/ThumNet)
