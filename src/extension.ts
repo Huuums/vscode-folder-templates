@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import createFolderStructure from "./commands/createFolderStructure";
-import * as open from "open";
+import open from "open";
 import { createDirectory, isDirectory } from "./lib/fsHelpers";
 
 // this method is called when your extension is activated
