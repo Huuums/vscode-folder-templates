@@ -9,7 +9,7 @@ import {
   openFile,
   readConfig,
 } from "../lib/vscodeHelpers";
-import { showError, showInfo } from "../lib/vscodeHelpers";
+import { showError, showInfo, getWorkspaceUri } from "../lib/vscodeHelpers";
 import { getTemplatesFromFS, pickTemplate, replaceTemplateContent } from "../lib/extensionHelpers";
 import { fileExists, getFullFilePath, isDirectory } from "../lib/fsHelpers";
 import { relative } from "path";
@@ -18,7 +18,8 @@ const CreateFolderStructure = async (
   resource: vscode.Uri | string | undefined,
   globalTemplatePath: string
 ) => {
-  const targetUri = await getTargetPath(resource);
+  const workspaceUri = await getWorkspaceUri();
+  const targetUri = await getTargetPath(resource, workspaceUri);
 
   const templateFolderPath = [await getLocalTemplatePath(targetUri), globalTemplatePath];
   const validPaths = templateFolderPath.filter(isDirectory) as string[];
@@ -47,12 +48,19 @@ const CreateFolderStructure = async (
     openFilesWhenDone,
     omitParentDirectory = false,
     omitFTName = false,
-    overwriteExistingFiles = 'never'
+    overwriteExistingFiles = 'never',
+    absolutePath = false
   } = pickedTemplate;
 
   if (omitFTName && !omitParentDirectory) {
     return showError(
       "omitFTName option can only be true when omitParentDirectory is true as well."
+    );
+  }
+
+  if (absolutePath && !omitParentDirectory) {
+    return showError(
+      "absolutePath option can only be true when omitParentDirectory is true as well."
     );
   }
 
@@ -69,8 +77,9 @@ const CreateFolderStructure = async (
 
   //Get all inputs for replacement of customvariables
   const replaceValueTuples = ftNameTuple.concat(await getReplaceValueTuples(customVariables || []));
+  const fsPath = (absolutePath ? workspaceUri : targetUri)?.fsPath;
   const structureContents = files.map(row => ({
-    fileName: getFullFilePath(row.fileName, targetUri?.fsPath, replaceValueTuples, omitParentDirectory),
+    fileName: getFullFilePath(row.fileName, fsPath, replaceValueTuples, omitParentDirectory),
     template: replaceTemplateContent(row.template, replaceValueTuples)
   }));
 
@@ -82,7 +91,7 @@ const CreateFolderStructure = async (
     //Doesn't work yet. Fix when coming back. Files to create are figured out in a wrong way
     const existingFiles = structureContents.filter(fileExists);
     const newFiles = structureContents.filter(file => !fileExists(file));
-    const filesToOverwrite = existingFiles.length ? await vscode.window.showQuickPick(existingFiles.map(row => ({...row, label: relative(targetUri?.fsPath || '', row.fileName)})), {canPickMany:true, placeHolder: 'Please select the files that should be overwritten'}) || [] : [];
+    const filesToOverwrite = existingFiles.length ? await vscode.window.showQuickPick(existingFiles.map(row => ({...row, label: relative(fsPath || '', row.fileName)})), {canPickMany:true, placeHolder: 'Please select the files that should be overwritten'}) || [] : [];
     filesToCreate = newFiles.concat(structureContents.filter(file => filesToOverwrite.find(row => row.fileName === file.fileName)));
   } else {
     filesToCreate = structureContents.filter(file => !fileExists(file));
@@ -93,9 +102,9 @@ const CreateFolderStructure = async (
     filesToCreate,
   );
 
-  if (openFilesWhenDone && targetUri) {
+  if (openFilesWhenDone && fsPath) {
     await Promise.all(
-      openFilesWhenDone.map(file => openFile(getFullFilePath(file, targetUri.fsPath, replaceValueTuples, omitParentDirectory)))
+      openFilesWhenDone.map(file => openFile(getFullFilePath(file, fsPath, replaceValueTuples, omitParentDirectory)))
     );
   }
 

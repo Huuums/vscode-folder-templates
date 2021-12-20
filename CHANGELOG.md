@@ -1,5 +1,10 @@
 # Change Log
 
+### 3.7.0
+
+- Thanks [hondzik] (https://github.com/hondzik)
+  - Added the option so templates can use an absolute path
+
 ### 3.6.1
 
 - Fixed an issue where the extension would crash when no replace value is used
