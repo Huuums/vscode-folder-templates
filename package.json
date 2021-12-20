@@ -19,7 +19,7 @@
     "vue"
   ],
   "icon": "images/extension-icon.png",
-  "version": "3.6.1",
+  "version": "3.7.0",
   "publisher": "Huuums",
   "engines": {
     "vscode": "^1.56.0"
@@ -110,6 +110,11 @@
                 "items": {
                   "$ref": "https://raw.githubusercontent.com/Huuums/vscode-folder-templates/master/schemas/defs.json#definitions/string_nonempty"
                 }
+              },
+              "absolutePath": {
+                "type": "boolean",
+                "default": false,
+                "description": "If set to true FT will always create all files relative to project root rather than relative to the folder you clicked"
               },
               "structure": {
                 "type": "array",

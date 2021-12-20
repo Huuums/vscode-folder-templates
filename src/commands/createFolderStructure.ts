@@ -18,7 +18,7 @@ const CreateFolderStructure = async (
   resource: vscode.Uri | string | undefined,
   globalTemplatePath: string
 ) => {
-  const workspaceUri = await getWorkspaceUri();  
+  const workspaceUri = await getWorkspaceUri();
   const targetUri = await getTargetPath(resource, workspaceUri);
 
   const templateFolderPath = [await getLocalTemplatePath(targetUri), globalTemplatePath];
@@ -91,7 +91,7 @@ const CreateFolderStructure = async (
     //Doesn't work yet. Fix when coming back. Files to create are figured out in a wrong way
     const existingFiles = structureContents.filter(fileExists);
     const newFiles = structureContents.filter(file => !fileExists(file));
-    const filesToOverwrite = existingFiles.length ? await vscode.window.showQuickPick(existingFiles.map(row => ({...row, label: relative(targetUri?.fsPath || '', row.fileName)})), {canPickMany:true, placeHolder: 'Please select the files that should be overwritten'}) || [] : [];
+    const filesToOverwrite = existingFiles.length ? await vscode.window.showQuickPick(existingFiles.map(row => ({...row, label: relative(fsPath || '', row.fileName)})), {canPickMany:true, placeHolder: 'Please select the files that should be overwritten'}) || [] : [];
     filesToCreate = newFiles.concat(structureContents.filter(file => filesToOverwrite.find(row => row.fileName === file.fileName)));
   } else {
     filesToCreate = structureContents.filter(file => !fileExists(file));
@@ -102,7 +102,7 @@ const CreateFolderStructure = async (
     filesToCreate,
   );
 
-  if (openFilesWhenDone && targetUri) {
+  if (openFilesWhenDone && fsPath) {
     await Promise.all(
       openFilesWhenDone.map(file => openFile(getFullFilePath(file, fsPath, replaceValueTuples, omitParentDirectory)))
     );
