@@ -246,6 +246,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/jrmora"><img src="https://avatars.githubusercontent.com/u/9900351?v=4?s=50" width="50px;" alt=""/><br /><sub><b>jrmora</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/issues?q=author%3Ajrmora" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/ThumNet"><img src="https://avatars.githubusercontent.com/u/692308?v=4?s=50" width="50px;" alt=""/><br /><sub><b>ThumNet</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/commits?author=ThumNet" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/hondzik"><img src="https://avatars.githubusercontent.com/u/14993644?v=4?s=50" width="50px;" alt=""/><br /><sub><b>hondzik</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/commits?author=hondzik" title="Code">💻</a></td>
   </tr>
 </table>
 
