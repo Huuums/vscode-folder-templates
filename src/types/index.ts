@@ -2,6 +2,7 @@ export interface FolderTemplateConfig {
   name?: string;
   customVariables?: string[];
   omitParentDirectory?: boolean;
+  absolutePath?: boolean;
   omitFTName?: boolean;
   overwriteExistingFiles?: 'never' | 'always' | 'prompt';
   openFilesWhenDone?: string[];
