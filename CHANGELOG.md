@@ -1,5 +1,10 @@
 # Change Log
 
+### 3.8.0
+
+- Customizable global template directory (it is recommended to do this)
+  - If your global templates were deleted when you updated the extension this is due to a major mistake I made. I hope I fixed it but it still can't be guaranteed. Please choose a custom directory for your global templates so this won't happen again.
+  - DEPRECATED: The default Global Template directory will not be used anymore at some point in the future. So doing this sooner rather than later is encouraged.
 ### 3.7.0
 
 - Thanks [hondzik] (https://github.com/hondzik)
