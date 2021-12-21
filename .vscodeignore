@@ -8,3 +8,8 @@ vsc-extension-quickstart.md
 **/tslint.json
 **/*.map
 **/*.ts
+.fttemplates/**
+.all-contributorsrc
+node_modules/**
+test-fixtures/**
+CHANGELOG.md

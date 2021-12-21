@@ -77,14 +77,18 @@ Examples
 
 ### Thanks to the change-case and pluralize libraries, for the transformations
 
-- https://github.com/blakeembrey/change-case
-- https://www.npmjs.com/package/pluralize
+- [https://github.com/blakeembrey/change-case](https://github.com/blakeembrey/change-case)
+- [https://www.npmjs.com/package/pluralize](https://www.npmjs.com/package/pluralize)
 
 ## Creating templates on the File System
 
-One option is to create a `.fttemplates` (changeable via the folderTemplates.templateFolderPath in your vscode settings) folder in your project root and save all templates you want to access in this project there. You could also use the global `.fttemplates` folder that exists in the directory of this extension. (Use the `Open Global Folder Templates Directory` command in the command palette to get there quickly)
+One option is to create a `.fttemplates` folder in your project root and save all templates you want to access in this project there. This path can be changed via the `folderTemplates.templateFolderPath` setting in your vscode settings.
 
-Create a folder with files and folders inside it and put in the placeholders wherever you need them. That's it. You created your template. It works out of the box but if you need some special settings for a template you can create a `.ftsettings.json` file inside your template folder.
+To use global templates over multiple projects use the `Set Custom Global Folder Templates Directory` command to choose a folder which functions as a global `.fttemplates` directory.
+
+**DEPRECATED**: You can also use the global template folder that exists in the directory of this extension.
+
+Create a folder with files and folders inside your template directory and use placeholders wherever you need them. That's it. You created your template. It works out of the box but if you need some special settings for a template you can create a `.ftsettings.json` file inside your template folder.
 
 See more in the [examples](https://github.com/Huuums/vscode-folder-templates/tree/master/examples)
 
@@ -93,7 +97,6 @@ See more in the [examples](https://github.com/Huuums/vscode-folder-templates/tre
 This setting is used to deviate from the default `.fttemplates` folder path at the root of your project folder. If this setting is set then Folder Templates will look for your templates at the specified path (relative to your project root)
 
 - Default `.fttemplates`
-
 
 ### Available .ftsettings.json Properties
 
@@ -105,7 +108,7 @@ This setting is used to deviate from the default `.fttemplates` folder path at t
 | omitFTName          | boolean (default: false)                     | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                       |
 | overwriteExistingFiles          | "never" \| "always" \| "prompt" (default: "never")                     | If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation.                        |
 | openFilesWhenDone     | string[]        | List of files to open when the Folder Template is created. (Supports use of variables, see examples)                                                      |
-
+| absolutePath     | boolean (default: false)       | If set to true all files will be created relative to the project root. Not relative to the folder you clicked on. (Can only be set to true if omitParentDirectory is true as well)|
 
 ## Creating your Template in VS Code settings.json
 
@@ -150,9 +153,10 @@ Example Structure
 | omitParentDirectory | boolean (default: false)                | If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it. |
 | omitFTName          | boolean (default: false)                | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                       |
 | overwriteExistingFiles          | "never" \| "always" \| "prompt" (default: "never")                     | If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation.                        |
-
+| absolutePath     | boolean (default: false)       | If set to true all files will be created relative to the project root. Not relative to the folder you clicked on. (Can only be set to true if omitParentDirectory is true as well)|
 
 If a template is specified for a file its value should match one of the names of your [folderTemplates.fileTemplates](#folderTemplates.fileTemplates) or have the `EmptyDirectory` value. If the template value is `EmptyDirectory` it will create an empty directory instead of a file.
+
 ### folderTemplates.fileTemplates
 
 - The `key` of the `key-value` pair is the name of the template

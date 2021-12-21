@@ -1,3 +1,4 @@
+import { normalize } from "path";
 import * as vscode from "vscode";
 import { isDirectory, fileExistsByName } from "./fsHelpers";
 
@@ -70,14 +71,14 @@ export const openAndSaveFile = async (uri: vscode.Uri | null) => {
   }
 };
 
-export const openFile = async (filePath: string) => {  
+export const openFile = async (filePath: string) => {
   if (fileExistsByName(filePath)){
     return await vscode.window.showTextDocument(vscode.Uri.file(filePath), { preview: false });
   }
-}
+};
 
 export const getLocalTemplatePath = async (resourceUri: vscode.Uri | undefined) => {
-  const configTemplateFolderPath = await readConfig('templateFolderPath') || '.fttemplates';
+  const configTemplateFolderPath = readConfig('templateFolderPath') || '.fttemplates';
   let workspace: vscode.WorkspaceFolder | undefined;
   if(resourceUri){
     workspace = vscode.workspace.getWorkspaceFolder(resourceUri);
@@ -93,4 +94,12 @@ export const getLocalTemplatePath = async (resourceUri: vscode.Uri | undefined) 
     }
   }
   return null;
+};
+
+export const getGlobalTemplatePath = (defaultPath: string) =>  {
+  const configuredPath = readConfig('globalTemplateDirectoryPath');
+  if(configuredPath){
+    return normalize(configuredPath);
+  }
+  return defaultPath;
 };

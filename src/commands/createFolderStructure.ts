@@ -4,6 +4,7 @@ import createStructure from "../actions/createStructure";
 import { FolderStructure, FolderTemplate, StringReplaceTuple } from "../types";
 import getReplaceValueTuples from "../lib/getReplaceValueTuples";
 import {
+  getGlobalTemplatePath,
   getLocalTemplatePath,
   getTargetPath,
   openFile,
@@ -21,8 +22,9 @@ const CreateFolderStructure = async (
   const workspaceUri = await getWorkspaceUri();
   const targetUri = await getTargetPath(resource, workspaceUri);
 
-  const templateFolderPath = [await getLocalTemplatePath(targetUri), globalTemplatePath];
-  const validPaths = templateFolderPath.filter(isDirectory) as string[];
+  const templateFolderPaths = [await getLocalTemplatePath(targetUri), await getGlobalTemplatePath(globalTemplatePath)];
+
+  const validPaths = templateFolderPaths.filter(isDirectory) as string[];
 
   const configTemplates: FolderTemplate[] = readConfig("structures") || [];
   const folderTemplates: FolderTemplate[] = validPaths

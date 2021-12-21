@@ -21,7 +21,6 @@ export default (
   if(fileExists(file)) { existingFile = true; }
 
   if(existingFile) {
-    console.log("here");
     wsedit.replace(newPath, new vscode.Range(new vscode.Position(0, 0), new vscode.Position(99999, 99999)), file.template as string);
   } else {
     wsedit.createFile(newPath);
