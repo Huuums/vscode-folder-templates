@@ -78,14 +78,24 @@
             "additionalProperties": false,
             "properties": {
               "name": {
-                "$ref": "https://raw.githubusercontent.com/Huuums/vscode-folder-templates/master/schemas/defs.json#definitions/string_nonempty"
+                "type": "string",
+                "default": "",
+                "minLength": 1,
+                "pattern": "^([^\\s].*[^\\s]*)$"
               },
               "customVariables": {
                 "type": "array",
                 "description": "Custom variables that will be replaced upon folder creation",
                 "uniqueItems": true,
                 "items": {
-                  "$ref": "https://raw.githubusercontent.com/Huuums/vscode-folder-templates/master/schemas/defs.json#definitions/cvar"
+                  "type": "string",
+                  "examples": [
+                    "mainColor=>red",
+                    "secondaryColor=>#cecece",
+                    "tertiaryColor"
+                  ],
+                  "description": "A key-value pair (kvp) declaration delimited by '=>'. The left hand side is the name of the variable and the right hand side is the value to replace it",
+                  "pattern": "^[\\w]+(=>([^\\s])+)?$"
                 }
               },
               "omitParentDirectory": {
@@ -113,7 +123,10 @@
                 "description": "Files to open after the folder template is created",
                 "uniqueItems": true,
                 "items": {
-                  "$ref": "https://raw.githubusercontent.com/Huuums/vscode-folder-templates/master/schemas/defs.json#definitions/string_nonempty"
+                  "type": "string",
+                  "default": "",
+                  "minLength": 1,
+                  "pattern": "^([^\\s].*[^\\s]*)$"
                 }
               },
               "absolutePath": {
@@ -132,7 +145,10 @@
                   ],
                   "properties": {
                     "fileName": {
-                      "$ref": "https://raw.githubusercontent.com/Huuums/vscode-folder-templates/master/schemas/defs.json#definitions/string_nonempty",
+                      "type": "string",
+                      "default": "",
+                      "minLength": 1,
+                      "pattern": "^([^\\s].*[^\\s]*)$",
                       "description": "Filenames can contain interpolated custom variables or can be assigned to subfolders by typing the full path. If a subfolder does not exist in the full path provided, it will be created at runtime",
                       "examples": [
                         "<FTName>.jsx",
@@ -147,7 +163,10 @@
                           "const": "EmptyDirectory"
                         },
                         {
-                          "$ref": "https://raw.githubusercontent.com/Huuums/vscode-folder-templates/master/schemas/defs.json#definitions/string_nonempty"
+                          "type": "string",
+                          "default": "",
+                          "minLength": 1,
+                          "pattern": "^([^\\s].*[^\\s]*)$"
                         }
                       ],
                       "examples": [
@@ -190,7 +209,10 @@
             "^.+$": {
               "anyOf": [
                 {
-                  "$ref": "https://raw.githubusercontent.com/Huuums/vscode-folder-templates/master/schemas/defs.json#definitions/string_nonempty"
+                  "type": "string",
+                  "default": "",
+                  "minLength": 1,
+                  "pattern": "^([^\\s].*[^\\s]*)$"
                 },
                 {
                   "type": "array",
@@ -264,7 +286,6 @@
     "html-tags": "^3.1.0",
     "open": "^8.4.0",
     "pluralize": "^8.0.0",
-    "x-match-expression": "^0.2.1",
-    "yarn": "^1.22.17"
+    "x-match-expression": "^0.2.1"
   }
 }
