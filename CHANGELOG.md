@@ -1,5 +1,9 @@
 # Change Log
 
+### 3.8.1
+
+- fix bug that would show "$ref" warnings in all kinds of json files
+
 ### 3.8.0
 
 - Customizable global template directory (it is recommended to do this)
