@@ -37,7 +37,10 @@ const getTransformedSSFName = (replacement: string, transformer: string) => {
 };
 
 const replaceFirstTransformer = (originalString:string,replaceFrom: string, replaceWith: string) => originalString.replace(replaceFrom, replaceWith);
-const replaceLastTransformer = (originalString:string,replaceFrom: string, replaceWith: string) => originalString.substring(0, originalString.lastIndexOf(replaceFrom)) + replaceWith;
+const replaceLastTransformer = (originalString:string,replaceFrom: string, replaceWith: string) => {
+  const lastIndex = originalString.lastIndexOf(replaceFrom);
+  return lastIndex < 0 ? originalString : originalString.substring(0, originalString.lastIndexOf(replaceFrom)) + replaceWith;
+}
 const replaceTransformer = (originalString:string,replaceFrom: string, replaceWith: string) => originalString.replaceAll(replaceFrom, replaceWith);
 
 

@@ -53,6 +53,10 @@ suite("lib/stringHelper suite", () => {
 
     replacePlaceholder(`<FTName | kebabcase>`, regex, "dDeeDda sde").should.equal("d-dee-dda-sde");
 
+    replacePlaceholder(`<FTName | replace('zzz','bbb')>`, regex, "dDeeDda sde").should.equal("dDeeDda sde");
+    replacePlaceholder(`<FTName | replaceFirst('zzz','bbb')>`, regex, "dDeeDda sde").should.equal("dDeeDda sde");
+    replacePlaceholder(`<FTName | replaceLast('zzz','bbb')>`, regex, "dDeeDda sde").should.equal("dDeeDda sde");
+
     replacePlaceholder(`<FTName | snakecase?capitalize>`, regex, "dDeeDda sde").should.equal("D_dee_dda_sde");
     replacePlaceholder(`<FTName | snakecase&capitalize>`, regex, "dDeeDda sde").should.equal("D_dee_dda_sde");
     replacePlaceholder(`<FTName | replace('a','b')&snakecase&capitalize>`, regex, "dDeeDda sde").should.equal("D_dee_ddb_sde");
