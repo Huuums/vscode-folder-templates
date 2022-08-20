@@ -1,0 +1,93 @@
+{
+    "folderTemplates.structures": [
+        {
+            "name": "tsx",
+             "customVariables": ["WhatIsTheFileName"],
+            "omitParentDirectory": true,
+            "omitFTName": true,
+            "structure": [
+              {
+                "fileName": "<WhatIsTheFileName | pascalcase>/<WhatIsTheFileName | pascalcase>.tsx",
+                "template": " import React, { Component } from 'react' \n  import '<WhatIsTheFileName | pascalcase>.scss' \n\n   function <WhatIsTheFileName | pascalcase>() { \n\n return ( <div>FUNCTION COMPONENT :  <WhatIsTheFileName | pascalcase>  </div>)} \n\n ////////////////////// \n\n  export class <WhatIsTheFileName | pascalcase> extends Component { \n\n render() { \n\n return ( \n\n  <div> CLASS COMPONENT :  <WhatIsTheFileName | pascalcase> </div> ) \n}} \n\n export default <WhatIsTheFileName | pascalcase>"
+              },
+              {
+                "fileName": "<WhatIsTheFileName | pascalcase>/<WhatIsTheFileName | pascalcase>.test.js"
+              },
+              {
+                "fileName": "<WhatIsTheFileName | pascalcase>/<WhatIsTheFileName | pascalcase>.scss"
+              },
+              {
+                "fileName": "<WhatIsTheFileName | pascalcase>/index.tsx",
+                "template": "import <WhatIsTheFileName | pascalcase> from './<WhatIsTheFileName | pascalcase>' \n export default <WhatIsTheFileName | pascalcase>"
+              }
+            ]
+          }
+          ,
+          {
+            "name": "jsx",
+             "customVariables": ["WhatIsTheFileName"],
+            "omitParentDirectory": true,
+            "omitFTName": true,
+            "structure": [
+              {
+                "fileName": "<WhatIsTheFileName | pascalcase>/<WhatIsTheFileName | pascalcase>.jsx",
+                "template": " import React, { Component } from 'react' \n  import '<WhatIsTheFileName | pascalcase>.scss' \n\n   function <WhatIsTheFileName | pascalcase>() { \n\n return ( <div>FUNCTION COMPONENT :  <WhatIsTheFileName | pascalcase>  </div>)} \n\n ////////////////////// \n\n  export class <WhatIsTheFileName | pascalcase> extends Component { \n\n render() { \n\n return ( \n\n  <div> CLASS COMPONENT :  <WhatIsTheFileName | pascalcase> </div> ) \n}} \n\n export default <WhatIsTheFileName | pascalcase>"
+              },
+              {
+                "fileName": "<WhatIsTheFileName | pascalcase>/<WhatIsTheFileName | pascalcase>.test.js"
+              },
+              {
+                "fileName": "<WhatIsTheFileName | pascalcase>/<WhatIsTheFileName | pascalcase>.scss"
+              },
+              {
+                "fileName": "<WhatIsTheFileName | pascalcase>/index.jsx",
+                "template": "import <WhatIsTheFileName | pascalcase> from './<WhatIsTheFileName | pascalcase>' \n export default <WhatIsTheFileName | pascalcase>"
+              }
+            ]
+          },
+          {
+            "name": "ts",
+             "customVariables": ["WhatIsTheFileName"],
+            "omitParentDirectory": true,
+            "omitFTName": true,
+            "structure": [
+              {
+                "fileName": "<WhatIsTheFileName | pascalcase>/<WhatIsTheFileName | pascalcase>.ts",
+                "template": " import React, { Component } from 'react' \n  import '<WhatIsTheFileName | pascalcase>.scss' \n\n   function <WhatIsTheFileName | pascalcase>() { \n\n return ( <div>FUNCTION COMPONENT :  <WhatIsTheFileName | pascalcase>  </div>)} \n\n ////////////////////// \n\n  export class <WhatIsTheFileName | pascalcase> extends Component { \n\n render() { \n\n return ( \n\n  <div> CLASS COMPONENT :  <WhatIsTheFileName | pascalcase> </div> ) \n}} \n\n export default <WhatIsTheFileName | pascalcase>"
+              },
+              {
+                "fileName": "<WhatIsTheFileName | pascalcase>/<WhatIsTheFileName | pascalcase>.test.js"
+              },
+              {
+                "fileName": "<WhatIsTheFileName | pascalcase>/<WhatIsTheFileName | pascalcase>.scss"
+              },
+              {
+                "fileName": "<WhatIsTheFileName | pascalcase>/index.ts",
+                "template": "import <WhatIsTheFileName | pascalcase> from './<WhatIsTheFileName | pascalcase>' \n export default <WhatIsTheFileName | pascalcase>"
+              }
+            ]
+          },
+          {
+            "name": "js",
+             "customVariables": ["WhatIsTheFileName"],
+            "omitParentDirectory": true,
+            "omitFTName": true,
+            "structure": [
+              {
+                "fileName": "<WhatIsTheFileName | pascalcase>/<WhatIsTheFileName | pascalcase>.js",
+                "template": " import React, { Component } from 'react' \n  import '<WhatIsTheFileName | pascalcase>.scss' \n\n   function <WhatIsTheFileName | pascalcase>() { \n\n return ( <div>FUNCTION COMPONENT :  <WhatIsTheFileName | pascalcase>  </div>)} \n\n ////////////////////// \n\n  export class <WhatIsTheFileName | pascalcase> extends Component { \n\n render() { \n\n return ( \n\n  <div> CLASS COMPONENT :  <WhatIsTheFileName | pascalcase> </div> ) \n}} \n\n export default <WhatIsTheFileName | pascalcase>"
+              },
+              {
+                "fileName": "<WhatIsTheFileName | pascalcase>/<WhatIsTheFileName | pascalcase>.test.js"
+              },
+              {
+                "fileName": "<WhatIsTheFileName | pascalcase>/<WhatIsTheFileName | pascalcase>.scss"
+              },
+              {
+                "fileName": "<WhatIsTheFileName | pascalcase>/index.js",
+                "template": "import <WhatIsTheFileName | pascalcase> from './<WhatIsTheFileName | pascalcase>' \n export default <WhatIsTheFileName | pascalcase>"
+              }
+            ]
+          }
+    ]
+}
