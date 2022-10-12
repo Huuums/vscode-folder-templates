@@ -19,10 +19,14 @@ export default (variableNames: string[]) => {
         value = defaultValue;
       }
       const inputValue = await vscode.window.showInputBox({
+        ignoreFocusOut: true,
         prompt,
         value,
       });
       //always return a string
+      if(inputValue === undefined){
+        throw new Error("Cancelled");
+      }
       return prevAcc.concat([[name, inputValue || ""]]);
     },
     Promise.resolve([])
