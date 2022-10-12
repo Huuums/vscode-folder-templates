@@ -57,6 +57,7 @@ suite("lib/stringHelper suite", () => {
     replacePlaceholder(`<FTName | replacefirst('zzz','bbb')>`, regex, "dDeeDda sde").should.equal("dDeeDda sde");
     replacePlaceholder(`<FTName | replacelast('zzz','bbb')>`, regex, "dDeeDda sde").should.equal("dDeeDda sde");
 
+
     replacePlaceholder(`<FTName | snakecase?capitalize>`, regex, "dDeeDda sde").should.equal("D_dee_dda_sde");
     replacePlaceholder(`<FTName | snakecase&capitalize>`, regex, "dDeeDda sde").should.equal("D_dee_dda_sde");
     replacePlaceholder(`<FTName | replace('a','b')&snakecase&capitalize>`, regex, "dDeeDda sde").should.equal("D_dee_ddb_sde");
