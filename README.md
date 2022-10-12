@@ -74,12 +74,10 @@ Examples
 | aaa              | \<FTName \| replacefirst('a', 'b')\>       | baa              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replacefirst function.
 | aaa              | \<FTName \| replacelast('a', 'b')\>        | aab              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replacelast function.
 | aaa              | \<FTName \| replace('a', 'b')\>            | bbb              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replace function.
-
 ### Thanks to the change-case and pluralize libraries, for the transformations
 
 - [https://github.com/blakeembrey/change-case](https://github.com/blakeembrey/change-case)
 - [https://www.npmjs.com/package/pluralize](https://www.npmjs.com/package/pluralize)
-
 ## Creating templates on the File System
 
 One option is to create a `.fttemplates` folder in your project root and save all templates you want to access in this project there. This path can be changed via the `folderTemplates.templateFolderPath` setting in your vscode settings.
@@ -185,6 +183,10 @@ Two example filetemplates
   }
 }
 ```
+
+### Appending or Prepending content to existing files
+
+There is a special placeholder `<__existingcontent__>` or `[__existingcontent__]` to read content from an existing file if you want to append or prepend text to this file. However this requires the setting `overwriteExistingFiles` to be set to `true` or `prompt`. See this [example](https://github.com/Huuums/vscode-folder-templates/tree/master/examples/Append%20Text%20to%20Existing%20File) for more information.
 
 ### Using the command createFolderStructure with a keybind
 
