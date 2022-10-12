@@ -4,7 +4,9 @@ import {
   FileTemplateCollection,
 } from "../types";
 
-import { createDirectory, fileExists } from "../lib/fsHelpers";
+import { createDirectory, fileExists, getFileContent } from "../lib/fsHelpers";
+import { readFileSync } from "fs";
+import { replaceAllVariablesInString } from "../lib/stringHelpers";
 
 
 export default (
@@ -17,11 +19,15 @@ export default (
   }
 
   const newPath = vscode.Uri.file(file.fileName);
-  let existingFile: boolean = false;
-  if(fileExists(file)) { existingFile = true; }
 
-  if(existingFile) {
-    wsedit.replace(newPath, new vscode.Range(new vscode.Position(0, 0), new vscode.Position(99999, 99999)), file.template as string);
+  if(fileExists(file)) {
+    if(file.template?.includes("__existingcontent__")) {
+      const currentFileContent = getFileContent(file.fileName);
+      wsedit.replace(newPath, new vscode.Range(new vscode.Position(0, 0), new vscode.Position(99999, 99999)), replaceAllVariablesInString(file.template as string, [['__existingcontent__', currentFileContent ||'']]));
+    } else {
+      wsedit.replace(newPath, new vscode.Range(new vscode.Position(0, 0), new vscode.Position(99999, 99999)), file.template as string);
+    }
+
   } else {
     wsedit.createFile(newPath);
     wsedit.insert(newPath, new vscode.Position(0, 0), file.template as string);

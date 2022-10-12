@@ -1,5 +1,12 @@
 # Change Log
 
+### 3.9.0
+
+- New Feature: Prepending/Appending to existing files is now possible. see the [Examples](https://github.com/Huuums/vscode-folder-templates/tree/master/examples/Append%20Text%20to%20Existing%20File)
+- fix a bug where losing when the inputbox lost focus the extension would move on as if the input was finished.
+- fix a bug where pressing escape would not stop the creation process.
+- fix a bug where the extension would allow invalid folder names by having spaces at the start or end of the names
+
 ### 3.8.1
 
 - fix bug that would show "$ref" warnings in all kinds of json files

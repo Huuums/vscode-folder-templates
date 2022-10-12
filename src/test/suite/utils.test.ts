@@ -54,8 +54,9 @@ suite("lib/stringHelper suite", () => {
     replacePlaceholder(`<FTName | kebabcase>`, regex, "dDeeDda sde").should.equal("d-dee-dda-sde");
 
     replacePlaceholder(`<FTName | replace('zzz','bbb')>`, regex, "dDeeDda sde").should.equal("dDeeDda sde");
-    replacePlaceholder(`<FTName | replaceFirst('zzz','bbb')>`, regex, "dDeeDda sde").should.equal("dDeeDda sde");
-    replacePlaceholder(`<FTName | replaceLast('zzz','bbb')>`, regex, "dDeeDda sde").should.equal("dDeeDda sde");
+    replacePlaceholder(`<FTName | replacefirst('zzz','bbb')>`, regex, "dDeeDda sde").should.equal("dDeeDda sde");
+    replacePlaceholder(`<FTName | replacelast('zzz','bbb')>`, regex, "dDeeDda sde").should.equal("dDeeDda sde");
+
 
     replacePlaceholder(`<FTName | snakecase?capitalize>`, regex, "dDeeDda sde").should.equal("D_dee_dda_sde");
     replacePlaceholder(`<FTName | snakecase&capitalize>`, regex, "dDeeDda sde").should.equal("D_dee_dda_sde");
@@ -71,6 +72,8 @@ suite("lib/stringHelper suite", () => {
     replacePlaceholder(`FTName>`, regex, "dDDd").should.equal("FTName>");
 
     replacePlaceholder(`<FTNames>`, regex, "dDDd").should.equal("<FTNames>");
+
+    replacePlaceholder(`<FTName>`, regex, " dDDd  ").should.equal("dDDd");
   });
 
   test("convertFileContent to return correct string", async () => {

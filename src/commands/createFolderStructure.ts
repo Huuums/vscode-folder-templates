@@ -68,12 +68,18 @@ const CreateFolderStructure = async (
 
   let ftNameTuple: StringReplaceTuple[] = [];
   if (!omitFTName) {
-    ftNameTuple = await getReplaceValueTuples(["FTName"]);
-    //If no componentname is specified do nothing
-    if (!ftNameTuple[0][1]) {
-      return showInfo(
-        "Aborted folder creation. Cannot continue without a name"
-      );
+    try{
+      ftNameTuple = await getReplaceValueTuples(["FTName"]);
+      //If no componentname is specified do nothing
+      if (!ftNameTuple[0][1]) {
+        return showInfo(
+          "Aborted folder creation. Cannot continue without a name"
+          );
+        }
+    } catch(e: any){
+      if(e && e.message === 'Cancelled'){
+        return showInfo("Aborted folder creation. Cancelled input");
+      }
     }
   }
 
