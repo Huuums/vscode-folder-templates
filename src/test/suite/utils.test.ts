@@ -73,7 +73,6 @@ suite("lib/stringHelper suite", () => {
 
     replacePlaceholder(`<FTNames>`, regex, "dDDd").should.equal("<FTNames>");
 
-    replacePlaceholder(`<FTName>`, regex, " dDDd  ").should.equal("dDDd");
   });
 
   test("convertFileContent to return correct string", async () => {

@@ -76,14 +76,14 @@ export const getFullFilePath = (fileName: string, resourcePath: string = '', rep
       `${resourcePath}/${replaceAllVariablesInString(
         fileName,
         replaceValues
-        )}`
+        ).trim()}`
     );
   }
   return normalize(
-  `${resourcePath}/${componentName}/${replaceAllVariablesInString(
+  `${resourcePath}/${componentName.trim()}/${replaceAllVariablesInString(
     fileName,
     replaceValues
-  )}`);
+  ).trim()}`);
 };
 
 export const fileExistsByName = (fileName: string) => {

@@ -19,7 +19,7 @@
     "vue"
   ],
   "icon": "images/extension-icon.png",
-  "version": "3.9.0",
+  "version": "3.9.1",
   "publisher": "Huuums",
   "engines": {
     "vscode": "^1.56.0"

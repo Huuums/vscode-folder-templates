@@ -25,7 +25,7 @@ const replacePlaceholder = function (
   return target.replace(stringToReplace, (_, transformer) =>
     //only need the transformer
     getTransformedSSFName(replacement, transformer)
-  ).trim();
+  );
 };
 
 const getTransformedSSFName = (replacement: string, transformer: string) => {
@@ -40,7 +40,8 @@ const replaceFirstTransformer = (originalString:string,replaceFrom: string, repl
 const replaceLastTransformer = (originalString:string,replaceFrom: string, replaceWith: string) => {
   const lastIndex = originalString.lastIndexOf(replaceFrom);
   return lastIndex < 0 ? originalString : originalString.substring(0, originalString.lastIndexOf(replaceFrom)) + replaceWith;
-  
+};
+
 const replaceTransformer = (originalString:string,replaceFrom: string, replaceWith: string) => originalString.replaceAll(replaceFrom, replaceWith);
 
 
