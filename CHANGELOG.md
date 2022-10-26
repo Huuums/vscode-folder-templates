@@ -1,5 +1,10 @@
 # Change Log
 
+### 3.9.1
+
+- Regression fix: Empty lines at the start and end of files will be kept again.
+  - The function to trim file and folder names was placed wrongly and due to that also trimmed file content.
+
 ### 3.9.0
 
 - New Feature: Prepending/Appending to existing files is now possible. see the [Examples](https://github.com/Huuums/vscode-folder-templates/tree/master/examples/Append%20Text%20to%20Existing%20File)
