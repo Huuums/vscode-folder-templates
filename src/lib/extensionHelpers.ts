@@ -59,7 +59,7 @@ export const getTemplatesFromFS = (folderPath: PathLike) => {
       const structure = convertFolderContentToStructure(
         contents,
         `${folderPath}/${file.name}`
-      ).filter((val) => val.fileName !== ".ftsettings.json" && val.fileName !== ".DS_Store");
+      ).filter((val) => val.fileName !== ".ftsettings.json" && !val.fileName.endsWith(".DS_Store"));
 
       return {
         ...settings,
