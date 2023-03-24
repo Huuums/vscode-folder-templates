@@ -1,5 +1,9 @@
 # Change Log
 
+### 3.9.2
+
+- No longer copy .DS_Store files on macOS. Thanks [tjunxin](https://github.com/tjunxin)
+
 ### 3.9.1
 
 - Regression fix: Empty lines at the start and end of files will be kept again.
