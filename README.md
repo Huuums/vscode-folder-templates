@@ -23,7 +23,7 @@ To create your templates you have two options.
 ### Interpolation
 
 The value `<FTName>` (or `[FTName]`) will always be interpolated into the component name you are asked for when creating the structure.
-Adding a transformer with this pattern `<FTName | transformer>` (or `<FTName % transformer>`) will give you the ability to transform your componentname wherever needed.
+Adding a transformer with this pattern `<FTName | transformer>` (or `<FTName % transformer>`) will give you the ability to transform your component name wherever needed.
 The currently supported transformers are:
 
 - `lowercase`
