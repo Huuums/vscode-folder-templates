@@ -6,8 +6,13 @@ export interface FolderTemplateConfig {
   omitFTName?: boolean;
   overwriteExistingFiles?: 'never' | 'always' | 'prompt';
   openFilesWhenDone?: string[];
+  templateNotation: TemplateNotation;
 }
 
+export type TemplateNotation = {
+  start: string[],
+  end: string[]
+};
 export interface FolderTemplate extends FolderTemplateConfig {
   name: string;
   structure: FolderStructure;

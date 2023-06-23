@@ -15,7 +15,7 @@ import {
   pascalCaseTransformMerge
 } from "change-case";
 import { match } from "x-match-expression";
-import { FileTemplate } from "../types";
+import { FileTemplate, TemplateNotation } from "../types";
 
 const replacePlaceholder = function (
   target: string,
@@ -78,7 +78,7 @@ const transform = (replacement: string, transformer: string) => {
   .default(replacement);
 };
 
-const lowerCaseFirstChar = (string: String) => {
+const lowerCaseFirstChar = (string: string) => {
   return string.charAt(0).toLowerCase() + string.slice(1);
 };
 
@@ -96,10 +96,22 @@ const convertFileContentToString = (content: FileTemplate | undefined) => {
   return Array.isArray(content) ? content.join("\n") : content;
 };
 
-const getReplaceRegexp = (variableName: string) => {
-  //finds <variableName( (| or %) transformer)> and  [variableName( (| or %) transformer)] in strings
+const getReplaceRegexp = (
+  variableName: string,
+  templateNotation: TemplateNotation
+) => {
+  //finds <variableName( (| or %) transformer)> and  [variableName( (| or %) transformer)] in strings)
+  const {start, end} = templateNotation;
+
+  function escapeForRegExp(text:string) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  }
+
+  const regexpStringStart = `(?:${start.map(escapeForRegExp).join("|")})`;
+  const regexpStringEnd = `(?:${end.map(escapeForRegExp).join("|")})`;
+
   const regexp = new RegExp(
-    `(?:<|\\[)${variableName}\\s*(?:\\s*(?:\\||\\%)\\s*((?:[A-Za-z](\\?|\\&)*)*|(?:[A-Za-z]+(\\?|\\&))*replace(?:first|last)?\\('.*?',\\s*'.*?'\\)(?:(\\?|\\&)[A-Za-z]+)*)\\s*)*(?:>|\\])`,
+    `${regexpStringStart}${variableName}\\s*(?:\\s*(?:\\||\\%)\\s*((?:[A-Za-z](\\?|\\&)*)*|(?:[A-Za-z]+(\\?|\\&))*replace(?:first|last)?\\('.*?',\\s*'.*?'\\)(?:(\\?|\\&)[A-Za-z]+)*)\\s*)*${regexpStringEnd}`,
     "g"
   );
 
@@ -110,13 +122,16 @@ const getReplaceRegexp = (variableName: string) => {
 
 const replaceAllVariablesInString = (
   string: string,
-  replaceValues: string[][]
+  replaceValues: string[][],
+  templateNotation: TemplateNotation
 ) => {
+
+
   return replaceValues.reduce((acc, row) => {
     const [variableName, replaceValue] = row;
     return replacePlaceholder(
       acc,
-      getReplaceRegexp(variableName),
+      getReplaceRegexp(variableName, templateNotation),
       replaceValue
     );
   }, string);

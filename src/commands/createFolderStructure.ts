@@ -51,8 +51,10 @@ const CreateFolderStructure = async (
     omitParentDirectory = false,
     omitFTName = false,
     overwriteExistingFiles = 'never',
-    absolutePath = false
+    absolutePath = false,
   } = pickedTemplate;
+
+  const templateNotation = pickedTemplate.templateNotation || readConfig("templateNotation");
 
   if (omitFTName && !omitParentDirectory) {
     return showError(
@@ -87,8 +89,8 @@ const CreateFolderStructure = async (
   const replaceValueTuples = ftNameTuple.concat(await getReplaceValueTuples(customVariables || []));
   const fsPath = (absolutePath ? workspaceUri : targetUri)?.fsPath;
   const structureContents = files.map(row => ({
-    fileName: getFullFilePath(row.fileName, fsPath, replaceValueTuples, omitParentDirectory),
-    template: replaceTemplateContent(row.template, replaceValueTuples)
+    fileName: getFullFilePath(row.fileName, fsPath, replaceValueTuples, omitParentDirectory, templateNotation),
+    template: replaceTemplateContent(row.template, replaceValueTuples, templateNotation)
   }));
 
   let filesToCreate: FolderStructure;
@@ -108,11 +110,12 @@ const CreateFolderStructure = async (
 
   await createStructure(
     filesToCreate,
+    templateNotation
   );
 
   if (openFilesWhenDone && fsPath) {
     await Promise.all(
-      openFilesWhenDone.map(file => openFile(getFullFilePath(file, fsPath, replaceValueTuples, omitParentDirectory)))
+      openFilesWhenDone.map(file => openFile(getFullFilePath(file, fsPath, replaceValueTuples, omitParentDirectory, templateNotation)))
     );
   }
 

@@ -1,5 +1,9 @@
 # Change Log
 
+### 3.10.0
+
+- Requires VSCode version 1.75.0
+- Added support for custom template annotation
 ### 3.9.2
 
 - No longer copy .DS_Store files on macOS. Thanks [tjunxin](https://github.com/tjunxin)

@@ -45,6 +45,40 @@
       "items": {
         "$ref": "./defs.json/#/definitions/string_nonempty"
       }
+    },
+    "templateNotation": {
+      "type": "object",
+      "description": "Can be used to customize the template notation",
+      "properties": {
+        "start": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "default": "",
+            "minLength": 1,
+            "pattern": "^([^\\s].*[^\\s]*)$"
+          },
+          "default": [
+            "<",
+            "["
+          ]
+        },
+        "end": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "default": "",
+            "minLength": 1,
+            "pattern": "^([^\\s].*[^\\s]*)$"
+          },
+          "default": [
+            "<",
+            "["
+          ]
+        }
+      }
     }
   },
   "if": {
