@@ -98,15 +98,16 @@ This setting is used to deviate from the default `.fttemplates` folder path at t
 
 ### Available .ftsettings.json Properties
 
-| Key                 | Type                                         | Description                                                                                                                                 |
-| ------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| name                | string (default: Name of the parent Folder ) | Name of the Folder Template                                                                                                                 |
-| customVariables     | string[] `variableName=>defaultvalue`        | Custom variables that will be replaced upon folder creation                                                                                 |
-| omitParentDirectory | boolean (default: false)                     | If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it. |
-| omitFTName          | boolean (default: false)                     | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                       |
-| overwriteExistingFiles          | "never" \| "always" \| "prompt" (default: "never")                     | If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation.                        |
-| openFilesWhenDone     | string[]        | List of files to open when the Folder Template is created. (Supports use of variables, see examples)                                                      |
-| absolutePath     | boolean (default: false)       | If set to true all files will be created relative to the project root. Not relative to the folder you clicked on. (Can only be set to true if omitParentDirectory is true as well)|
+| Key                    | Type                                  | Default                               | Description                                                                                                                                                                        |
+|------------------------|---------------------------------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name                   | string                                | Name of parent folder                 | Name of the folder Template                                                                                                                                                        |
+| customVariables        | string[] `variableName=>defaultvalue` | -                                     | Custom variables to be interpolated upon folder creation                                                                                                                           |
+| omitParentDirectory    | boolean                               | false                                 | If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it.                                        |
+| omitFTName             | boolean                               | false                                 | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                                                              |
+| overwriteExistingFiles | "never" \| "always" \| "prompt"       | "never"                               | If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation.                                 |
+| openFilesWhenDone      | string[]                              | -                                     | List of files to open when the Folder Template is created. (Supports use of variables, see examples)                                                                               |
+| absolutePath           | boolean                               | false                                 | If set to true all files will be created relative to the project root. Not relative to the folder you clicked on. (Can only be set to true if omitParentDirectory is true as well) |
+| templateNotation       | {start: string[], end: string[]}      | `{start: ["<","["], end: [">", "]"]}` | If you would like to customize how to annotate strings that should be interpolated use this option                                                                                  |
 
 ## Creating your Template in VS Code settings.json
 
@@ -143,15 +144,18 @@ Example Structure
 }
 ```
 
-| Key                 | Type                                    | Description                                                                                                                                 |
-| ------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| name                | string                                  | Name of the Folder Template.                                                                                                                |
-| customVariables     | string[]                                | Custom variables that will be replaced upon folder creation "variableName=>defaultvalue"                                                    |
-| structure           | {fileName: string, template?: string}[] | Every object in this array represents a File or Folder that will be created                                                                 |
-| omitParentDirectory | boolean (default: false)                | If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it. |
-| omitFTName          | boolean (default: false)                | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                       |
-| overwriteExistingFiles          | "never" \| "always" \| "prompt" (default: "never")                     | If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation.                        |
-| absolutePath     | boolean (default: false)       | If set to true all files will be created relative to the project root. Not relative to the folder you clicked on. (Can only be set to true if omitParentDirectory is true as well)|
+| Key                    | Type                                    | Default                               | Description                                                                                                                                                                        |
+|------------------------|-----------------------------------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name                   | string                                  | Name of parent folder                 | Name of the folder Template                                                                                                                                                        |
+| customVariables        | string[] `variableName=>defaultvalue`   | -                                     | Custom variables to be interpolated upon folder creation                                                                                                                           |
+| structure              | {fileName: string, template?: string}[] | -                                     |Every object in this array represents a File or Folder that will be created                             |
+| omitParentDirectory    | boolean                                 | false                                 | If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it.                                        |
+| omitFTName             | boolean                                 | false                                 | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                                                              |
+| overwriteExistingFiles | "never" \| "always" \| "prompt"         | "never"                               | If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation.                                 |
+| openFilesWhenDone      | string[]                                | -                                     | List of files to open when the Folder Template is created. (Supports use of variables, see examples)                                                                               |
+| absolutePath           | boolean                                 | false                                 | If set to true all files will be created relative to the project root. Not relative to the folder you clicked on. (Can only be set to true if omitParentDirectory is true as well) |
+| templateNotation       | {start: string[], end: string[]}        | `{start: ["<","["], end: [">", "]"]}` | If you would like to customize how to annotate strings that should be interpolated use this option
+
 
 If a template is specified for a file its value should match one of the names of your [folderTemplates.fileTemplates](#folderTemplates.fileTemplates) or have the `EmptyDirectory` value. If the template value is `EmptyDirectory` it will create an empty directory instead of a file.
 
@@ -183,6 +187,19 @@ Two example filetemplates
   }
 }
 ```
+
+### folderTemplates.templateNotation
+
+This setting can be used to globally customize how template strings that should be interpolated can be annotated. If you would like to customize this on a per template basis you can do so in the `ftsettings.json` file.
+
+```json
+  folderTemplates.templateNotation: {
+    "start": ["<<%", "[[["],
+    "end": ["%>>", "]]]"
+  }
+```
+
+this example would make it so that you have to annotate the strings like this `<<%FTName%>>` or `[[[FTName]]]` instead of using the defaults.
 
 ### Appending or Prepending content to existing files
 

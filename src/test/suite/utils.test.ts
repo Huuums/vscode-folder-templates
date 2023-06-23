@@ -11,7 +11,7 @@ suite("lib/stringHelper suite", () => {
   test("replacePlaceholder to work with all Transformers", async () => {
     const variableName = "FTName";
     // Get all parts of a string enclosed in < >
-    const regex = getReplaceRegexp(variableName);
+    const regex = getReplaceRegexp(variableName, {start: ['<', '['], end: ['>', ']']});
 
     replacePlaceholder(`<FTName>`, regex, "dDDd").should.equal("dDDd");
 
@@ -96,8 +96,36 @@ abcd
     ];
     const initialString =
       "<FTName | uppercase> <customVar1 | lowercase> <customVar2 | capitalize> <FTName | asdf> <FTNam>";
-    replaceAllVariablesInString(initialString, replaceTuples).should.equal(
-      "ASDDFF variable VariablE2 asddFf <FTNam>"
+    replaceAllVariablesInString(initialString, replaceTuples, {
+      start: ["<", "["],
+      end: [">", "]"],
+    }).should.equal("ASDDFF variable VariablE2 asddFf <FTNam>");
+  });
+
+  test("custom template notation to work as expected", async () => {
+    const replaceTuples = [
+      ["FTName", "asddFf"],
+      ["customVar1", "variablE"],
+      ["customVar2", "variablE2"],
+    ];
+    const initialString =
+      "<<<FTName | uppercase>>> <<<customVar1 | lowercase>>> <<<customVar2 | capitalize>>> <<<FTName | asdf>>> [[[FTName]]] [[FTName]] [[[FTNam]]]";
+    replaceAllVariablesInString(initialString, replaceTuples, {
+      start: ["<<<", "[[["],
+      end: [">>>", "]]]"],
+    }).should.equal(
+      "ASDDFF variable VariablE2 asddFf asddFf [[FTName]] [[[FTNam]]]"
     );
+
+const initialString2 =
+  "#{<<FTName | uppercase>>} #{<<customVar1 | lowercase>>} <<<customVar2 | capitalize>>> ${<<customVar2>>> #{<<customVar1 | uppercase>>} #{<<customVar1>>}";
+
+replaceAllVariablesInString(initialString2, replaceTuples, {
+  start: ["#{<<"],
+  end: [">>}"],
+}).should.equal(
+  "ASDDFF variable <<<customVar2 | capitalize>>> ${<<customVar2>>> VARIABLE variablE"
+);
+
   });
 });

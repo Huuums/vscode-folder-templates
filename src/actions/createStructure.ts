@@ -1,17 +1,19 @@
 import * as vscode from "vscode";
 import createFileOrDirectory from "../actions/createFileOrDirectory";
-import { FileSettings } from "../types";
+import { FileSettings, TemplateNotation } from "../types";
 import { openAndSaveFile } from "../lib/vscodeHelpers";
 
 const createStructure = async (
   structure: FileSettings[] | undefined,
+  templateNotation: TemplateNotation
 ) => {
   if (structure) {
     const wsedit = new vscode.WorkspaceEdit();
     const fileUris = await Promise.all(
       structure.map(
         createFileOrDirectory(
-          wsedit
+          wsedit,
+          templateNotation
         )
       )
     );

@@ -8,15 +8,14 @@ import {
   mkdirSync,
 } from "fs";
 import {normalize} from 'path';
-import { FileSettings, FolderContent, StringReplaceTuple } from "../types";
+import { FileSettings, FolderContent, StringReplaceTuple, TemplateNotation } from "../types";
 import { replaceAllVariablesInString } from "./stringHelpers";
 
 export const getFileContent = (path: string) => {
   try {
-    let fileContent = readFileSync(normalize(path), {
+    return readFileSync(normalize(path), {
       encoding: "utf8",
     });
-    return fileContent;
   } catch (e) {
     console.log({e});
     return null;
@@ -65,7 +64,7 @@ export const createDirectory = (path: PathLike) => {
   mkdirSync(path, { recursive: true });
 };
 
-export const getFullFilePath = (fileName: string, resourcePath: string = '', replaceValues: StringReplaceTuple[] | [], omitParentDirectory: boolean) => {
+export const getFullFilePath = (fileName: string, resourcePath = '', replaceValues: StringReplaceTuple[] | [], omitParentDirectory: boolean, templateNotation: TemplateNotation) => {
   let componentName = "";
   if(replaceValues.length > 0) {
     ([[, componentName]] = replaceValues);
@@ -75,14 +74,16 @@ export const getFullFilePath = (fileName: string, resourcePath: string = '', rep
     return normalize(
       `${resourcePath}/${replaceAllVariablesInString(
         fileName,
-        replaceValues
+        replaceValues,
+        templateNotation
         ).trim()}`
     );
   }
   return normalize(
   `${resourcePath}/${componentName.trim()}/${replaceAllVariablesInString(
     fileName,
-    replaceValues
+    replaceValues,
+    templateNotation
   ).trim()}`);
 };
 
