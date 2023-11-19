@@ -6,9 +6,16 @@ import {
   existsSync,
   lstatSync,
   mkdirSync,
+  accessSync,
+  constants,
 } from "fs";
-import {normalize} from 'path';
-import { FileSettings, FolderContent, StringReplaceTuple, TemplateNotation } from "../types";
+import { normalize } from "path";
+import {
+  FileSettings,
+  FolderContent,
+  StringReplaceTuple,
+  TemplateNotation,
+} from "../types";
 import { replaceAllVariablesInString } from "./stringHelpers";
 
 export const getFileContent = (path: string) => {
@@ -17,7 +24,7 @@ export const getFileContent = (path: string) => {
       encoding: "utf8",
     });
   } catch (e) {
-    console.log({e});
+    console.log({ e });
     return null;
   }
 };
@@ -64,27 +71,45 @@ export const createDirectory = (path: PathLike) => {
   mkdirSync(path, { recursive: true });
 };
 
-export const getFullFilePath = (fileName: string, resourcePath = '', replaceValues: StringReplaceTuple[] | [], omitParentDirectory: boolean, templateNotation: TemplateNotation) => {
+export const isExecutable = (path: PathLike) => {
+  // Windows doesnt need explicit executable flag
+  if (process.platform === "win32") return false;
+  try {
+    accessSync(path, constants.X_OK);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const getFullFilePath = (
+  fileName: string,
+  resourcePath = "",
+  replaceValues: StringReplaceTuple[] | [],
+  omitParentDirectory: boolean,
+  templateNotation: TemplateNotation
+) => {
   let componentName = "";
-  if(replaceValues.length > 0) {
-    ([[, componentName]] = replaceValues);
+  if (replaceValues.length > 0) {
+    [[, componentName]] = replaceValues;
   }
 
-  if(omitParentDirectory){
+  if (omitParentDirectory) {
     return normalize(
       `${resourcePath}/${replaceAllVariablesInString(
         fileName,
         replaceValues,
         templateNotation
-        ).trim()}`
+      ).trim()}`
     );
   }
   return normalize(
-  `${resourcePath}/${componentName.trim()}/${replaceAllVariablesInString(
-    fileName,
-    replaceValues,
-    templateNotation
-  ).trim()}`);
+    `${resourcePath}/${componentName.trim()}/${replaceAllVariablesInString(
+      fileName,
+      replaceValues,
+      templateNotation
+    ).trim()}`
+  );
 };
 
 export const fileExistsByName = (fileName: string) => {

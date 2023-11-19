@@ -106,6 +106,7 @@ This setting is used to deviate from the default `.fttemplates` folder path at t
 | omitFTName             | boolean                               | false                                 | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                                                              |
 | overwriteExistingFiles | "never" \| "always" \| "prompt"       | "never"                               | If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation.                                 |
 | openFilesWhenDone      | string[]                              | -                                     | List of files to open when the Folder Template is created. (Supports use of variables, see examples)                                                                               |
+| setExecutablePermission| boolean                                 | false                                 | If set to true automatically adds executable permission to created file. Only works if file in the template is also executable.
 | absolutePath           | boolean                               | false                                 | If set to true all files will be created relative to the project root. Not relative to the folder you clicked on. (Can only be set to true if omitParentDirectory is true as well) |
 | templateNotation       | {start: string[], end: string[]}      | `{start: ["<","["], end: [">", "]"]}` | If you would like to customize how to annotate strings that should be interpolated use this option                                                                                  |
 
@@ -137,6 +138,11 @@ Example Structure
       "template": "IndexFile"
     },
     {
+      "fileName": "bashfile.sh",
+      "template": "echo \"Hello World\"",
+      "isExecutable": true
+    },
+    {
       "fileName": "<CustomVar>",
       "template": "EmptyDirectory"
     }
@@ -153,6 +159,7 @@ Example Structure
 | omitFTName             | boolean                                 | false                                 | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                                                              |
 | overwriteExistingFiles | "never" \| "always" \| "prompt"         | "never"                               | If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation.                                 |
 | openFilesWhenDone      | string[]                                | -                                     | List of files to open when the Folder Template is created. (Supports use of variables, see examples)                                                                               |
+| setExecutablePermission| boolean                                 | false                                 | If set to true automatically adds executable permission to created file. Only works if file in the template is also executable.
 | absolutePath           | boolean                                 | false                                 | If set to true all files will be created relative to the project root. Not relative to the folder you clicked on. (Can only be set to true if omitParentDirectory is true as well) |
 | templateNotation       | {start: string[], end: string[]}        | `{start: ["<","["], end: [">", "]"]}` | If you would like to customize how to annotate strings that should be interpolated use this option
 
@@ -195,7 +202,7 @@ This setting can be used to globally customize how template strings that should 
 ```json
   folderTemplates.templateNotation: {
     "start": ["<<%", "[[["],
-    "end": ["%>>", "]]]"
+    "end": ["%>>", "]]]"]
   }
 ```
 

@@ -1,32 +1,21 @@
 import open from "open";
-import { normalize } from "path";
-import { createDirectory, isDirectory } from "../lib/fsHelpers";
-import { readConfig, showError } from "../lib/vscodeHelpers";
+
+import { isDirectory } from "../lib/fsHelpers";
+import { getGlobalTemplatePath, showError } from "../lib/vscodeHelpers";
 
 export default (defaultGlobalPath: string) => {
-  const configuredPath = readConfig('globalTemplateDirectoryPath');
-  if(configuredPath) {
-    const normalizedPath = normalize(configuredPath);
-    if(!isDirectory(normalizedPath)) {
-      showError(`The configured global template directory path '${normalizedPath}' does not exist.`);
+  const globalTemplatePath = getGlobalTemplatePath(defaultGlobalPath);
+  if (globalTemplatePath) {
+    if (!isDirectory(globalTemplatePath)) {
+      showError(
+        `The configured global template directory path '${globalTemplatePath}' does not exist.`
+      );
     }
-    try{
-      return open(normalizedPath);
-    } catch(e){
+    try {
+      return open(globalTemplatePath);
+    } catch (e) {
       showError(`Could not open directory`);
       return null;
     }
-  }
-
-
-  if (!isDirectory(defaultGlobalPath)) {
-    createDirectory(defaultGlobalPath);
-  }
-
-  try {
-    return open(defaultGlobalPath);
-  } catch (e) {
-    showError(`Could not open directory`);
-    return null;
   }
 };

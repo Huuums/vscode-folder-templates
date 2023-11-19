@@ -19,7 +19,7 @@
     "vue"
   ],
   "icon": "images/extension-icon.png",
-  "version": "3.10.0",
+  "version": "3.11.0",
   "publisher": "Huuums",
   "engines": {
     "vscode": "^1.75.0"
@@ -145,6 +145,11 @@
                 "default": false,
                 "description": "If set to true FT will create all files directly inside the current folder instead of creating a new folder and all the files inside of it"
               },
+              "setExecutablePermission": {
+                "type": "boolean",
+                "default": false,
+                "description": "If set to true FT will set automatically set executable permissions for files that are executable in the template as well."
+              },
               "omitFTName": {
                 "type": "boolean",
                 "default": false,
@@ -197,6 +202,11 @@
                         "root/subfolderA/subfolderB/test.js",
                         "<CustomVar>"
                       ]
+                    },
+                    "isExecutable": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "If set to true FT will set executable permissions for this file"
                     },
                     "template": {
                       "description": "",
@@ -273,7 +283,8 @@
           "default": "",
           "examples": [
             "C:\\Users\\MyUser\\Desktop\\globalTemplates",
-            "D:\\Users\\MyUser\\Desktop\\coding\\myGlobalTemplates"
+            "D:\\Users\\MyUser\\Desktop\\coding\\myGlobalTemplates",
+            "%HOME%\\Desktop\\code\\GlobalTemplates"
           ],
           "description": "Defines the path to the global templates folder. Has to be an absolute path to the directory containing the templates"
         }
