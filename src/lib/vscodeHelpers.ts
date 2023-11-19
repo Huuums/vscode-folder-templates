@@ -1,6 +1,7 @@
 import { normalize } from "path";
 import * as vscode from "vscode";
 import { isDirectory, fileExistsByName } from "./fsHelpers";
+import { homedir } from "os";
 
 export const readConfig = (key: string): any => {
   const config = vscode.workspace.getConfiguration("folderTemplates");
@@ -38,8 +39,7 @@ export const getWorkspaceUri = async () => {
 
 export const getTargetPath = async (
   resource: vscode.Uri | string | undefined,
-  workspaceUri: vscode.Uri | undefined,
-
+  workspaceUri: vscode.Uri | undefined
 ) => {
   if (typeof resource === "string") {
     if (resource === "__current") {
@@ -64,28 +64,37 @@ export const getTargetPath = async (
   return resource as vscode.Uri | undefined;
 };
 
-export const openAndSaveFile = async (uri: vscode.Uri | null) => {
+export const openAndSaveFile = async (uri: string | null | undefined) => {
   if (uri) {
-    const document = await vscode.workspace.openTextDocument(uri);
+    const vsCodeURI = vscode.Uri.file(uri);
+    const document = await vscode.workspace.openTextDocument(vsCodeURI);
     return document.save();
   }
 };
 
 export const openFile = async (filePath: string) => {
-  if (fileExistsByName(filePath)){
-    return await vscode.window.showTextDocument(vscode.Uri.file(filePath), { preview: false });
+  if (fileExistsByName(filePath)) {
+    return await vscode.window.showTextDocument(vscode.Uri.file(filePath), {
+      preview: false,
+    });
   }
 };
 
-export const getLocalTemplatePath = async (resourceUri: vscode.Uri | undefined) => {
-  const configTemplateFolderPath = readConfig('templateFolderPath') || '.fttemplates';
+export const getLocalTemplatePath = async (
+  resourceUri: vscode.Uri | undefined
+) => {
+  const configTemplateFolderPath =
+    readConfig("templateFolderPath") || ".fttemplates";
   let workspace: vscode.WorkspaceFolder | undefined;
-  if(resourceUri){
+  if (resourceUri) {
     workspace = vscode.workspace.getWorkspaceFolder(resourceUri);
   } else {
-    workspace = await vscode.window.showWorkspaceFolderPick({placeHolder: "Pick the workspace in which you would like to create the Folder"});
+    workspace = await vscode.window.showWorkspaceFolderPick({
+      placeHolder:
+        "Pick the workspace in which you would like to create the Folder",
+    });
   }
-  if(workspace){
+  if (workspace) {
     const templateFolderPath = `${workspace.uri.fsPath}/${configTemplateFolderPath}`;
     if (isDirectory(templateFolderPath)) {
       // Match any TypeScript file in the root of this workspace folder
@@ -96,10 +105,13 @@ export const getLocalTemplatePath = async (resourceUri: vscode.Uri | undefined) 
   return null;
 };
 
-export const getGlobalTemplatePath = (defaultPath: string) =>  {
-  const configuredPath = readConfig('globalTemplateDirectoryPath');
-  if(configuredPath){
-    return normalize(configuredPath);
+export const getGlobalTemplatePath = (defaultPath: string) => {
+  const configuredPath = readConfig("globalTemplateDirectoryPath");
+  if (configuredPath) {
+    return configuredPath.startsWith("%HOME%")
+      ? normalize(`${homedir()}${configuredPath.substr(6)}`)
+      : normalize(configuredPath);
   }
-  return defaultPath;
+
+  return normalize(defaultPath);
 };

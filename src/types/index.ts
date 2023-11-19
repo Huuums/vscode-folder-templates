@@ -4,14 +4,15 @@ export interface FolderTemplateConfig {
   omitParentDirectory?: boolean;
   absolutePath?: boolean;
   omitFTName?: boolean;
-  overwriteExistingFiles?: 'never' | 'always' | 'prompt';
+  overwriteExistingFiles?: "never" | "always" | "prompt";
   openFilesWhenDone?: string[];
   templateNotation: TemplateNotation;
+  setExecutablePermission?: boolean;
 }
 
 export type TemplateNotation = {
-  start: string[],
-  end: string[]
+  start: string[];
+  end: string[];
 };
 export interface FolderTemplate extends FolderTemplateConfig {
   name: string;
@@ -23,6 +24,7 @@ export type FolderStructure = FileSettings[];
 export type FileSettings = {
   fileName: string;
   template?: string | string[];
+  isExecutable: boolean;
 };
 
 export type FolderContent = {

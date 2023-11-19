@@ -1,5 +1,10 @@
 # Change Log
 
+### 3.11.0
+
+- Introduced `setExecutablePermission` to ftsettings.json to allow automatic executable permissions if the template file was executable as well.
+- globalTemplatePath setting can now use a `%HOME%` placeholder which resolves to current users Home directory.
+
 ### 3.10.0
 
 - Requires VSCode version 1.75.0

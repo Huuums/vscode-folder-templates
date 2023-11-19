@@ -10,18 +10,12 @@ const createStructure = async (
   if (structure) {
     const wsedit = new vscode.WorkspaceEdit();
     const fileUris = await Promise.all(
-      structure.map(
-        createFileOrDirectory(
-          wsedit,
-          templateNotation
-        )
-      )
+      structure.map(createFileOrDirectory(wsedit, templateNotation))
     );
 
     await vscode.workspace.applyEdit(wsedit);
-    await Promise.all(fileUris.map(openAndSaveFile));
-
-    return "done";
+    await Promise.all(fileUris.map((file) => openAndSaveFile(file?.filePath)));
+    return fileUris;
   }
 };
 

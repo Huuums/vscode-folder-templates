@@ -11,16 +11,19 @@ import {
   StringReplaceTuple,
   TemplateNotation,
 } from "../types";
-import { getFileContent, getFolderContents } from "./fsHelpers";
+import { getFileContent, getFolderContents, isExecutable } from "./fsHelpers";
 import { readConfig } from "./vscodeHelpers";
 import * as path from "path";
-import { convertFileContentToString, replaceAllVariablesInString } from "./stringHelpers";
+import {
+  convertFileContentToString,
+  replaceAllVariablesInString,
+} from "./stringHelpers";
 
 export const parseSettingsFile = (
   path: string
 ): FolderTemplateConfig | null => {
-  if(!existsSync(path)){
-     return null;
+  if (!existsSync(path)) {
+    return null;
   }
   const settings = getFileContent(path);
   if (!settings) {
@@ -33,14 +36,13 @@ const convertFolderContentToStructure = (
   contents: FolderContent[],
   relativeTo: string
 ): FolderStructure => {
-  return contents.map(
-    (file): FileSettings => {
-      return {
-        fileName: path.relative(relativeTo, file.filePath),
-        template: file.content || "",
-      };
-    }
-  );
+  return contents.map((file): FileSettings => {
+    return {
+      fileName: path.relative(relativeTo, file.filePath),
+      template: file.content || "",
+      isExecutable: isExecutable(file.filePath),
+    };
+  });
 };
 
 export const getTemplatesFromFS = (folderPath: PathLike) => {
@@ -50,17 +52,22 @@ export const getTemplatesFromFS = (folderPath: PathLike) => {
       if (!file.isDirectory()) {
         return null;
       }
-      const settings =
-        parseSettingsFile(`${folderPath}/${file.name}/.ftsettings.json`);
+      const settings = parseSettingsFile(
+        `${folderPath}/${file.name}/.ftsettings.json`
+      );
 
-        const contents = getFolderContents(
+      const contents = getFolderContents(
         vscode.Uri.file(`${folderPath}/${file.name}`)
       );
 
       const structure = convertFolderContentToStructure(
         contents,
         `${folderPath}/${file.name}`
-      ).filter((val) => val.fileName !== ".ftsettings.json" && !val.fileName.endsWith(".DS_Store"));
+      ).filter(
+        (val) =>
+          val.fileName !== ".ftsettings.json" &&
+          !val.fileName.endsWith(".DS_Store")
+      );
 
       return {
         ...(settings || {}),
@@ -111,10 +118,13 @@ export const pickTemplate = async (allStructures: FolderTemplate[]) => {
   return getSelectedFolderStructure(allStructures, structureName);
 };
 
-export const replaceTemplateContent = (fileTemplate: FileTemplate | undefined, replaceValues: StringReplaceTuple[], templateNotation: TemplateNotation) => {
-  const configTemplates: FileTemplateCollection | undefined = readConfig(
-    "fileTemplates"
-  );
+export const replaceTemplateContent = (
+  fileTemplate: FileTemplate | undefined,
+  replaceValues: StringReplaceTuple[],
+  templateNotation: TemplateNotation
+) => {
+  const configTemplates: FileTemplateCollection | undefined =
+    readConfig("fileTemplates");
 
   let template;
   if (typeof fileTemplate === "string") {
