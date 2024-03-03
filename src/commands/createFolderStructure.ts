@@ -1,24 +1,25 @@
-import * as vscode from "vscode";
-import createStructure from "../actions/createStructure";
+import * as vscode from 'vscode';
+import createStructure from '../actions/createStructure';
 
-import { FolderStructure, FolderTemplate, StringReplaceTuple } from "../types";
-import getReplaceValueTuples from "../lib/getReplaceValueTuples";
+import { FolderStructure, FolderTemplate, StringReplaceTuple } from '../types';
+import getReplaceValueTuples from '../lib/getReplaceValueTuples';
 import {
   getGlobalTemplatePath,
   getLocalTemplatePath,
   getTargetPath,
   openFile,
   readConfig,
-} from "../lib/vscodeHelpers";
-import { showError, showInfo, getWorkspaceUri } from "../lib/vscodeHelpers";
+} from '../lib/vscodeHelpers';
+import { showError, showInfo, getWorkspaceUri } from '../lib/vscodeHelpers';
 import {
   getTemplatesFromFS,
   pickTemplate,
   replaceTemplateContent,
-} from "../lib/extensionHelpers";
-import { fileExists, getFullFilePath, isDirectory } from "../lib/fsHelpers";
-import { relative } from "path";
-import { chmodSync } from "fs";
+} from '../lib/extensionHelpers';
+import { fileExists, getFullFilePath, isDirectory } from '../lib/fsHelpers';
+import { relative } from 'path';
+import { chmodSync } from 'fs';
+import { minimatch } from 'minimatch';
 
 const CreateFolderStructure = async (
   resource: vscode.Uri | string | undefined,
@@ -29,26 +30,26 @@ const CreateFolderStructure = async (
 
   const templateFolderPaths = [
     await getLocalTemplatePath(targetUri),
-    await getGlobalTemplatePath(globalTemplatePath),
+    getGlobalTemplatePath(globalTemplatePath),
   ];
 
   const validPaths = templateFolderPaths.filter(isDirectory) as string[];
 
-  const configTemplates: FolderTemplate[] = readConfig("structures") || [];
+  const configTemplates: FolderTemplate[] = readConfig('structures') || [];
   const folderTemplates: FolderTemplate[] = validPaths
     .map((path: string) => getTemplatesFromFS(path))
     .flat()
     .concat(configTemplates);
 
   if (!folderTemplates.length) {
-    return showError("No configured Folder Templates found!");
+    return showError('No configured Folder Templates found!');
   }
 
   const pickedTemplate = await pickTemplate(folderTemplates);
 
   if (!pickedTemplate) {
     return showInfo(
-      "Aborted folder creation. Cannot continue without template selection."
+      'Aborted folder creation. Cannot continue without template selection.'
     );
   }
 
@@ -58,39 +59,40 @@ const CreateFolderStructure = async (
     openFilesWhenDone,
     omitParentDirectory = false,
     omitFTName = false,
-    overwriteExistingFiles = "never",
+    overwriteExistingFiles = 'never',
     absolutePath = false,
     setExecutablePermission = false,
+    ignoreFiles = [],
   } = pickedTemplate;
 
   const templateNotation =
-    pickedTemplate.templateNotation || readConfig("templateNotation");
+    pickedTemplate.templateNotation || readConfig('templateNotation');
 
   if (omitFTName && !omitParentDirectory) {
     return showError(
-      "omitFTName option can only be true when omitParentDirectory is true as well."
+      'omitFTName option can only be true when omitParentDirectory is true as well.'
     );
   }
 
   if (absolutePath && !omitParentDirectory) {
     return showError(
-      "absolutePath option can only be true when omitParentDirectory is true as well."
+      'absolutePath option can only be true when omitParentDirectory is true as well.'
     );
   }
 
   let ftNameTuple: StringReplaceTuple[] = [];
   if (!omitFTName) {
     try {
-      ftNameTuple = await getReplaceValueTuples(["FTName"]);
+      ftNameTuple = await getReplaceValueTuples(['FTName']);
       //If no componentname is specified do nothing
       if (!ftNameTuple[0][1]) {
         return showInfo(
-          "Aborted folder creation. Cannot continue without a name"
+          'Aborted folder creation. Cannot continue without a name'
         );
       }
     } catch (e: any) {
-      if (e && e.message === "Cancelled") {
-        return showInfo("Aborted folder creation. Cancelled input");
+      if (e && e.message === 'Cancelled') {
+        return showInfo('Aborted folder creation. Cancelled input');
       }
     }
   }
@@ -100,6 +102,7 @@ const CreateFolderStructure = async (
     await getReplaceValueTuples(customVariables || [])
   );
   const fsPath = (absolutePath ? workspaceUri : targetUri)?.fsPath;
+
   const structureContents = files.map((row) => ({
     isExecutable: row.isExecutable,
     fileName: getFullFilePath(
@@ -118,9 +121,9 @@ const CreateFolderStructure = async (
 
   let filesToCreate: FolderStructure;
 
-  if (overwriteExistingFiles === "always") {
+  if (overwriteExistingFiles === 'always') {
     filesToCreate = structureContents;
-  } else if (overwriteExistingFiles === "prompt") {
+  } else if (overwriteExistingFiles === 'prompt') {
     //Doesn't work yet. Fix when coming back. Files to create are figured out in a wrong way
     const existingFiles = structureContents.filter(fileExists);
     const newFiles = structureContents.filter((file) => !fileExists(file));
@@ -128,11 +131,11 @@ const CreateFolderStructure = async (
       ? (await vscode.window.showQuickPick(
           existingFiles.map((row) => ({
             ...row,
-            label: relative(fsPath || "", row.fileName),
+            label: relative(fsPath || '', row.fileName),
           })),
           {
             canPickMany: true,
-            placeHolder: "Please select the files that should be overwritten",
+            placeHolder: 'Please select the files that should be overwritten',
           }
         )) || []
       : [];
@@ -152,7 +155,11 @@ const CreateFolderStructure = async (
       );
   }
 
-  const createdFiles = await createStructure(filesToCreate, templateNotation);
+  const createdFiles = await createStructure(
+    filesToCreate,
+    templateNotation,
+    ignoreFiles
+  );
 
   if (setExecutablePermission && createdFiles && createdFiles.length > 0) {
     createdFiles.forEach(
@@ -169,7 +176,7 @@ const CreateFolderStructure = async (
           | null
       ) => {
         if (file && file.isExecutable && file.filePath) {
-          chmodSync(file.filePath, "755");
+          chmodSync(file.filePath, '755');
         }
       }
     );
@@ -191,6 +198,6 @@ const CreateFolderStructure = async (
     );
   }
 
-  return "done";
+  return 'done';
 };
 export default CreateFolderStructure;

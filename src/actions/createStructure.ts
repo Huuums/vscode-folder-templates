@@ -4,11 +4,12 @@ import { FileSettings, TemplateNotation } from '../types';
 
 const createStructure = async (
   structure: FileSettings[] | undefined,
-  templateNotation: TemplateNotation
+  templateNotation: TemplateNotation,
+  ignoreFiles: string[]
 ) => {
   if (structure) {
     const fileUris = await Promise.all(
-      structure.map(createFileOrDirectory(templateNotation))
+      structure.map(createFileOrDirectory(templateNotation, ignoreFiles))
     );
 
     return fileUris;

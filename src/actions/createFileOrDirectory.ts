@@ -6,11 +6,13 @@ import {
   writeToFile,
   fileExists,
   getFileContent,
+  isDirectory,
 } from '../lib/fsHelpers';
 import { replaceAllVariablesInString } from '../lib/stringHelpers';
 import { dirname } from 'path';
+import { minimatch } from 'minimatch';
 
-export default (templateNotation: TemplateNotation) =>
+export default (templateNotation: TemplateNotation, ignoreFiles: string[]) =>
   async (file: FileSettings) => {
     if (file.template === 'EmptyDirectory') {
       createDirectory(file.fileName);
@@ -32,8 +34,12 @@ export default (templateNotation: TemplateNotation) =>
         writeToFile(file.fileName, file.template as string);
       }
     } else {
-      createDirectory(dirname(file.fileName));
-      writeToFile(file.fileName, file.template as string);
+      if (!isDirectory(dirname(file.fileName))) {
+        createDirectory(dirname(file.fileName));
+      }
+      if (!ignoreFiles.some((pattern) => minimatch(file.fileName, pattern))) {
+        writeToFile(file.fileName, file.template as string);
+      }
     }
 
     if (file.template) {
