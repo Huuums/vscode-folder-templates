@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import createFolderStructure from './commands/createFolderStructure';
 import openGlobalTemplatePath from './commands/openGlobalTemplatePath';
 import chooseGlobalTemplateFolder from './commands/chooseGlobalTemplateFolder';
-import { isDirectory } from './lib/fsHelpers';
+import { isDirectory, isFile } from './lib/fsHelpers';
 import { showError } from './lib/vscodeHelpers';
 import { normalize } from 'path';
 
@@ -28,14 +28,17 @@ export function activate(context: vscode.ExtensionContext) {
         await vscode.env.clipboard.writeText(originalClipboard);
 
         // see note below for parsing multiple files/folders
-
-        if (!isDirectory(normalize(resource))) {
+        if (isFile(normalize(resource))) {
           showError(
             'Can only create templates in directories. Please select a directory in the explorer.'
           );
           return;
         }
-        newUri = vscode.Uri.file(resource); // make it a Uri
+        if (isDirectory(normalize(resource))) {
+          newUri = vscode.Uri.file(resource); // make it a Uri
+        } else {
+          newUri = undefined;
+        }
       }
       return createFolderStructure(newUri, globalTemplateFolderPath);
     }

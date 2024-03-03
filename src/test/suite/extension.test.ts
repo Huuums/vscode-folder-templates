@@ -23,8 +23,6 @@ suite('Fast Folder Structure Extension Suite', () => {
     vscode.workspace.workspaceFolders?.[0].uri.fsPath + '/src/components';
   const noDeletionPath =
     vscode.workspace.workspaceFolders?.[0].uri.fsPath + '/src/donotdelete';
-  const templateFolder =
-    vscode.workspace.workspaceFolders?.[0].uri.fsPath + '/src/templateFolder';
   const guideLineFolderPath =
     vscode.workspace.workspaceFolders?.[0].uri.fsPath + '/guideline/';
   const inputBox = sinon.stub(vscode.window, 'showInputBox');

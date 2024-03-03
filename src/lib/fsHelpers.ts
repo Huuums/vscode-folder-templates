@@ -79,6 +79,13 @@ export const isDirectory = (path: PathLike | null) => {
   return existsSync(path) && lstatSync(path).isDirectory();
 };
 
+export const isFile = (path: PathLike | null) => {
+  if (path === null) {
+    return false;
+  }
+  return existsSync(path) && lstatSync(path).isFile();
+};
+
 export const createDirectory = (path: PathLike) => {
   mkdirSync(path, { recursive: true });
 };
