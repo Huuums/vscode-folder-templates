@@ -1,6 +1,6 @@
 import * as path from 'path';
 
-import { runTests } from 'vscode-test';
+import { runTests } from '@vscode/test-electron';
 
 async function main() {
   try {
@@ -9,7 +9,7 @@ async function main() {
     const extensionDevelopmentPath = path.resolve(__dirname, '../../');
     const testWorkspace = path.resolve(
       __dirname,
-      '../../test-fixtures/testworkspace',
+      '../../test-fixtures/testworkspace'
     );
 
     // The path to test runner

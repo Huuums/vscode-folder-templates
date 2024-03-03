@@ -4,10 +4,11 @@ export interface FolderTemplateConfig {
   omitParentDirectory?: boolean;
   absolutePath?: boolean;
   omitFTName?: boolean;
-  overwriteExistingFiles?: "never" | "always" | "prompt";
+  overwriteExistingFiles?: 'never' | 'always' | 'prompt';
   openFilesWhenDone?: string[];
   templateNotation: TemplateNotation;
   setExecutablePermission?: boolean;
+  ignoreFiles?: string[];
 }
 
 export type TemplateNotation = {

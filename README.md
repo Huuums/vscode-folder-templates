@@ -51,33 +51,35 @@ Examples
 
 | Input            | Transformer                                | Result           | Description                                                                                                     |
 | ---------------- | -------------------------------------------| ---------------- | ----------------------------------------------------------------------------------------------------------------|
-| LOWERCASE        | \<FTName \| lowercase\>                    | lowercase        |
-| uppercase        | \<FTName \| uppercase\>                    | UPPERCASE        |
+| LOWERCASE        | \<FTName \| lowercase\>                    | lowercase        ||
+| uppercase        | \<FTName \| uppercase\>                    | UPPERCASE        ||
 | My-new-component | \<FTName \| camelcase\>                    | myNewComponent   | (First letter is lowercased. Every letter behind a special character will be capitalized)                       |
-| test string      | \<FTName \| capitalcase\>                  | Test String      |
-| test string      | \<FTName \| constantcase\>                 | TEST_STRING      |
-| test string      | \<FTName \| dotcase\>                      | test.string      |
-| test string      | \<FTName \| headercase\>                   | Test-String      |
-| test string      | \<FTName \| nocase\>                       | test string      |
-| test string      | \<FTName \| paramcase\>                    | test-string      |
+| test string      | \<FTName \| capitalcase\>                  | Test String      ||
+| test string      | \<FTName \| constantcase\>                 | TEST_STRING      ||
+| test string      | \<FTName \| dotcase\>                      | test.string      ||
+| test string      | \<FTName \| headercase\>                   | Test-String      ||
+| test string      | \<FTName \| nocase\>                       | test string      ||
+| test string      | \<FTName \| paramcase\>                    | test-string      ||
 | my-new-component | \<FTName \| pascalcase\>                   | MyNewComponent   | (First letter and every letter behind a special character will be capitalized)                                  |
-| test string      | \<FTName \| pathcase\>                     | test/string      |
-| test string      | \<FTName \| sentencecase\>                 | Test string      |
-| test string      | \<FTName \| snakecase\>                    | test_string      |
-| boxes            | \<FTName \| singular\>                     | box              |
-| box              | \<FTName \| plural\>                       | boxes            |
+| test string      | \<FTName \| pathcase\>                     | test/string      ||
+| test string      | \<FTName \| sentencecase\>                 | Test string      ||
+| test string      | \<FTName \| snakecase\>                    | test_string      ||
+| boxes            | \<FTName \| singular\>                     | box              ||
+| box              | \<FTName \| plural\>                       | boxes            ||
 | wooden box       | \<FTName \| plural?snakecase?uppercase\>   | WOODEN_BOXES     | it is possible to combine transformations with the "?" or "&" operator, these will be performed from left to right.    |
 | wooden box       | \[FTName \% plural&snakecase&uppercase\]   | WOODEN_BOXES     | "&" operator example of row above    |
-| MyNewComponent   | \<FTName \| lowercasefirstchar\>           | myNewComponent   |
-| myNewComponent   | \<FTName \| capitalize\>                   | MyNewComponent   | just like capitalcase
-| myNewComponent   | \<FTName \| kebabcase\>                    | my-new-component | just like paramcase
-| aaa              | \<FTName \| replacefirst('a', 'b')\>       | baa              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replacefirst function.
-| aaa              | \<FTName \| replacelast('a', 'b')\>        | aab              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replacelast function.
-| aaa              | \<FTName \| replace('a', 'b')\>            | bbb              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replace function.
+| MyNewComponent   | \<FTName \| lowercasefirstchar\>           | myNewComponent   ||
+| myNewComponent   | \<FTName \| capitalize\>                   | MyNewComponent   | just like capitalcase|
+| myNewComponent   | \<FTName \| kebabcase\>                    | my-new-component | just like paramcase|
+| aaa              | \<FTName \| replacefirst('a', 'b')\>       | baa              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replacefirst function.|
+| aaa              | \<FTName \| replacelast('a', 'b')\>        | aab              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replacelast function.|
+| aaa              | \<FTName \| replace('a', 'b')\>            | bbb              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replace function.|
+
 ### Thanks to the change-case and pluralize libraries, for the transformations
 
 - [https://github.com/blakeembrey/change-case](https://github.com/blakeembrey/change-case)
 - [https://www.npmjs.com/package/pluralize](https://www.npmjs.com/package/pluralize)
+
 ## Creating templates on the File System
 
 One option is to create a `.fttemplates` folder in your project root and save all templates you want to access in this project there. This path can be changed via the `folderTemplates.templateFolderPath` setting in your vscode settings.
@@ -106,7 +108,7 @@ This setting is used to deviate from the default `.fttemplates` folder path at t
 | omitFTName             | boolean                               | false                                 | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                                                              |
 | overwriteExistingFiles | "never" \| "always" \| "prompt"       | "never"                               | If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation.                                 |
 | openFilesWhenDone      | string[]                              | -                                     | List of files to open when the Folder Template is created. (Supports use of variables, see examples)                                                                               |
-| setExecutablePermission| boolean                                 | false                                 | If set to true automatically adds executable permission to created file. Only works if file in the template is also executable.
+| setExecutablePermission| boolean                                 | false                                 | If set to true automatically adds executable permission to created file. Only works if file in the template is also executable.|
 | absolutePath           | boolean                               | false                                 | If set to true all files will be created relative to the project root. Not relative to the folder you clicked on. (Can only be set to true if omitParentDirectory is true as well) |
 | templateNotation       | {start: string[], end: string[]}      | `{start: ["<","["], end: [">", "]"]}` | If you would like to customize how to annotate strings that should be interpolated use this option                                                                                  |
 
@@ -159,10 +161,9 @@ Example Structure
 | omitFTName             | boolean                                 | false                                 | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                                                              |
 | overwriteExistingFiles | "never" \| "always" \| "prompt"         | "never"                               | If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation.                                 |
 | openFilesWhenDone      | string[]                                | -                                     | List of files to open when the Folder Template is created. (Supports use of variables, see examples)                                                                               |
-| setExecutablePermission| boolean                                 | false                                 | If set to true automatically adds executable permission to created file. Only works if file in the template is also executable.
+| setExecutablePermission| boolean                                 | false                                 | If set to true automatically adds executable permission to created file. Only works if file in the template is also executable.|
 | absolutePath           | boolean                                 | false                                 | If set to true all files will be created relative to the project root. Not relative to the folder you clicked on. (Can only be set to true if omitParentDirectory is true as well) |
-| templateNotation       | {start: string[], end: string[]}        | `{start: ["<","["], end: [">", "]"]}` | If you would like to customize how to annotate strings that should be interpolated use this option
-
+| templateNotation       | {start: string[], end: string[]}        | `{start: ["<","["], end: [">", "]"]}` | If you would like to customize how to annotate strings that should be interpolated use this option|
 
 If a template is specified for a file its value should match one of the names of your [folderTemplates.fileTemplates](#folderTemplates.fileTemplates) or have the `EmptyDirectory` value. If the template value is `EmptyDirectory` it will create an empty directory instead of a file.
 
