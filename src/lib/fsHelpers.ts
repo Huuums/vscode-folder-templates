@@ -27,7 +27,6 @@ export const getFileContent = (path: string) => {
       encoding: 'utf8',
     });
   } catch (e) {
-    console.log({ e });
     return null;
   }
 };
