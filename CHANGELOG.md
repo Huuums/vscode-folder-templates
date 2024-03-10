@@ -1,5 +1,16 @@
 # Change Log
 
+### 3.12.0
+
+- fix #127
+  - you can now add a glob to ´ignoreFiles` in .ftsettings.json to skip files that should not be created by the extension
+- fix #109
+  - added the ability to interpolate the current Date.
+- fix #124
+  - If you use the command from the command palette or by keybind the extension will try to get the currently focused folder in VSCode explorer view and use that as target for template creation.
+- fix #125
+  - The extension should now behave correctly and not automatically open files that were just created. Only if you specified that in the `filesToOpen` property of the .ftsettings.json file.
+
 ### 3.11.0
 
 - Introduced `setExecutablePermission` to ftsettings.json to allow automatic executable permissions if the template file was executable as well.
@@ -9,6 +20,7 @@
 
 - Requires VSCode version 1.75.0
 - Added support for custom template annotation
+
 ### 3.9.2
 
 - No longer copy .DS_Store files on macOS. Thanks [tjunxin](https://github.com/tjunxin)
@@ -107,11 +119,11 @@
 
 Some breaking changes, I'm really sorry but I wanted to do this right and had to do it earlier rather than later. This will hopefully be the last breaking change
 
-- **BREAKING**: The `FFSName` Placeholder no longer works. Please replace it with the new placeholder `FTName`
+- __BREAKING__: The `FFSName` Placeholder no longer works. Please replace it with the new placeholder `FTName`
 
-- **BREAKING**: Configuration namechange. Please switch the configuration keys from `fastFolderStructure.structures` to `folderTemplates.structures` and `fastFolderStructure.fileTemplates` to `folderTemplates.fileTemplates`.
+- __BREAKING__: Configuration namechange. Please switch the configuration keys from `fastFolderStructure.structures` to `folderTemplates.structures` and `fastFolderStructure.fileTemplates` to `folderTemplates.fileTemplates`.
 
-- **BREAKING**: Calling the `FFS.createFolderStructure` command will no longer work. Please replace it with `FT.createFolderStructure`
+- __BREAKING__: Calling the `FFS.createFolderStructure` command will no longer work. Please replace it with `FT.createFolderStructure`
 
 - REMOVED: Creating a Template from an existing folder is no longer supported because you can now save templates on the filesystem.
 
