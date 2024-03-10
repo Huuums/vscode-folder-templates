@@ -19,10 +19,10 @@
     "vue"
   ],
   "icon": "images/extension-icon.png",
-  "version": "3.11.0",
+  "version": "3.12.0",
   "publisher": "Huuums",
   "engines": {
-    "vscode": "^1.75.0"
+    "vscode": "^1.87.0"
   },
   "license": "MIT",
   "categories": [
@@ -31,7 +31,7 @@
   "activationEvents": [
     "onFileSystem:.ftsettings.json"
   ],
-  "main": "./out/main.js",
+  "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
@@ -298,47 +298,51 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run esbuild-base -- --minify",
-    "esbuild-base": "rimraf out && esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
+    "vscode:prepublish": "yarn rimraf-out && yarn esbuild-base --minify",
+    "rimraf-out": "rimraf ./out",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
     "esbuild": "npm run esbuild-base -- --sourcemap",
     "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
-    "test-compile": "tsc -p ./",
-    "package": "yarn run compile && vsce package",
     "compile": "tsc -p ./",
+    "lint": "eslint \"src/**/*.ts\"",
     "watch": "tsc -watch -p ./",
-    "pretest": "yarn run compile",
+    "pretest": "npm run compile",
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.18",
-    "@types/chai-fs": "^2.0.2",
-    "@types/glob": "^7.2.0",
+    "@types/chai": "^4.3.12",
+    "@types/chai-fs": "^2.0.5",
     "@types/html-tags": "^3.0.1",
-    "@types/mocha": "^9.0.0",
-    "@types/node": "^16.11.12",
-    "@types/pluralize": "^0.0.29",
-    "@types/rimraf": "^3.0.0",
-    "@types/sinon": "^10.0.6",
-    "@types/sinon-chai": "^3.2.3",
-    "@types/vscode": "^1.56.0",
-    "@typescript-eslint/eslint-plugin": "^5.60.0",
-    "@typescript-eslint/parser": "^5.60.0",
-    "all-contributors-cli": "^6.20.0",
-    "chai": "^4.2.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.24",
+    "@types/pluralize": "^0.0.33",
+    "@types/rimraf": "^4.0.5",
+    "@types/sinon": "^17.0.3",
+    "@types/sinon-chai": "^3.2.12",
+    "@types/vscode": "^1.87.0",
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
+    "@typescript-eslint/parser": "^7.1.0",
+    "@vscode/test-cli": "^0.0.6",
+    "@vscode/test-electron": "^2.3.9",
+    "all-contributors-cli": "^6.26.1",
+    "chai": "4",
     "chai-fs": "^2.0.0",
-    "esbuild": "^0.14.3",
+    "esbuild": "^0.20.1",
     "eslint": "^8.43.0",
-    "glob": "^7.2.0",
-    "mocha": "^9.1.3",
-    "rimraf": "^3.0.2",
-    "sinon": "^12.0.1",
+    "glob": "^10.3.10",
+    "mocha": "^10.3.0",
+    "rimraf": "^5.0.5",
+    "sinon": "^17.0.1",
     "sinon-chai": "^3.7.0",
-    "typescript": "^4.5.4",
+    "typescript": "^5.3.3",
     "vscode-test": "^1.0.2"
   },
   "dependencies": {
-    "change-case": "^4.1.2",
-    "html-tags": "^3.1.0",
+    "change-case": "4",
+    "date-fns": "^2",
+    "date-fns-tz": "^2.0.0",
+    "html-tags": "^3.3.1",
+    "minimatch": "^9.0.3",
     "open": "^8.4.0",
     "pluralize": "^8.0.0",
     "x-match-expression": "^0.2.1"

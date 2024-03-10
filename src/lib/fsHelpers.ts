@@ -1,4 +1,4 @@
-import * as vscode from "vscode";
+import * as vscode from 'vscode';
 import {
   readdirSync,
   readFileSync,
@@ -8,24 +8,35 @@ import {
   mkdirSync,
   accessSync,
   constants,
-} from "fs";
-import { normalize } from "path";
+  writeFile,
+  writeFileSync,
+} from 'fs';
+import { normalize } from 'path';
 import {
   FileSettings,
   FolderContent,
   StringReplaceTuple,
   TemplateNotation,
-} from "../types";
-import { replaceAllVariablesInString } from "./stringHelpers";
+} from '../types';
+import { replaceAllVariablesInString } from './stringHelpers';
+import { showError } from './vscodeHelpers';
 
 export const getFileContent = (path: string) => {
   try {
     return readFileSync(normalize(path), {
-      encoding: "utf8",
+      encoding: 'utf8',
     });
   } catch (e) {
-    console.log({ e });
     return null;
+  }
+};
+
+export const writeToFile = (path: string, content: string) => {
+  // use nodejs writefile to create file
+  try {
+    writeFileSync(path, content, { encoding: 'utf8' });
+  } catch (e) {
+    showError(`Error writing to file: ${path}, ${e}`);
   }
 };
 
@@ -47,14 +58,14 @@ export const getFolderContents = (uri: vscode.Uri): FolderContent[] => {
       return [
         {
           filePath: uri.fsPath,
-          content: "EmptyDirectory",
+          content: 'EmptyDirectory',
         },
       ];
     }
     return allPaths.flat(Infinity) as FolderContent[];
   } catch (e) {
     vscode.window.showErrorMessage(
-      "Something went wrong getting Folder contents"
+      'Something went wrong getting Folder contents'
     );
     return [];
   }
@@ -67,13 +78,20 @@ export const isDirectory = (path: PathLike | null) => {
   return existsSync(path) && lstatSync(path).isDirectory();
 };
 
+export const isFile = (path: PathLike | null) => {
+  if (path === null) {
+    return false;
+  }
+  return existsSync(path) && lstatSync(path).isFile();
+};
+
 export const createDirectory = (path: PathLike) => {
   mkdirSync(path, { recursive: true });
 };
 
 export const isExecutable = (path: PathLike) => {
   // Windows doesnt need explicit executable flag
-  if (process.platform === "win32") return false;
+  if (process.platform === 'win32') return false;
   try {
     accessSync(path, constants.X_OK);
     return true;
@@ -84,12 +102,12 @@ export const isExecutable = (path: PathLike) => {
 
 export const getFullFilePath = (
   fileName: string,
-  resourcePath = "",
+  resourcePath = '',
   replaceValues: StringReplaceTuple[] | [],
   omitParentDirectory: boolean,
   templateNotation: TemplateNotation
 ) => {
-  let componentName = "";
+  let componentName = '';
   if (replaceValues.length > 0) {
     [[, componentName]] = replaceValues;
   }

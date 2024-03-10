@@ -2,7 +2,7 @@
 
 ### What is this and why
 
-VS-Code Folder Templates is an extension which creates your folders/files as specified in custom templates.
+VS-Code Folder Templates is an extension that creates your folders/files as specified in custom templates.
 
 Why? Because creating the same directories over and over again is annoying to do manually.
 
@@ -51,33 +51,41 @@ Examples
 
 | Input            | Transformer                                | Result           | Description                                                                                                     |
 | ---------------- | -------------------------------------------| ---------------- | ----------------------------------------------------------------------------------------------------------------|
-| LOWERCASE        | \<FTName \| lowercase\>                    | lowercase        |
-| uppercase        | \<FTName \| uppercase\>                    | UPPERCASE        |
+| LOWERCASE        | \<FTName \| lowercase\>                    | lowercase        ||
+| uppercase        | \<FTName \| uppercase\>                    | UPPERCASE        ||
 | My-new-component | \<FTName \| camelcase\>                    | myNewComponent   | (First letter is lowercased. Every letter behind a special character will be capitalized)                       |
-| test string      | \<FTName \| capitalcase\>                  | Test String      |
-| test string      | \<FTName \| constantcase\>                 | TEST_STRING      |
-| test string      | \<FTName \| dotcase\>                      | test.string      |
-| test string      | \<FTName \| headercase\>                   | Test-String      |
-| test string      | \<FTName \| nocase\>                       | test string      |
-| test string      | \<FTName \| paramcase\>                    | test-string      |
+| test string      | \<FTName \| capitalcase\>                  | Test String      ||
+| test string      | \<FTName \| constantcase\>                 | TEST_STRING      ||
+| test string      | \<FTName \| dotcase\>                      | test.string      ||
+| test string      | \<FTName \| headercase\>                   | Test-String      ||
+| test string      | \<FTName \| nocase\>                       | test string      ||
+| test string      | \<FTName \| paramcase\>                    | test-string      ||
 | my-new-component | \<FTName \| pascalcase\>                   | MyNewComponent   | (First letter and every letter behind a special character will be capitalized)                                  |
-| test string      | \<FTName \| pathcase\>                     | test/string      |
-| test string      | \<FTName \| sentencecase\>                 | Test string      |
-| test string      | \<FTName \| snakecase\>                    | test_string      |
-| boxes            | \<FTName \| singular\>                     | box              |
-| box              | \<FTName \| plural\>                       | boxes            |
+| test string      | \<FTName \| pathcase\>                     | test/string      ||
+| test string      | \<FTName \| sentencecase\>                 | Test string      ||
+| test string      | \<FTName \| snakecase\>                    | test_string      ||
+| boxes            | \<FTName \| singular\>                     | box              ||
+| box              | \<FTName \| plural\>                       | boxes            ||
 | wooden box       | \<FTName \| plural?snakecase?uppercase\>   | WOODEN_BOXES     | it is possible to combine transformations with the "?" or "&" operator, these will be performed from left to right.    |
 | wooden box       | \[FTName \% plural&snakecase&uppercase\]   | WOODEN_BOXES     | "&" operator example of row above    |
-| MyNewComponent   | \<FTName \| lowercasefirstchar\>           | myNewComponent   |
-| myNewComponent   | \<FTName \| capitalize\>                   | MyNewComponent   | just like capitalcase
-| myNewComponent   | \<FTName \| kebabcase\>                    | my-new-component | just like paramcase
-| aaa              | \<FTName \| replacefirst('a', 'b')\>       | baa              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replacefirst function.
-| aaa              | \<FTName \| replacelast('a', 'b')\>        | aab              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replacelast function.
-| aaa              | \<FTName \| replace('a', 'b')\>            | bbb              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replace function.
+| MyNewComponent   | \<FTName \| lowercasefirstchar\>           | myNewComponent   ||
+| myNewComponent   | \<FTName \| capitalize\>                   | MyNewComponent   | just like capitalcase|
+| myNewComponent   | \<FTName \| kebabcase\>                    | my-new-component | just like paramcase|
+| aaa              | \<FTName \| replacefirst('a', 'b')\>       | baa              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replacefirst function.|
+| aaa              | \<FTName \| replacelast('a', 'b')\>        | aab              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replacelast function.|
+| aaa              | \<FTName \| replace('a', 'b')\>            | bbb              | IMPORTANT: Due to filesystem limitations (thanks Windows) only single quotes (`'`) will work to annotate the string in the replace function.|
+
+### Date values
+
+As of v3.12.0 it is possible to add dates to a file name or its content. However it will only be possible to add the current time in your local time zone or UTC. The way to achieve this is by using the placeholder \[DATE_NOW(FORMATSTRING)\] for local timezone or \[DATE_NOW_UTC(FORMATSTRING)\] for UTC time.
+
+As an example [DATE_NOW('yyyy-mm-dd')] will result in `2024-03-04`. Please take a look at this [https://date-fns.org/v2.30.0/docs/format](https://date-fns.org/v2.30.0/docs/format) documentation to see all the available formatting patterns.
+
 ### Thanks to the change-case and pluralize libraries, for the transformations
 
 - [https://github.com/blakeembrey/change-case](https://github.com/blakeembrey/change-case)
 - [https://www.npmjs.com/package/pluralize](https://www.npmjs.com/package/pluralize)
+
 ## Creating templates on the File System
 
 One option is to create a `.fttemplates` folder in your project root and save all templates you want to access in this project there. This path can be changed via the `folderTemplates.templateFolderPath` setting in your vscode settings.
@@ -106,15 +114,15 @@ This setting is used to deviate from the default `.fttemplates` folder path at t
 | omitFTName             | boolean                               | false                                 | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                                                              |
 | overwriteExistingFiles | "never" \| "always" \| "prompt"       | "never"                               | If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation.                                 |
 | openFilesWhenDone      | string[]                              | -                                     | List of files to open when the Folder Template is created. (Supports use of variables, see examples)                                                                               |
-| setExecutablePermission| boolean                                 | false                                 | If set to true automatically adds executable permission to created file. Only works if file in the template is also executable.
+| setExecutablePermission| boolean                                 | false                                 | If set to true automatically adds executable permission to created file. Only works if file in the template is also executable.|
 | absolutePath           | boolean                               | false                                 | If set to true all files will be created relative to the project root. Not relative to the folder you clicked on. (Can only be set to true if omitParentDirectory is true as well) |
 | templateNotation       | {start: string[], end: string[]}      | `{start: ["<","["], end: [">", "]"]}` | If you would like to customize how to annotate strings that should be interpolated use this option                                                                                  |
 
-## Creating your Template in VS Code settings.json
+## Creating your Template in VS Code settings.json {#template-format}
 
-There are two key parts to creating your FT Templates. [Folder Structures](#folderTemplates.structures) and [File Templates](#folderTemplates.fileTemplates).
+There are two key parts to creating your FT Templates. [Folder Structures](#foldertemplatestructures) and [File Templates](#filetemplates).
 
-### folderTemplates.structures
+### folderTemplates.structures {#foldertemplatestructures}
 
 The `folderTemplates.structures` option takes an `array of objects` where one object equals one Folder Structure.
 
@@ -159,14 +167,14 @@ Example Structure
 | omitFTName             | boolean                                 | false                                 | If set to true FT will not ask for a component name. (Can only be set to true if omitParentDirectory is true as well)                                                              |
 | overwriteExistingFiles | "never" \| "always" \| "prompt"         | "never"                               | If set to always all existing files will be overwritten. If set to prompt user will be asked which files shall be overwritten upon foldercreation.                                 |
 | openFilesWhenDone      | string[]                                | -                                     | List of files to open when the Folder Template is created. (Supports use of variables, see examples)                                                                               |
-| setExecutablePermission| boolean                                 | false                                 | If set to true automatically adds executable permission to created file. Only works if file in the template is also executable.
+| setExecutablePermission| boolean                                 | false                                 | If set to true automatically adds executable permission to created file. Only works if file in the template is also executable.|
 | absolutePath           | boolean                                 | false                                 | If set to true all files will be created relative to the project root. Not relative to the folder you clicked on. (Can only be set to true if omitParentDirectory is true as well) |
-| templateNotation       | {start: string[], end: string[]}        | `{start: ["<","["], end: [">", "]"]}` | If you would like to customize how to annotate strings that should be interpolated use this option
+| templateNotation       | {start: string[], end: string[]}        | `{start: ["<","["], end: [">", "]"]}` | If you would like to customize how to annotate strings that should be interpolated use this option|
+| ignoreFiles            | string[]                                | ["**/.gitkeep"]                       | This option takes an array of globs to define which files should not be created by the extension  |
 
+If a template is specified for a file its value should match one of the names of your [folderTemplates.fileTemplates](#filetemplates) or have the `EmptyDirectory` value. If the template value is `EmptyDirectory` it will create an empty directory instead of a file.
 
-If a template is specified for a file its value should match one of the names of your [folderTemplates.fileTemplates](#folderTemplates.fileTemplates) or have the `EmptyDirectory` value. If the template value is `EmptyDirectory` it will create an empty directory instead of a file.
-
-### folderTemplates.fileTemplates
+### folderTemplates.fileTemplates {#filetemplates}
 
 - The `key` of the `key-value` pair is the name of the template
 - The value can either be

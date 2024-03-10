@@ -1,7 +1,7 @@
-import open from "open";
+import open from 'open';
 
-import { isDirectory } from "../lib/fsHelpers";
-import { getGlobalTemplatePath, showError } from "../lib/vscodeHelpers";
+import { isDirectory } from '../lib/fsHelpers';
+import { getGlobalTemplatePath, showError } from '../lib/vscodeHelpers';
 
 export default (defaultGlobalPath: string) => {
   const globalTemplatePath = getGlobalTemplatePath(defaultGlobalPath);

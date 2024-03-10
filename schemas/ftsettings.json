@@ -55,6 +55,19 @@
         "$ref": "./defs.json/#/definitions/string_nonempty"
       }
     },
+    "ignoreFiles": {
+      "type": "array",
+      "description": "Takes an array of globs to define files that should not be created by the extension when choosing this template",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "./defs.json/#/definitions/string_nonempty"
+      },
+      "examples": [
+        [
+          "**/.gitkeep"
+        ]
+      ]
+    },
     "templateNotation": {
       "type": "object",
       "description": "Can be used to customize the template notation",

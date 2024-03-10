@@ -1,83 +1,174 @@
-import * as chai from "chai";
+import * as chai from 'chai';
 chai.should();
 import {
   replacePlaceholder,
   getReplaceRegexp,
   convertFileContentToString,
   replaceAllVariablesInString,
-} from "../../lib/stringHelpers";
+} from '../../lib/stringHelpers';
 
-suite("lib/stringHelper suite", () => {
-  test("replacePlaceholder to work with all Transformers", async () => {
-    const variableName = "FTName";
+suite('lib/stringHelper suite', () => {
+  test('replacePlaceholder to work with all Transformers', async () => {
+    const variableName = 'FTName';
     // Get all parts of a string enclosed in < >
-    const regex = getReplaceRegexp(variableName, {start: ['<', '['], end: ['>', ']']});
+    const regex = getReplaceRegexp(variableName, {
+      start: ['<', '['],
+      end: ['>', ']'],
+    });
 
-    replacePlaceholder(`<FTName>`, regex, "dDDd").should.equal("dDDd");
+    replacePlaceholder(`<FTName>`, regex, 'dDDd').should.equal('dDDd');
 
-    replacePlaceholder(`<FTName | lowercase>`, regex, "dDDd").should.equal("dddd");
+    replacePlaceholder(`<FTName | lowercase>`, regex, 'dDDd').should.equal(
+      'dddd'
+    );
 
-    replacePlaceholder(`<FTName | uppercase>`, regex, "dDDd").should.equal("DDDD");
+    replacePlaceholder(`<FTName | uppercase>`, regex, 'dDDd').should.equal(
+      'DDDD'
+    );
 
-    replacePlaceholder(`<FTName % uppercase>`, regex, "dDDd").should.equal("DDDD");
+    replacePlaceholder(`<FTName % uppercase>`, regex, 'dDDd').should.equal(
+      'DDDD'
+    );
 
-    replacePlaceholder(`<FTName | camelcase>`, regex, 'Start-_test   with* specialchars!"§$%&/89whoop').should.equal("startTestWithSpecialchars89whoop");
+    replacePlaceholder(
+      `<FTName | camelcase>`,
+      regex,
+      'Start-_test   with* specialchars!"§$%&/89whoop'
+    ).should.equal('startTestWithSpecialchars89whoop');
 
-    replacePlaceholder(`<FTName | capitalcase>`, regex, "dDeeDda sde").should.equal("D Dee Dda Sde");
+    replacePlaceholder(
+      `<FTName | capitalcase>`,
+      regex,
+      'dDeeDda sde'
+    ).should.equal('D Dee Dda Sde');
 
-    replacePlaceholder(`<FTName | constantcase>`, regex, "dDeeDda sde").should.equal("D_DEE_DDA_SDE");
+    replacePlaceholder(
+      `<FTName | constantcase>`,
+      regex,
+      'dDeeDda sde'
+    ).should.equal('D_DEE_DDA_SDE');
 
-    replacePlaceholder(`<FTName | dotcase>`, regex, "dDeeDda sde").should.equal("d.dee.dda.sde");
+    replacePlaceholder(`<FTName | dotcase>`, regex, 'dDeeDda sde').should.equal(
+      'd.dee.dda.sde'
+    );
 
-    replacePlaceholder(`<FTName | headercase>`, regex, "dDeeDda sde").should.equal("D-Dee-Dda-Sde");
+    replacePlaceholder(
+      `<FTName | headercase>`,
+      regex,
+      'dDeeDda sde'
+    ).should.equal('D-Dee-Dda-Sde');
 
-    replacePlaceholder(`<FTName | nocase>`, regex, "dDeeDda sde").should.equal("d dee dda sde");
+    replacePlaceholder(`<FTName | nocase>`, regex, 'dDeeDda sde').should.equal(
+      'd dee dda sde'
+    );
 
-    replacePlaceholder(`<FTName | paramcase>`, regex, "dDeeDda sde").should.equal("d-dee-dda-sde");
+    replacePlaceholder(
+      `<FTName | paramcase>`,
+      regex,
+      'dDeeDda sde'
+    ).should.equal('d-dee-dda-sde');
 
-    replacePlaceholder(`<FTName | pascalcase>`, regex, 'start-_test   with* specialchars!"§$%&/89whoop').should.equal("StartTestWithSpecialchars89whoop");
+    replacePlaceholder(
+      `<FTName | pascalcase>`,
+      regex,
+      'start-_test   with* specialchars!"§$%&/89whoop'
+    ).should.equal('StartTestWithSpecialchars89whoop');
 
-    replacePlaceholder(`<FTName | pathcase>`, regex, 'dDeeDda sde').should.equal("d/dee/dda/sde");
+    replacePlaceholder(
+      `<FTName | pathcase>`,
+      regex,
+      'dDeeDda sde'
+    ).should.equal('d/dee/dda/sde');
 
-    replacePlaceholder(`<FTName | sentencecase>`, regex, 'dDeeDda sde').should.equal("D dee dda sde");
+    replacePlaceholder(
+      `<FTName | sentencecase>`,
+      regex,
+      'dDeeDda sde'
+    ).should.equal('D dee dda sde');
 
-    replacePlaceholder(`<FTName | snakecase>`, regex, "dDeeDda sde").should.equal("d_dee_dda_sde");
+    replacePlaceholder(
+      `<FTName | snakecase>`,
+      regex,
+      'dDeeDda sde'
+    ).should.equal('d_dee_dda_sde');
 
-    replacePlaceholder(`<FTName | singular>`, regex, "Boxes").should.equal("Box");
+    replacePlaceholder(`<FTName | singular>`, regex, 'Boxes').should.equal(
+      'Box'
+    );
 
-    replacePlaceholder(`<FTName | plural>`, regex, "Box").should.equal("Boxes");
+    replacePlaceholder(`<FTName | plural>`, regex, 'Box').should.equal('Boxes');
 
-    replacePlaceholder(`<FTName | lowercasefirstchar>`, regex, "DDeeDda sde").should.equal("dDeeDda sde");
+    replacePlaceholder(
+      `<FTName | lowercasefirstchar>`,
+      regex,
+      'DDeeDda sde'
+    ).should.equal('dDeeDda sde');
 
-    replacePlaceholder(`<FTName | capitalize>`, regex, "dDeeDda sde").should.equal("DDeeDda sde");
+    replacePlaceholder(
+      `<FTName | capitalize>`,
+      regex,
+      'dDeeDda sde'
+    ).should.equal('DDeeDda sde');
 
-    replacePlaceholder(`<FTName | kebabcase>`, regex, "dDeeDda sde").should.equal("d-dee-dda-sde");
+    replacePlaceholder(
+      `<FTName | kebabcase>`,
+      regex,
+      'dDeeDda sde'
+    ).should.equal('d-dee-dda-sde');
 
-    replacePlaceholder(`<FTName | replace('zzz','bbb')>`, regex, "dDeeDda sde").should.equal("dDeeDda sde");
-    replacePlaceholder(`<FTName | replacefirst('zzz','bbb')>`, regex, "dDeeDda sde").should.equal("dDeeDda sde");
-    replacePlaceholder(`<FTName | replacelast('zzz','bbb')>`, regex, "dDeeDda sde").should.equal("dDeeDda sde");
+    replacePlaceholder(
+      `<FTName | replace('zzz','bbb')>`,
+      regex,
+      'dDeeDda sde'
+    ).should.equal('dDeeDda sde');
+    replacePlaceholder(
+      `<FTName | replacefirst('zzz','bbb')>`,
+      regex,
+      'dDeeDda sde'
+    ).should.equal('dDeeDda sde');
+    replacePlaceholder(
+      `<FTName | replacelast('zzz','bbb')>`,
+      regex,
+      'dDeeDda sde'
+    ).should.equal('dDeeDda sde');
 
+    replacePlaceholder(
+      `<FTName | snakecase?capitalize>`,
+      regex,
+      'dDeeDda sde'
+    ).should.equal('D_dee_dda_sde');
+    replacePlaceholder(
+      `<FTName | snakecase&capitalize>`,
+      regex,
+      'dDeeDda sde'
+    ).should.equal('D_dee_dda_sde');
+    replacePlaceholder(
+      `<FTName | replace('a','b')&snakecase&capitalize>`,
+      regex,
+      'dDeeDda sde'
+    ).should.equal('D_dee_ddb_sde');
+    replacePlaceholder(
+      `<FTName | snakecase&replace('a','b')&capitalize>`,
+      regex,
+      'dDeeDda sde'
+    ).should.equal('D_dee_ddb_sde');
 
-    replacePlaceholder(`<FTName | snakecase?capitalize>`, regex, "dDeeDda sde").should.equal("D_dee_dda_sde");
-    replacePlaceholder(`<FTName | snakecase&capitalize>`, regex, "dDeeDda sde").should.equal("D_dee_dda_sde");
-    replacePlaceholder(`<FTName | replace('a','b')&snakecase&capitalize>`, regex, "dDeeDda sde").should.equal("D_dee_ddb_sde");
-    replacePlaceholder(`<FTName | snakecase&replace('a','b')&capitalize>`, regex, "dDeeDda sde").should.equal("D_dee_ddb_sde");
+    replacePlaceholder(`<ASDF | capitalize>`, regex, 'dDDd').should.equal(
+      '<ASDF | capitalize>'
+    );
 
-    replacePlaceholder(`<ASDF | capitalize>`, regex, "dDDd").should.equal("<ASDF | capitalize>");
+    replacePlaceholder(`FTName`, regex, 'dDDd').should.equal('FTName');
 
-    replacePlaceholder(`FTName`, regex, "dDDd").should.equal("FTName");
+    replacePlaceholder(`<FTName`, regex, 'dDDd').should.equal('<FTName');
 
-    replacePlaceholder(`<FTName`, regex, "dDDd").should.equal("<FTName");
+    replacePlaceholder(`FTName>`, regex, 'dDDd').should.equal('FTName>');
 
-    replacePlaceholder(`FTName>`, regex, "dDDd").should.equal("FTName>");
-
-    replacePlaceholder(`<FTNames>`, regex, "dDDd").should.equal("<FTNames>");
-
+    replacePlaceholder(`<FTNames>`, regex, 'dDDd').should.equal('<FTNames>');
   });
 
-  test("convertFileContent to return correct string", async () => {
-    const array = ["asdf", "", "abcd", "        dddd"];
-    const string = "asdf\n\nabcd\n        dddd";
+  test('convertFileContent to return correct string', async () => {
+    const array = ['asdf', '', 'abcd', '        dddd'];
+    const string = 'asdf\n\nabcd\n        dddd';
     // Get all parts of a string enclosed in < >
     const targetString = `asdf
 
@@ -85,47 +176,46 @@ abcd
         dddd`;
     convertFileContentToString(array).should.equal(targetString);
     convertFileContentToString(string).should.equal(targetString);
-    convertFileContentToString(undefined).should.equal("");
+    convertFileContentToString(undefined).should.equal('');
   });
 
-  test("replaceAllVariablesInString to have replaced everything correctly", async () => {
+  test('replaceAllVariablesInString to have replaced everything correctly', async () => {
     const replaceTuples = [
-      ["FTName", "asddFf"],
-      ["customVar1", "variablE"],
-      ["customVar2", "variablE2"],
+      ['FTName', 'asddFf'],
+      ['customVar1', 'variablE'],
+      ['customVar2', 'variablE2'],
     ];
     const initialString =
-      "<FTName | uppercase> <customVar1 | lowercase> <customVar2 | capitalize> <FTName | asdf> <FTNam>";
+      '<FTName | uppercase> <customVar1 | lowercase> <customVar2 | capitalize> <FTName | asdf> <FTNam>';
     replaceAllVariablesInString(initialString, replaceTuples, {
-      start: ["<", "["],
-      end: [">", "]"],
-    }).should.equal("ASDDFF variable VariablE2 asddFf <FTNam>");
+      start: ['<', '['],
+      end: ['>', ']'],
+    }).should.equal('ASDDFF variable VariablE2 asddFf <FTNam>');
   });
 
-  test("custom template notation to work as expected", async () => {
+  test('custom template notation to work as expected', async () => {
     const replaceTuples = [
-      ["FTName", "asddFf"],
-      ["customVar1", "variablE"],
-      ["customVar2", "variablE2"],
+      ['FTName', 'asddFf'],
+      ['customVar1', 'variablE'],
+      ['customVar2', 'variablE2'],
     ];
     const initialString =
-      "<<<FTName | uppercase>>> <<<customVar1 | lowercase>>> <<<customVar2 | capitalize>>> <<<FTName | asdf>>> [[[FTName]]] [[FTName]] [[[FTNam]]]";
+      '<<<FTName | uppercase>>> <<<customVar1 | lowercase>>> <<<customVar2 | capitalize>>> <<<FTName | asdf>>> [[[FTName]]] [[FTName]] [[[FTNam]]]';
     replaceAllVariablesInString(initialString, replaceTuples, {
-      start: ["<<<", "[[["],
-      end: [">>>", "]]]"],
+      start: ['<<<', '[[['],
+      end: ['>>>', ']]]'],
     }).should.equal(
-      "ASDDFF variable VariablE2 asddFf asddFf [[FTName]] [[[FTNam]]]"
+      'ASDDFF variable VariablE2 asddFf asddFf [[FTName]] [[[FTNam]]]'
     );
 
-const initialString2 =
-  "#{<<FTName | uppercase>>} #{<<customVar1 | lowercase>>} <<<customVar2 | capitalize>>> ${<<customVar2>>> #{<<customVar1 | uppercase>>} #{<<customVar1>>}";
+    const initialString2 =
+      '#{<<FTName | uppercase>>} #{<<customVar1 | lowercase>>} <<<customVar2 | capitalize>>> ${<<customVar2>>> #{<<customVar1 | uppercase>>} #{<<customVar1>>}';
 
-replaceAllVariablesInString(initialString2, replaceTuples, {
-  start: ["#{<<"],
-  end: [">>}"],
-}).should.equal(
-  "ASDDFF variable <<<customVar2 | capitalize>>> ${<<customVar2>>> VARIABLE variablE"
-);
-
+    replaceAllVariablesInString(initialString2, replaceTuples, {
+      start: ['#{<<'],
+      end: ['>>}'],
+    }).should.equal(
+      'ASDDFF variable <<<customVar2 | capitalize>>> ${<<customVar2>>> VARIABLE variablE'
+    );
   });
 });
