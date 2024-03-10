@@ -77,9 +77,9 @@ Examples
 
 ### Date values
 
-As of v3.12.0 it is possible to add dates to a file name or its content. However it will only be possible to add the current time in your local time zone or UTC. The way to achieve this is by using the placeholder \[DATE_NOW(FORMATSTRING)\] for local timezone or \[DATE_NOW_UTC(FORMATSTRING)\] for UTC time.
+As of v3.12.0 it is possible to add dates to a file name or its content. However it will only be possible to add the current time in your local time zone or UTC. The way to achieve this is by using the placeholder `\[DATE_NOW(FORMATSTRING)\]` for local timezone or `\[DATE_NOW_UTC(FORMATSTRING)\]` for UTC time.
 
-As an example [DATE_NOW('yyyy-mm-dd')] will result in `2024-03-04`. Please take a look at this [https://date-fns.org/v2.30.0/docs/format](https://date-fns.org/v2.30.0/docs/format) documentation to see all the available formatting patterns.
+As an example `[DATE_NOW('yyyy-mm-dd')]` will result in `2024-03-04`. Please take a look at this [https://date-fns.org/v2.30.0/docs/format](https://date-fns.org/v2.30.0/docs/format) documentation to see all the available formatting patterns.
 
 ### Thanks to the change-case and pluralize libraries, for the transformations
 
@@ -117,6 +117,7 @@ This setting is used to deviate from the default `.fttemplates` folder path at t
 | setExecutablePermission| boolean                                 | false                                 | If set to true automatically adds executable permission to created file. Only works if file in the template is also executable.|
 | absolutePath           | boolean                               | false                                 | If set to true all files will be created relative to the project root. Not relative to the folder you clicked on. (Can only be set to true if omitParentDirectory is true as well) |
 | templateNotation       | {start: string[], end: string[]}      | `{start: ["<","["], end: [">", "]"]}` | If you would like to customize how to annotate strings that should be interpolated use this option                                                                                  |
+| ignoreFiles            | string[]                                | []                       | This option takes an array of globs to define which files should not be created by the extension  |
 
 ## Creating your Template in VS Code settings.json {#template-format}
 
@@ -170,7 +171,7 @@ Example Structure
 | setExecutablePermission| boolean                                 | false                                 | If set to true automatically adds executable permission to created file. Only works if file in the template is also executable.|
 | absolutePath           | boolean                                 | false                                 | If set to true all files will be created relative to the project root. Not relative to the folder you clicked on. (Can only be set to true if omitParentDirectory is true as well) |
 | templateNotation       | {start: string[], end: string[]}        | `{start: ["<","["], end: [">", "]"]}` | If you would like to customize how to annotate strings that should be interpolated use this option|
-| ignoreFiles            | string[]                                | ["**/.gitkeep"]                       | This option takes an array of globs to define which files should not be created by the extension  |
+
 
 If a template is specified for a file its value should match one of the names of your [folderTemplates.fileTemplates](#filetemplates) or have the `EmptyDirectory` value. If the template value is `EmptyDirectory` it will create an empty directory instead of a file.
 
