@@ -114,7 +114,17 @@
     "properties": {
       "omitFTName": {
         "enum": [
-          true
+          true,
+          false
+        ]
+      }
+    }
+  },
+  "else": {
+    "properties": {
+      "omitFTName": {
+        "enum": [
+          false
         ]
       }
     }
