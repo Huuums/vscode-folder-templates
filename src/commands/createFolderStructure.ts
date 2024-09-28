@@ -97,12 +97,12 @@ const CreateFolderStructure = async (
     }
   }
 
+  const fsPath = (absolutePath ? workspaceUri : targetUri)?.fsPath;
   //Get all inputs for replacement of customvariables
+  const pathTuples: StringReplaceTuple[] = `${fsPath}`.split('\\').map((p, i) => [`Path${i}`, p]);
   const replaceValueTuples = ftNameTuple.concat(
     await getReplaceValueTuples(customVariables || [])
-  );
-  const fsPath = (absolutePath ? workspaceUri : targetUri)?.fsPath;
-
+  ).concat(pathTuples);
   const structureContents = files.map((row) => ({
     isExecutable: row.isExecutable,
     fileName: getFullFilePath(
