@@ -47,7 +47,9 @@ The currently supported transformers are:
 
 It is possible to specify a set of custom Variables which will be interpolated as well. You will be asked to enter a value for every custom variable defined. They can be transformed the same way as the default `<FTName>`
 
-### UPDATE: Now you can use absolute path parts in your template. To use corresponding part, specify <Part0> - <PartN>, depending on how long path is picked. For example for path "P:\projects\contributing\vscode-folder-templates":
+### UPDATE: Now you can use absolute path parts in your template.
+
+To use corresponding part, specify <Part0> - <PartN>, depending on how long path is picked. For example for path "P:\projects\contributing\vscode-folder-templates":
 P - <Path0>, projects - <Path1>, contributing - <Path2>. Path parts can be transformed.
 Examples
 
@@ -223,7 +225,9 @@ this example would make it so that you have to annotate the strings like this `<
 
 There is a special placeholder `<__existingcontent__>` or `[__existingcontent__]` to read content from an existing file if you want to append or prepend text to this file. However this requires the setting `overwriteExistingFiles` to be set to `true` or `prompt`. See this [example](https://github.com/Huuums/vscode-folder-templates/tree/master/examples/Append%20Text%20to%20Existing%20File) for more information.
 
-### UPDATE: Now you can patch files using substring search. Use this structure in your template. This is example I use for Redux reducer:
+### UPDATE: Now you can patch files using substring search.
+
+Use this structure in your template. This is example I use for Redux reducer:
 ```[__precisecontent__]
 before: default:
     case <Path6>ActionTypes.SET_<FTName % snakecase&uppercase>:

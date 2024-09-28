@@ -1,6 +1,6 @@
 {
   "name": "vscode-fast-folder-structure",
-  "displayName": "Folder Templates",
+  "displayName": "Folder Templates V2",
   "description": "Create Templates for Folders and Files for easy reusability",
   "repository": {
     "type": "git",
