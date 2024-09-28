@@ -228,7 +228,8 @@ There is a special placeholder `<__existingcontent__>` or `[__existingcontent__]
 ### UPDATE: Now you can patch files using substring search.
 
 Use this structure in your template. This is example I use for Redux reducer:
-```[__precisecontent__]
+```
+[__precisecontent__]
 before: default:
     case <Path6>ActionTypes.SET_<FTName % snakecase&uppercase>:
       return state.merge({
