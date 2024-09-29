@@ -35,7 +35,7 @@
     "absolutePath": {
       "type": "boolean",
       "default": false,
-      "description": "If set to true FT will always create all files relative to project root rather than relative to the folder you clicked"
+      "description": "If set to true FT will always create all files relative to project root rather than relative to the folder you clicked. (Can only be set to true if omitParentDirectory is true as well)"
     },
     "omitFTName": {
       "type": "boolean",
@@ -114,7 +114,28 @@
     "properties": {
       "omitFTName": {
         "enum": [
-          true
+          true,
+          false
+        ]
+      },
+      "absolutePath": {
+        "enum": [
+          true,
+          false
+        ]
+      }
+    }
+  },
+  "else": {
+    "properties": {
+      "omitFTName": {
+        "enum": [
+          false
+        ]
+      },
+      "absolutePath": {
+        "enum": [
+          false
         ]
       }
     }
