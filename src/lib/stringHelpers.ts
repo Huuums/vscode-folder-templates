@@ -187,9 +187,95 @@ const replaceAllVariablesInString = (
   }, string);
 };
 
+const extractPreciseContentBetweenTags = (input: string): string[] => {
+  const regex = /\[__precisecontent__\](.*?)\[__endprecisecontent__\]/gs;
+  const matches = [];
+  let match;
+
+  while ((match = regex.exec(input)) !== null) {
+    // `match[1]` contains the content between the tags
+    matches.push(match[1].trim());
+  }
+
+  return matches;
+};
+
+const parseInstruction = (input: string): { [key: string]: string } => {
+  const lines = input.split('\r\n'); // Split by newlines
+  const firstLineMatch = lines[0].match(/^(before|after):\s*(.+)$/);
+
+  if (!firstLineMatch) {
+    throw new Error("First line must start with 'before:' or 'after:'");
+  }
+
+  const key = firstLineMatch[1]; // 'before' or 'after'
+  const value = firstLineMatch[2]; // The string after 'before:' or 'after:'
+
+  // Join the remaining lines as the content
+  const content = lines.slice(1).join('\r\n');
+
+  return {
+    [key]: value.trim(),
+    content: content
+  };
+};
+
+function applyInstruction(input: string | null, instruction: { [key: string]: string }): string {
+  if (!input) {
+
+    return '';
+    // throw new Error("Input is empty");
+  }
+  const lines = input.split('\r\n'); // Split the input into lines
+  const key = Object.keys(instruction).find(k => k === 'before' || k === 'after');
+
+  if (!key) {
+    throw new Error("Instruction must contain either 'before' or 'after' key");
+  }
+
+  const targetLine = instruction[key]; // Line we need to match
+  const contentToInsert = instruction.content; // Content to insert
+
+  let foundIndex = -1;
+
+  // Find the line index that matches the targetLine
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].includes(targetLine)) {
+      foundIndex = i;
+      break;
+    }
+  }
+  // Split the content to insert into separate lines (if it's multiline content)
+  const contentLines = contentToInsert.split('\r\n');
+
+  // Insert content based on the key (before or after)
+  // if (key === 'before') {
+  //   lines.splice(foundIndex, 0, ...contentLines); // Insert before the matching line
+  // } else if (key === 'after') {
+  //   lines.splice(foundIndex + 1, 0, ...contentLines); // Insert after the matching line
+  // }
+  // Rebuild the final string based on whether we insert before or after
+  let result: string[] = [];
+
+  if (key === 'before') {
+    // Insert content before the matching line
+    result = [...lines.slice(0, foundIndex), ...contentLines, ...lines.slice(foundIndex)];
+  } else if (key === 'after') {
+    // Insert content after the matching line
+    result = [...lines.slice(0, foundIndex + 1), ...contentLines, ...lines.slice(foundIndex + 1)];
+  }
+  // Join the lines back together and return the resulting string
+  return result.join('\r\n');
+}
+
+const replaceLineWraps = (s: string) => s.replaceAll('\\r', '').replaceAll('\\n', '');
 export {
+  replaceLineWraps,
   getReplaceRegexp,
   replacePlaceholder,
   convertFileContentToString,
   replaceAllVariablesInString,
+  extractPreciseContentBetweenTags,
+  parseInstruction,
+  applyInstruction
 };

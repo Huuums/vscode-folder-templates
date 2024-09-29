@@ -47,6 +47,10 @@ The currently supported transformers are:
 
 It is possible to specify a set of custom Variables which will be interpolated as well. You will be asked to enter a value for every custom variable defined. They can be transformed the same way as the default `<FTName>`
 
+### UPDATE: Now you can use absolute path parts in your template.
+
+To use corresponding part, specify <Part0> - <PartN>, depending on how long path is picked. For example for path "P:\projects\contributing\vscode-folder-templates":
+P - <Path0>, projects - <Path1>, contributing - <Path2>. Path parts can be transformed.
 Examples
 
 | Input            | Transformer                                | Result           | Description                                                                                                     |
@@ -221,6 +225,21 @@ this example would make it so that you have to annotate the strings like this `<
 
 There is a special placeholder `<__existingcontent__>` or `[__existingcontent__]` to read content from an existing file if you want to append or prepend text to this file. However this requires the setting `overwriteExistingFiles` to be set to `true` or `prompt`. See this [example](https://github.com/Huuums/vscode-folder-templates/tree/master/examples/Append%20Text%20to%20Existing%20File) for more information.
 
+### UPDATE: Now you can patch files using substring search.
+
+Use this structure in your template. This is example I use for Redux reducer:
+```
+[__precisecontent__]
+before: default:
+    case <Path6>ActionTypes.SET_<FTName % snakecase&uppercase>:
+      return state.merge({
+        <FTName | lowercasefirstchar>: action.payload,
+      });
+
+[__endprecisecontent__]
+```
+here we search " default:" substring in file. In case we specified "before" all remaining part down to the [__endprecisecontent__] will be inserted before line that has been found. Or you can have "after", in this case remaing content will be inserted after that line.
+
 ### Using the command createFolderStructure with a keybind
 
 You can add a `string` argument to the keybind you are using to define a static folder in which you want the new folder to be created.
@@ -288,6 +307,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ThumNet"><img src="https://avatars.githubusercontent.com/u/692308?v=4?s=50" width="50px;" alt="ThumNet"/><br /><sub><b>ThumNet</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/commits?author=ThumNet" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/hondzik"><img src="https://avatars.githubusercontent.com/u/14993644?v=4?s=50" width="50px;" alt="hondzik"/><br /><sub><b>hondzik</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/commits?author=hondzik" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/tjunxin"><img src="https://avatars.githubusercontent.com/u/4941309?v=4?s=50" width="50px;" alt="tjunxin"/><br /><sub><b>tjunxin</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/commits?author=tjunxin" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/galionix"><img src="https://avatars.githubusercontent.com/u/39463178?v=4?s=50" width="50px;" alt="galionix"/><br /><sub><b>galionix</b></sub></a><br /><a href="https://github.com/Huuums/vscode-folder-templates/commits?author=galionix" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>

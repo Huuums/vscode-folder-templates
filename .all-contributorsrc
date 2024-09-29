@@ -241,6 +241,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "galionix",
+      "name": "galionix",
+      "avatar_url": "https://avatars.githubusercontent.com/u/39463178?v=4",
+      "profile": "https://github.com/galionix",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,

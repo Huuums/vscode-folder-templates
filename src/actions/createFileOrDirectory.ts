@@ -8,10 +8,14 @@ import {
   getFileContent,
   isDirectory,
 } from '../lib/fsHelpers';
-import { replaceAllVariablesInString } from '../lib/stringHelpers';
+import { applyInstruction, extractPreciseContentBetweenTags, parseInstruction, replaceAllVariablesInString, replaceLineWraps } from '../lib/stringHelpers';
 import { dirname } from 'path';
 import { minimatch } from 'minimatch';
-
+type PreciseInstruction = {
+  after?: string
+  before?: string
+  content: string
+}
 export default (templateNotation: TemplateNotation, ignoreFiles: string[]) =>
   async (file: FileSettings) => {
     if (file.template === 'EmptyDirectory') {
@@ -20,15 +24,31 @@ export default (templateNotation: TemplateNotation, ignoreFiles: string[]) =>
     }
 
     if (fileExists(file)) {
+      if (file.template?.includes('__precisecontent__')) {
+        try {
+          let resultingContent = getFileContent(file.fileName) || '';
+          const templateInstructions = extractPreciseContentBetweenTags(`${file.template}`)
+            .map(parseInstruction);
+
+            templateInstructions.forEach(instruction => resultingContent = applyInstruction(resultingContent, instruction));
+          writeToFile(
+            file.fileName,
+            resultingContent
+          );
+        } catch (e) {
+          console.error(e);
+        }
+      } else
       if (file.template?.includes('__existingcontent__')) {
         const currentFileContent = getFileContent(file.fileName);
+        const rawReplacedContent = replaceAllVariablesInString(
+          file.template as string,
+          [['__existingcontent__', currentFileContent || '']],
+          templateNotation
+        );
         writeToFile(
           file.fileName,
-          replaceAllVariablesInString(
-            file.template as string,
-            [['__existingcontent__', currentFileContent || '']],
-            templateNotation
-          )
+          rawReplacedContent
         );
       } else {
         writeToFile(file.fileName, file.template as string);
