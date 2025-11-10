@@ -79,7 +79,7 @@ Examples
 
 As of v3.12.0 it is possible to add dates to a file name or its content. However it will only be possible to add the current time in your local time zone or UTC. The way to achieve this is by using the placeholder `\[DATE_NOW(FORMATSTRING)\]` for local timezone or `\[DATE_NOW_UTC(FORMATSTRING)\]` for UTC time.
 
-As an example `[DATE_NOW('yyyy-mm-dd')]` will result in `2024-03-04`. Please take a look at this [https://date-fns.org/v2.30.0/docs/format](https://date-fns.org/v2.30.0/docs/format) documentation to see all the available formatting patterns.
+As an example `[DATE_NOW('yyyy-MM-dd')]` will result in `2024-03-04`. Please take a look at this [https://date-fns.org/v2.30.0/docs/format](https://date-fns.org/v2.30.0/docs/format) documentation to see all the available formatting patterns.
 
 ### Thanks to the change-case and pluralize libraries, for the transformations
 
